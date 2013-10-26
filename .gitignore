@@ -1,6 +1,7 @@
 # Object files
 *.o
 *.ko
+*.d
 
 # Libraries
 *.lib
@@ -18,3 +19,7 @@
 *.app
 *.hex
 *.elf
+
+# mspgcc specific
+*.map
+*.txt

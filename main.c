@@ -26,18 +26,9 @@ int main( void )
 
     P1DIR |= _BV(0);
     P1DIR |= _BV(1);
-    
+
     while(1)
     {
-        // Check and show any oscillator faults
-        if(UCSCTL7 & XT1LFOFFG)
-        {
-            SFRIFG1 &= ~OFIFG;
-            P1OUT |= _BV(1);
-        } else {
-            P1OUT &= ~_BV(1);
-        }
-
         P1OUT ^= _BV(0);
         __delay_cycles(160000);
         __delay_cycles(160000);
