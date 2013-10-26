@@ -15,7 +15,7 @@
     #error "F_CPU not defined"
 #endif
 
-void uart_init(uint32_t baud);
+void uart_init(void);
 void uart_tx(char* string);
 
 #endif /* __UART_H__ */

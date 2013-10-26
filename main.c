@@ -22,13 +22,16 @@ int main( void )
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
+    // Set up the system clock and any required peripherals
     sys_clock_init();
+    uart_init();
 
     P1DIR |= _BV(0);
     P1DIR |= _BV(1);
 
     while(1)
     {
+        uart_tx("Hello\n");
         P1OUT ^= _BV(0);
         __delay_cycles(160000);
         __delay_cycles(160000);
