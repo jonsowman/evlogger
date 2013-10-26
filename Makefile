@@ -21,7 +21,7 @@ SOURCES = main.c uart.c
 INCLUDES = -IInclude
 
 #######################################################################################
-CFLAGS   = -mmcu=$(MCU) -DF_CPU=16000000 -g -Os -Wall -Wunused $(INCLUDES)   
+CFLAGS   = -mmcu=$(MCU) -DF_CPU=20000000 -g -Os -Wall -Wunused $(INCLUDES)   
 ASFLAGS  = -mmcu=$(MCU) -x assembler-with-cpp -Wa,-gstabs
 LDFLAGS  = -mmcu=$(MCU) -Wl,-Map=$(TARGET).map
 ########################################################################################

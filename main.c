@@ -47,7 +47,7 @@ int main( void )
 
 /**
  * Set up the system clock to use the external crystal as the stabilisation
- * source for the FLL.
+ * source for the FLL and have MCLK at 20MHz.
  */
 void sys_clock_init( void )
 {
@@ -67,15 +67,15 @@ void sys_clock_init( void )
         for( i = 0xFFF; i > 0; i--);
     } while( UCSCTL7 & XT2OFFG );
 
-    // Set FLL reference to be XT2 divided by 4
-    UCSCTL3 = SELREF__XT2CLK | FLLREFDIV__4;
+    // Set FLL reference to be XT2 divided by 2 (FLLREFDIV=2)
+    UCSCTL3 = SELREF__XT2CLK | FLLREFDIV__2;
 
-    // Set the FLL loop divider to 16 and the multiplier to 1
+    // Set the FLL loop divider to 4 (D=4) and the multiplier to 5 (N=4)
     // DCOCLK = D * (N+1) * (FLLREFCLK / FLLREFDIV)
-    UCSCTL2 = 0x0000;
-    UCSCTL2 |= FLLD__8; // compensate for N=0 disallowed
+    UCSCTL2 = 0x0004;
+    UCSCTL2 |= FLLD__4; // compensate for N=0 disallowed
 
-    // Set the DCO to range 4 (1.3 - 28.2MHz, target 16MHz)
+    // Set the DCO to range 4 (1.3 - 28.2MHz, target 20MHz)
     UCSCTL1 = DCORSEL_4;
 
     // Wait until the DCO has stabilised
@@ -84,7 +84,7 @@ void sys_clock_init( void )
         for( i = 0xFFF; i > 0; i--);
     } while( UCSCTL7 & DCOFFG );
 
-    // At this point, DCOCLK is a 16MHz stabilised reference
+    // At this point, DCOCLK is a 20MHz stabilised reference
     // So set MCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }
