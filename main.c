@@ -35,6 +35,8 @@ int main( void )
         P1OUT ^= _BV(0);
         __delay_cycles(160000);
         __delay_cycles(160000);
+        __delay_cycles(160000);
+        __delay_cycles(160000);
     }
     return 0;
 }
@@ -79,6 +81,6 @@ void sys_clock_init( void )
     } while( UCSCTL7 & DCOFFG );
 
     // At this point, DCOCLK is a 20MHz stabilised reference
-    // So set MCLK to use this
+    // So set MCLK and SMCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }

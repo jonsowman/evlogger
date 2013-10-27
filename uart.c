@@ -14,7 +14,7 @@
  */
 void uart_init(void)
 {
-    P3SEL |= (1 << 3) | (1 << 4);
+    P4SEL |= (1 << 4) | (1 << 5);
 
     // Make sure the USCI is in reset state
     UCA1CTL1 |= UCSWRST;
@@ -27,10 +27,13 @@ void uart_init(void)
     // UCBRx = 10; UCBRSx = 0; UCBRFx = 14
     UCA1BR0 = 10;
     UCA1BR1 = 0;
-    UCA1MCTL = UCOS16 | (0x0E << 4);
+    UCA1MCTL = UCOS16 | UCBRF_14;
 
     // Finally, release the USCI reset logic to enable the peripheral
     UCA1CTL1 &= ~UCSWRST;
+
+    // Enable interrupts from the UCSI
+    UCA1IE |= UCRXIE;
 }
 
 /**
