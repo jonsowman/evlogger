@@ -31,7 +31,7 @@ int main( void )
 
     while(1)
     {
-        uart_tx("Hello\n");
+        uart_tx("U");
         P1OUT ^= _BV(0);
         __delay_cycles(160000);
         __delay_cycles(160000);
