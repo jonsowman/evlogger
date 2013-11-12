@@ -41,11 +41,22 @@ void uart_init(void)
  * TODO: This should time out instead of busy-wait forever.
  * \param string A char pointer to the string to transmit
  */
-void uart_tx(char* string)
+void _uart_tx(const char* string)
 {
     while(*string)
     {
         while(!(UCA1IFG & UCTXIFG));
         UCA1TXBUF = *string++;
     }
+}
+
+/**
+ * Send a \r\n terminated string to the debug output (to avoid storing
+ * the terminators in RAM all the time).
+ * \param string A char pointer to the string to transmit.
+ */
+void uart_debug(const char* string)
+{
+    _uart_tx(string);
+    _uart_tx("\r\n");
 }
