@@ -12,6 +12,7 @@
 
 #include "typedefs.h"
 #include "uart.h"
+#include "adc.h"
 
 #define _BV(x) (1<<x)
 
@@ -19,19 +20,32 @@ void sys_clock_init(void);
 
 int main( void )
 {
+    uint16_t adc_read;
+    char s[20];
+
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
     // Set up the system clock and any required peripherals
     sys_clock_init();
     uart_init();
+    adc_init();
 
     P1DIR |= _BV(0);
     P1DIR |= _BV(1);
 
+    // Turn P8.0 on as the power supply for the pot
+    P8DIR |= _BV(0);
+    P8OUT |= _BV(0);
+
+    // Read from ADC channel 5 (A5)
+    adc_select(5);
+
     while(1)
     {
-        uart_debug("Hello world");
+        adc_read = adc_convert();
+        sprintf(s, "%u", adc_read);
+        uart_debug(s);
         P1OUT ^= _BV(0);
         __delay_cycles(160000);
         __delay_cycles(160000);
