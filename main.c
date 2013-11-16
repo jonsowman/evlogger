@@ -19,6 +19,7 @@
 #define _BV(x) (1<<x)
 
 void sys_clock_init(void);
+void led_toggle(void);
 
 int main( void )
 {
@@ -30,15 +31,13 @@ int main( void )
 
     // Set up the system clock and any required peripherals
     sys_clock_init();
+    clock_init();
     uart_init();
     adc_init();
 
     // Enable LED on P1.0 and turn it off
     P1DIR |= _BV(0);
     P1OUT &= ~_BV(0);
-
-    // Initial the system clock at 1ms
-    clock_init();
 
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
@@ -48,6 +47,9 @@ int main( void )
 
     // Test that minicom/term is behaving
     uart_debug("Hello world");
+
+    // Flash the LED at 1 second
+    register_function_1s(&led_toggle);
 
     while(1)
     {
@@ -103,3 +105,10 @@ void sys_clock_init( void )
     UCSCTL4 = SELS_3 | SELM_3;
 }
 
+/**
+ * Toggle the LED on P1.0, requires already set as output
+ */
+void led_toggle(void)
+{
+    P1OUT ^= _BV(0);
+}

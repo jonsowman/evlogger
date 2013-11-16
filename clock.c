@@ -10,6 +10,7 @@
 #define _BV(x) (1<<x)
 
 volatile uint32_t ticks;
+void (*fn_1s)(void);
 
 /**
  * Use timer A0 to set up a system clock ticking at 1ms intervals.
@@ -17,8 +18,9 @@ volatile uint32_t ticks;
  */
 void clock_init(void)
 {
-    // Reset the local tick counter
+    // Reset the local tick counter and set function ptrs to null
     ticks = 0;
+    fn_1s = NULL;
 
     // Count to 19999 (20000 actual counts)
     TA0CCR0 = 19999;
@@ -29,10 +31,18 @@ void clock_init(void)
     // CCR0 interrupt enable
     TA0CCTL0 |= CCIE;
 
-    // Enable global interrupts (macro from legacymsp430.h)
+    // Enable global interrupts (macro from legacymsp430.h) and return
     eint();
-
     return;
+}
+
+/**
+ * Register a function to be run by the clock module every 
+ * one second period.
+ */
+void register_function_1s(void (*function_1s)(void))
+{
+    fn_1s = function_1s;
 }
 
 /**
@@ -42,5 +52,8 @@ void clock_init(void)
 interrupt(TIMER0_A0_VECTOR) TIMER0_A0_ISR(void)
 {
     ticks++;
-    if(ticks % 1000UL == 0) P1OUT ^= _BV(0);
+
+    // Call the 1s function if it exists
+    if(ticks % 1000 == 0)
+        if(fn_1s != NULL) (*fn_1s)();
 }
