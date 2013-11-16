@@ -16,7 +16,7 @@ MCU        = msp430f5529
 PROGRAMMER = rf2500
 # List all the source files here
 # eg if you have a source file foo.c then list it here
-SOURCES = main.c uart.c adc.c delay.c
+SOURCES = main.c uart.c adc.c delay.c clock.c
 # Include are located in the Include directory
 INCLUDES = -IInclude
 

@@ -14,6 +14,7 @@
 #include "delay.h"
 #include "uart.h"
 #include "adc.h"
+#include "clock.h"
 
 #define _BV(x) (1<<x)
 
@@ -32,8 +33,12 @@ int main( void )
     uart_init();
     adc_init();
 
+    // Enable LED on P1.0 and turn it off
     P1DIR |= _BV(0);
-    P1DIR |= _BV(1);
+    P1OUT &= ~_BV(0);
+
+    // Initial the system clock at 1ms
+    clock_init();
 
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
@@ -49,7 +54,6 @@ int main( void )
         adc_read = adc_convert();
         sprintf(s, "%u", adc_read);
         uart_debug(s);
-        P1OUT ^= _BV(0);
         _delay_ms(1000);
     }
     return 0;
