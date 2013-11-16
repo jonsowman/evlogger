@@ -10,6 +10,10 @@
 #define _BV(x) (1<<x)
 
 volatile uint32_t ticks;
+
+// We can register a function to be called at each of 10ms, 100ms, and 1s
+void (*fn_10ms)(void);
+void (*fn_100ms)(void);
 void (*fn_1s)(void);
 
 /**
@@ -20,7 +24,7 @@ void clock_init(void)
 {
     // Reset the local tick counter and set function ptrs to null
     ticks = 0;
-    fn_1s = NULL;
+    fn_10ms = fn_100ms = fn_1s = NULL;
 
     // Count to 19999 (20000 actual counts)
     TA0CCR0 = 19999;
@@ -37,8 +41,29 @@ void clock_init(void)
 }
 
 /**
+ * Register a function to be run by the clock module every
+ * ten milliseconds (10ms)
+ * \param function_10ms The pointer to the function to be run
+ */
+void register_function_10ms(void (*function_10ms)(void))
+{
+    fn_10ms = function_10ms;
+}
+
+/**
+ * Register a function to be run by the clock module every
+ * one hundred milliseconds (100ms)
+ * \param function_100ms The pointer to the function to be run
+ */
+void register_function_100ms(void (*function_100ms)(void))
+{
+    fn_100ms = function_100ms;
+}
+
+/**
  * Register a function to be run by the clock module every 
  * one second period.
+ * \param function_1s The pointer to the function to be run
  */
 void register_function_1s(void (*function_1s)(void))
 {
@@ -53,7 +78,13 @@ interrupt(TIMER0_A0_VECTOR) TIMER0_A0_ISR(void)
 {
     ticks++;
 
-    // Call the 1s function if it exists
+    // Run through and call all registered functions
+    if(ticks % 10 == 0)
+        if(fn_10ms != NULL) (*fn_10ms)();
+
+    if(ticks % 100 == 0)
+        if(fn_100ms != NULL) (*fn_100ms)();
+
     if(ticks % 1000 == 0)
         if(fn_1s != NULL) (*fn_1s)();
 }
