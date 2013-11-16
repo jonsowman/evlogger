@@ -23,3 +23,6 @@
 # mspgcc specific
 *.map
 *.txt
+
+# vim
+*.swp
