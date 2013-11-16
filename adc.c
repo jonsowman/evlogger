@@ -6,6 +6,7 @@
  */
 
 #include "adc.h"
+#include "delay.h"
 
 /**
  * Set up the ADC clock and configure resolution, then enable the ADC
@@ -13,21 +14,17 @@
  */
 void adc_init(void)
 {
-    // We clock from SMCLK which is 20MHz
-    // Predivide the clock by 4 to get 5MHz
-    ADC12CTL2 |= ADC12PDIV;
+    // Be sure that conversions are disabled
+    ADC12CTL0 &= ~ADC12ENC;
 
-    // Now divide by 5 (0b101) to get 1MHz and clock from SMCLK
+    // Enable ADC12 and set sample time
+    ADC12CTL0 |= ADC12ON | ADC12SHT0_12 | ADC12SHT1_12;
+
+    // Now divide by 5 (0b101) to get 4MHz and clock from SMCLK
     // Use the sampling timer (SHP)
-    ADC12CTL1 |= ADC12DIV2 | ADC12DIV0 | ADC12SSEL_3 | ADC12SHP;
+    ADC12CTL1 |= ADC12DIV_4 | ADC12SSEL_3 | ADC12SHP;
 
-    // Set 12 bit resolution
-    ADC12CTL2 |= ADC12RES_3;
-
-    // Finally, enable ADC12 and set sample time
-    ADC12CTL0 |= ADC12ON | ADC12SHT02 | ADC12SHT12;
-
-    // Enable conversions
+    // Enable conversions last, can't modify ADC12ON whilst ADC12ENC=1
     ADC12CTL0 |= ADC12ENC;
 }
 
@@ -39,15 +36,22 @@ void adc_init(void)
  */
 void adc_select(const uint8_t channel)
 {
+    // Need to disable conversions before we can change ADC12MCTLx
+    ADC12CTL0 &= ~ADC12ENC;
+
     // Set the range to Vcc & GND by clearing bits 4-6 in the MCTLx reg
     // Also clear the 'EOS' bit 7
     // Set the channel that this conversion memory register is concerned with
     ADC12MCTL0 = (channel & 0x0F);
+
+    // Re-enable conversions
+    ADC12CTL0 |= ADC12ENC;
 }
 
 /**
  * Run a single conversion on the currently selected channel (or
  * group of channels for sequential conversion mode).
+ * \return The result of the ADC conversion.
  */
 uint16_t adc_convert(void)
 {

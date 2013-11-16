@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "typedefs.h"
+#include "delay.h"
 #include "uart.h"
 #include "adc.h"
 
@@ -34,12 +35,14 @@ int main( void )
     P1DIR |= _BV(0);
     P1DIR |= _BV(1);
 
-    // Turn P8.0 on as the power supply for the pot
+    // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
     P8OUT |= _BV(0);
+    P6SEL |= _BV(5);
+    adc_select(0x05);
 
-    // Read from ADC channel 5 (A5)
-    adc_select(5);
+    // Test that minicom/term is behaving
+    uart_debug("Hello world");
 
     while(1)
     {
@@ -47,10 +50,7 @@ int main( void )
         sprintf(s, "%u", adc_read);
         uart_debug(s);
         P1OUT ^= _BV(0);
-        __delay_cycles(160000);
-        __delay_cycles(160000);
-        __delay_cycles(160000);
-        __delay_cycles(160000);
+        _delay_ms(1000);
     }
     return 0;
 }
@@ -98,3 +98,4 @@ void sys_clock_init( void )
     // So set MCLK and SMCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }
+

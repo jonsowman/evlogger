@@ -22,9 +22,8 @@ void uart_init(void)
     // Clock the USCI from SMCLK
     UCA1CTL1 |= UCSSEL_2;
 
-    // Baud rate should be 115200 at 20MHz, register values are:
+    // Baud rate should be 9600 at 20MHz (see datasheet for these)
     // UCOS16 = 0
-    // UCBRx = 173; UCBRSx = 5; UCBRFx = 0
     UCA1BR0 = 2083 & 0xFF;
     UCA1BR1 = 2083 >> 8;
     UCA1MCTL = UCBRS_2;
@@ -41,7 +40,7 @@ void uart_init(void)
  * TODO: This should time out instead of busy-wait forever.
  * \param string A char pointer to the string to transmit
  */
-void _uart_tx(const char* string)
+void _uart_tx(char* string)
 {
     while(*string)
     {
@@ -55,7 +54,7 @@ void _uart_tx(const char* string)
  * the terminators in RAM all the time).
  * \param string A char pointer to the string to transmit.
  */
-void uart_debug(const char* string)
+void uart_debug(char* string)
 {
     _uart_tx(string);
     _uart_tx("\r\n");

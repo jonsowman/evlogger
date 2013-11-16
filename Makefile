@@ -16,12 +16,12 @@ MCU        = msp430f5529
 PROGRAMMER = rf2500
 # List all the source files here
 # eg if you have a source file foo.c then list it here
-SOURCES = main.c uart.c adc.c
+SOURCES = main.c uart.c adc.c delay.c
 # Include are located in the Include directory
 INCLUDES = -IInclude
 
 #######################################################################################
-CFLAGS   = -mmcu=$(MCU) -DF_CPU=20000000 -g -Os -Wall -Wunused $(INCLUDES)   
+CFLAGS   = -mmcu=$(MCU) -DF_CPU=20000000 -g -Os -Wall -pedantic -Wunused $(INCLUDES)   
 ASFLAGS  = -mmcu=$(MCU) -x assembler-with-cpp -Wa,-gstabs
 LDFLAGS  = -mmcu=$(MCU) -Wl,-Map=$(TARGET).map
 ########################################################################################
