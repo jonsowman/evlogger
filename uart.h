@@ -16,7 +16,7 @@
 #endif
 
 void uart_init(void);
-void _uart_tx(char* string);
+static void _uart_tx(char* string);
 void uart_debug(char* string);
 
 #endif /* __UART_H__ */

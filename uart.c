@@ -40,7 +40,7 @@ void uart_init(void)
  * TODO: This should time out instead of busy-wait forever.
  * \param string A char pointer to the string to transmit
  */
-void _uart_tx(char* string)
+static void _uart_tx(char* string)
 {
     while(*string)
     {
