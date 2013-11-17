@@ -16,6 +16,9 @@
 #include "adc.h"
 #include "clock.h"
 
+#include "ff.h"
+#include "diskio.h"
+
 #define _BV(x) (1<<x)
 
 void sys_clock_init(void);
@@ -33,6 +36,7 @@ int main( void )
     sys_clock_init();
     clock_init();
     uart_init();
+    sd_init();
     adc_init();
 
     // Enable LED on P1.0 and turn it off

@@ -14,6 +14,9 @@
 
 #include <msp430.h>
 
+// This is shorthand from avr-libc
+#define _BV(x) (1<<x)
+
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
 typedef long int32_t;

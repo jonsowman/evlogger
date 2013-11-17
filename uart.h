@@ -15,8 +15,12 @@
     #error "F_CPU not defined"
 #endif
 
+#define SDCS_PORT P3OUT
+#define SDCS_PIN _BV(7)
+
 void uart_init(void);
-static void _uart_tx(char* string);
 void uart_debug(char* string);
+
+void sd_init(void);
 
 #endif /* __UART_H__ */

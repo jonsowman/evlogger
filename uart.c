@@ -59,3 +59,25 @@ void uart_debug(char* string)
     _uart_tx(string);
     _uart_tx("\r\n");
 }
+
+/**
+ * Initialise UCB1 for the SD card SPI unit.
+ */
+void sd_init(void)
+{
+    // Put UCSI state machine in reset
+    UCB1CTL1 |= UCSWRST;
+
+    // Set SD CS line to output, and SPI lines to alt. digital fn
+    P3DIR |= _BV(7);
+    P4SEL |= _BV(1) | _BV(2) | _BV(3);
+
+    // MSB first, be a master
+    UCB1CTL0 |= UCMSB | UCMST;
+
+    // Clock from SMCLK
+    UCB1CTL1 |= UCSSEL__SMCLK;
+
+    // Release the USCI reset logic
+    UCB1CTL1 &= ~UCSWRST;
+}
