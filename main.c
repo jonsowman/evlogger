@@ -55,6 +55,9 @@ int main( void )
     // Flash the LED at 1 second
     register_function_1s(&led_toggle);
 
+    // Call the periodic fatfs timer functionality
+    register_function_10ms(&disk_timerproc);
+
     while(1)
     {
         adc_read = adc_convert();

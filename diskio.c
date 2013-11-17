@@ -602,3 +602,12 @@ void disk_timerproc (void)
     // Stat = s;
 }
 
+
+/*-----------------------------------------------------------------------*/
+/* Return the current time packed into a DWORD value                     */
+/* TODO: Make this return a real time                                    */
+/*-----------------------------------------------------------------------*/
+DWORD get_fattime(void)
+{
+    return 0;
+}
