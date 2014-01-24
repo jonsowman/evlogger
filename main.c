@@ -53,6 +53,9 @@ int main( void )
     P6SEL |= _BV(5);
     adc_select(0x05);
 
+    // Wait for peripherals to boot
+    _delay_ms(100);
+
     // Test that minicom/term is behaving
     uart_debug("Hello world");
 
@@ -63,12 +66,13 @@ int main( void )
     register_function_10ms(&disk_timerproc);
 
     // Mount the FAT filesystem
+    _delay_ms(100);
     fr = f_mount(&FatFs, "", 1);
     while( fr != FR_OK )
     {
         sprintf(s, "Mount failed: %d", fr);
         uart_debug(s);
-        _delay_ms(2500);
+        _delay_ms(1000);
         fr = f_mount(&FatFs, "", 1);
     }
 
