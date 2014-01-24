@@ -69,11 +69,14 @@ void sd_init(void)
     UCB1CTL1 |= UCSWRST;
 
     // Set SD CS line to output, and SPI lines to alt. digital fn
+    // CS in on P3.7
+    // SIMO, SOMI, SCLK on P4.1, P4.2, P4.3
     P3DIR |= _BV(7);
     P4SEL |= _BV(1) | _BV(2) | _BV(3);
 
     // MSB first, be a master
-    UCB1CTL0 |= UCMSB | UCMST;
+    // Clock idles high, change data on falling edge
+    UCB1CTL0 |= UCMSB | UCMST | UCCKPL;
 
     // Clock from SMCLK
     UCB1CTL1 |= UCSSEL__SMCLK;

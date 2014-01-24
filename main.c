@@ -27,7 +27,11 @@ void led_toggle(void);
 int main( void )
 {
     uint16_t adc_read;
-    char s[20];
+    char s[30];
+    FATFS FatFs;
+    FRESULT fr;
+    FIL fil;
+    UINT bw;
 
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
@@ -57,6 +61,32 @@ int main( void )
 
     // Call the periodic fatfs timer functionality
     register_function_10ms(&disk_timerproc);
+
+    // Mount the FAT filesystem
+    fr = f_mount(&FatFs, "", 1);
+    while( fr != FR_OK )
+    {
+        sprintf(s, "Mount failed: %d", fr);
+        uart_debug(s);
+        _delay_ms(2500);
+        fr = f_mount(&FatFs, "", 1);
+    }
+
+    fr = f_open(&fil, "test.txt", FA_WRITE | FA_CREATE_ALWAYS);
+    if( fr == FR_OK )
+    {
+        f_write(&fil, "Some test text\r\n", 17, &bw);
+        f_close(&fil);
+        if(bw == 17)
+            uart_debug("Wrote full data");
+        else
+            uart_debug("Wrote partial data");
+    }
+    else
+    {
+        sprintf(s, "Couldn't open file: %d", fr);
+        uart_debug(s);
+    }
 
     while(1)
     {

@@ -28,7 +28,7 @@ char buff[256];
 // Set slow clock (100k-400k)
 #define FCLK_SLOW()     do {                    \
                         UCB1CTL1 |= UCSWRST;    \
-                        UCB1BR0 = 0x64;         \
+                        UCB1BR0 = 0xA0;         \
                         UCB1CTL1 &= ~UCSWRST;   \
                         } while (0)
 /* Set fast clock (depends on the CSD) */
@@ -90,14 +90,13 @@ BYTE CardType;                  /* Card type flags */
 static
 BYTE rcvr_spi (void)
 {
-    while (!(UCB1IFG&UCTXIFG));
+    while (! (UCB1IFG & UCTXIFG) );
     UCB1TXBUF = 0xFF;
-    while (!(UCB1IFG&UCRXIFG));
+    while (! (UCB1IFG & UCRXIFG) );
     return UCB1RXBUF;
 }
 
 /* Alternative macro to receive data fast */
-//#define rcvr_spi_m(dst)       SPDR=0xFF; loop_until_bit_is_set(SPSR,SPIF); *(dst)=SPDR
 #define rcvr_spi_m(dst) *(dst)=rcvr_spi()
 
 /*-----------------------------------------------------------------------*/
