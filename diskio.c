@@ -28,7 +28,7 @@ char buff[256];
 // Set slow clock (100k-400k)
 #define FCLK_SLOW()     do {                    \
                         UCB1CTL1 |= UCSWRST;    \
-                        UCB1BR0 = 0xA0;         \
+                        UCB1BR0 = 0x64;         \
                         UCB1CTL1 &= ~UCSWRST;   \
                         } while (0)
 /* Set fast clock (depends on the CSD) */
