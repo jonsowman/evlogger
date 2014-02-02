@@ -1455,6 +1455,7 @@ void Dogs102x6_refresh(uint8_t mode)
  */
 void lcd_debug(char *s)
 {
+    Dogs102x6_clearRow(7);
     Dogs102x6_stringDraw(7, 0, s, DOGS102x6_DRAW_NORMAL);
 }
 
