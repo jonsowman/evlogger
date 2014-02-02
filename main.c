@@ -72,6 +72,7 @@ int main( void )
     Dogs102x6_setBacklight(8);
     Dogs102x6_setContrast(8);
     Dogs102x6_clearScreen();
+    Dogs102x6_stringDraw(0, 0, "Hello World", DOGS102x6_DRAW_NORMAL);
     
     while(1);
 
