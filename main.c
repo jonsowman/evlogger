@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "HAL_Dogs102x6.h"
 #include "typedefs.h"
 #include "delay.h"
 #include "uart.h"
@@ -40,8 +41,10 @@ int main( void )
     sys_clock_init();
     clock_init();
     uart_init();
-    sd_init();
+    //sd_init(); FIXME
     adc_init();
+    Dogs102x6_init();
+    Dogs102x6_backlightInit();
 
     // Enable LED on P1.0 and turn it off
     P1DIR |= _BV(0);
@@ -55,7 +58,7 @@ int main( void )
 
     // Wait for peripherals to boot
     _delay_ms(100);
-
+    
     // Test that minicom/term is behaving
     uart_debug("Hello world");
 
@@ -64,6 +67,13 @@ int main( void )
 
     // Call the periodic fatfs timer functionality
     register_function_10ms(&disk_timerproc);
+
+    // Test the LCD
+    Dogs102x6_setBacklight(8);
+    Dogs102x6_setContrast(8);
+    Dogs102x6_clearScreen();
+    
+    while(1);
 
     // Mount the FAT filesystem
     _delay_ms(100);
