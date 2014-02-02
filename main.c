@@ -96,10 +96,12 @@ int main( void )
     }
 
     // Write some data to the file
+    write_file:
     fr = f_write(&fil, "hello world\r\n", 14, &bw);
     f_close(&fil);
     sprintf(s, "%d - wrote %db", fr, bw);
     uart_debug(s);
+    if(fr) goto write_file;
 
     while(1)
     {
