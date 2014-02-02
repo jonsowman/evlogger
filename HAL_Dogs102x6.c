@@ -269,26 +269,26 @@ void Dogs102x6_init(void)
     CD_RST_OUT &= ~CD;
 
     // P4.1 option select SIMO
-    SPI_SEL |= SPI_SIMO;
-    SPI_DIR |= SPI_SIMO;
-    // P4.3 option select CLK
-    SPI_SEL |= SPI_CLK;
-    SPI_DIR |= SPI_CLK;
+    /*SPI_SEL |= SPI_SIMO;*/
+    /*SPI_DIR |= SPI_SIMO;*/
+    /*// P4.3 option select CLK*/
+    /*SPI_SEL |= SPI_CLK;*/
+    /*SPI_DIR |= SPI_CLK;*/
 
     // Initialize USCI_B1 for SPI Master operation
     // Put state machine in reset
-    UCB1CTL1 |= UCSWRST;
-    //3-pin, 8-bit SPI master
-    UCB1CTL0 = UCCKPH + UCMSB + UCMST + UCMODE_0 + UCSYNC;
-    // Clock phase - data captured first edge, change second edge
-    // MSB
-    // Use SMCLK, keep RESET
-    UCB1CTL1 = UCSSEL_2 + UCSWRST;
-    UCB1BR0 = 0x02;
-    UCB1BR1 = 0;
-    // Release USCI state machine
-    UCB1CTL1 &= ~UCSWRST;
-    UCB1IFG &= ~UCRXIFG;
+    /*UCB1CTL1 |= UCSWRST;*/
+    /*//3-pin, 8-bit SPI master*/
+    /*UCB1CTL0 = UCCKPH + UCMSB + UCMST + UCMODE_0 + UCSYNC;*/
+    /*// Clock phase - data captured first edge, change second edge*/
+    /*// MSB*/
+    /*// Use SMCLK, keep RESET*/
+    /*UCB1CTL1 = UCSSEL_2 + UCSWRST;*/
+    /*UCB1BR0 = 0x02;*/
+    /*UCB1BR1 = 0;*/
+    /*// Release USCI state machine*/
+    /*UCB1CTL1 &= ~UCSWRST;*/
+    /*UCB1IFG &= ~UCRXIFG;*/
 
     Dogs102x6_writeCommand(Dogs102x6_initMacro, 13);
 

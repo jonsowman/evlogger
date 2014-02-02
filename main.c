@@ -41,7 +41,7 @@ int main( void )
     sys_clock_init();
     clock_init();
     uart_init();
-    //sd_init(); FIXME
+    sd_init();
     adc_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
