@@ -1444,6 +1444,20 @@ void Dogs102x6_refresh(uint8_t mode)
   drawmode = mode;
 }
 
+/************************************************************************
+ * CUSTOM EVLOGGER
+ ***********************************************************************/
+
+/**
+ * Shorthand to display a debug message on the LCD screen
+ * \param s A pointer to the debug string (no longer than 17 chars)
+ * \return None
+ */
+void lcd_debug(char *s)
+{
+    Dogs102x6_stringDraw(7, 0, s, DOGS102x6_DRAW_NORMAL);
+}
+
 /***************************************************************************//**
  * @}
  ******************************************************************************/

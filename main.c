@@ -69,20 +69,18 @@ int main( void )
     register_function_10ms(&disk_timerproc);
 
     // Test the LCD
-    Dogs102x6_setBacklight(8);
-    Dogs102x6_setContrast(8);
+    Dogs102x6_setBacklight(6);
+    Dogs102x6_setContrast(6);
     Dogs102x6_clearScreen();
-    Dogs102x6_stringDraw(0, 0, "Hello World", DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
-    while(1);
-
     // Mount the FAT filesystem
     _delay_ms(100);
     fr = f_mount(&FatFs, "", 1);
     while( fr != FR_OK )
     {
-        sprintf(s, "Mount failed: %d", fr);
-        uart_debug(s);
+        sprintf(s, "Mount fail: %d", fr);
+        lcd_debug(s);
         _delay_ms(1000);
         fr = f_mount(&FatFs, "", 1);
     }
@@ -93,23 +91,24 @@ int main( void )
         f_write(&fil, "Some test text\r\n", 17, &bw);
         f_close(&fil);
         if(bw == 17)
-            uart_debug("Wrote full data");
+            lcd_debug("Wrote full");
         else
-            uart_debug("Wrote partial data");
+            lcd_debug("Wrote partial");
     }
     else
     {
-        sprintf(s, "Couldn't open file: %d", fr);
-        uart_debug(s);
+        sprintf(s, "Open fail: %d", fr);
+        lcd_debug(s);
     }
 
     while(1)
     {
         adc_read = adc_convert();
-        sprintf(s, "%u", adc_read);
-        uart_debug(s);
+        sprintf(s, "ADC: %u", adc_read);
+        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
         _delay_ms(1000);
     }
+
     return 0;
 }
 
@@ -164,3 +163,5 @@ void led_toggle(void)
 {
     P1OUT ^= _BV(0);
 }
+
+

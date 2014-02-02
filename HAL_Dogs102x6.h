@@ -83,4 +83,7 @@ extern void Dogs102x6_circleDraw(uint8_t x, uint8_t y, uint8_t radius, uint8_t s
 extern void Dogs102x6_imageDraw(const uint8_t IMAGE[], uint8_t row, uint8_t col);
 extern void Dogs102x6_clearImage(uint8_t height, uint8_t width, uint8_t row, uint8_t col);
 
+// Custom things for EV logger
+void lcd_debug(char *s);
+
 #endif /* HAL_DOGS102x6_H */
