@@ -25,14 +25,16 @@
 void sys_clock_init(void);
 void led_toggle(void);
 
-int main( void )
+int main(void)
 {
     uint16_t adc_read;
     char s[30];
+    char filebuf[15];
     FATFS FatFs;
     FRESULT fr;
     FIL fil;
     UINT bw;
+    DWORD fsz;
 
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
@@ -43,8 +45,8 @@ int main( void )
     uart_init();
     sd_init();
     adc_init();
-    //Dogs102x6_init();
-    //Dogs102x6_backlightInit();
+    Dogs102x6_init();
+    Dogs102x6_backlightInit();
 
     // Enable LED on P1.0 and turn it off
     P1DIR |= _BV(0);
@@ -69,10 +71,10 @@ int main( void )
     register_function_10ms(&disk_timerproc);
 
     // Test the LCD
-    //Dogs102x6_setBacklight(6);
-    //Dogs102x6_setContrast(6);
-    //Dogs102x6_clearScreen();
-    //Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_setBacklight(6);
+    Dogs102x6_setContrast(6);
+    Dogs102x6_clearScreen();
+    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
     // Mount the FAT filesystem
     _delay_ms(100);
@@ -86,33 +88,52 @@ int main( void )
     }
 
     // Attempt to open a file
-    fr = f_open(&fil, "test.txt", FA_WRITE | FA_CREATE_ALWAYS);
+    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
     while( fr != FR_OK )
     {
         _delay_ms(500);
         sprintf(s, "Open fail: %d", fr);
         uart_debug(s);
-        fr = f_open(&fil, "test.txt", FA_WRITE | FA_CREATE_ALWAYS);
+        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
     }
+    uart_debug("Opened successfully");
 
-    // Write some data to the file
-    write_file:
-    fr = f_write(&fil, "hello world\r\n", 14, &bw);
-    f_close(&fil);
-    sprintf(s, "%d - wrote %db", fr, bw);
+    // Determine the size of the file
+    fsz = f_size(&fil);
+    sprintf(s, "file is %d bytes", (int)fsz);
     uart_debug(s);
-    if(fr)
-    {
-        _delay_ms(500);
-        goto write_file;
-    }
+
+    // Try and read from the file
+    fr = f_read(&fil, filebuf, fsz - 1, &bw);
+    _delay_ms(1000);
+    sprintf(s, "af read: %d and %d", fil.fs->id, fil.id);
+    uart_debug(s);
+    filebuf[fsz-1] = '\0';
+    //sprintf(s, "Read %d bytes with result code %d", bw, fr);
+    //uart_debug(s);
+    lcd_debug(filebuf);
+
+    // Try and write something new, move to beginning of file
+    sprintf(s, "bf seek: %d and %d", fil.fs->id, fil.id);
+    uart_debug(s);
+    fr = f_lseek(&fil, 0);
+    //sprintf(s, "lseek returned %d", fr);
+    //uart_debug(s);
+
+    // Write something else
+    fr = f_write(&fil, "ohhai world", 12, &bw);
+    //sprintf(s, "Wrote %d bytes with result code %d", bw, fr);
+    //uart_debug(s);
+
+    // Close the file
+    f_close(&fil);
 
     while(1)
     {
         adc_read = adc_convert();
         sprintf(s, "ADC: %u", adc_read);
-        //Dogs102x6_clearRow(2);
-        //Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+        Dogs102x6_clearRow(2);
+        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
         _delay_ms(100);
     }
 
