@@ -43,8 +43,8 @@ int main( void )
     uart_init();
     sd_init();
     adc_init();
-    Dogs102x6_init();
-    Dogs102x6_backlightInit();
+    //Dogs102x6_init();
+    //Dogs102x6_backlightInit();
 
     // Enable LED on P1.0 and turn it off
     P1DIR |= _BV(0);
@@ -69,10 +69,10 @@ int main( void )
     register_function_10ms(&disk_timerproc);
 
     // Test the LCD
-    Dogs102x6_setBacklight(6);
-    Dogs102x6_setContrast(6);
-    Dogs102x6_clearScreen();
-    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
+    //Dogs102x6_setBacklight(6);
+    //Dogs102x6_setContrast(6);
+    //Dogs102x6_clearScreen();
+    //Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
     // Mount the FAT filesystem
     _delay_ms(100);
@@ -80,33 +80,34 @@ int main( void )
     while( fr != FR_OK )
     {
         sprintf(s, "Mount fail: %d", fr);
-        lcd_debug(s);
-        _delay_ms(1000);
+        uart_debug(s);
+        _delay_ms(100);
         fr = f_mount(&FatFs, "", 1);
     }
 
+    // Attempt to open a file
     fr = f_open(&fil, "test.txt", FA_WRITE | FA_CREATE_ALWAYS);
-    if( fr == FR_OK )
+    while( fr != FR_OK )
     {
-        f_write(&fil, "Some test text\r\n", 17, &bw);
-        f_close(&fil);
-        if(bw == 17)
-            lcd_debug("Wrote full");
-        else
-            lcd_debug("Wrote partial");
-    }
-    else
-    {
+        _delay_ms(500);
         sprintf(s, "Open fail: %d", fr);
-        lcd_debug(s);
+        uart_debug(s);
+        fr = f_open(&fil, "test.txt", FA_WRITE | FA_CREATE_ALWAYS);
     }
+
+    // Write some data to the file
+    fr = f_write(&fil, "hello world\r\n", 14, &bw);
+    f_close(&fil);
+    sprintf(s, "%d - wrote %db", fr, bw);
+    uart_debug(s);
 
     while(1)
     {
         adc_read = adc_convert();
         sprintf(s, "ADC: %u", adc_read);
-        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
-        _delay_ms(1000);
+        //Dogs102x6_clearRow(2);
+        //Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+        _delay_ms(100);
     }
 
     return 0;
