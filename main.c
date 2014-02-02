@@ -101,7 +101,11 @@ int main( void )
     f_close(&fil);
     sprintf(s, "%d - wrote %db", fr, bw);
     uart_debug(s);
-    if(fr) goto write_file;
+    if(fr)
+    {
+        _delay_ms(500);
+        goto write_file;
+    }
 
     while(1)
     {
