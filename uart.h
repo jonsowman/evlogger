@@ -18,6 +18,9 @@
 #define SDCS_PORT P3OUT
 #define SDCS_PIN _BV(7)
 
+// Length of the char buffer for debugging over UART
+#define UART_BUF_LEN 40
+
 void uart_init(void);
 void uart_debug(char* string);
 

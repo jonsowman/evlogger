@@ -5,6 +5,7 @@
  * University of Southampton
  */
 
+#include <string.h>
 #include "uart.h"
 
 /**
@@ -56,6 +57,8 @@ static void _uart_tx(char* string)
  */
 void uart_debug(char* string)
 {
+    if(strlen(string) >= UART_BUF_LEN)
+        uart_debug("[WARN] UART BUF_OVF");
     _uart_tx(string);
     _uart_tx("\r\n");
 }

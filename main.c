@@ -28,7 +28,7 @@ void led_toggle(void);
 int main(void)
 {
     uint16_t adc_read;
-    char s[30];
+    char s[UART_BUF_LEN];
     char filebuf[15];
     FATFS FatFs;
     FRESULT fr;
@@ -96,7 +96,6 @@ int main(void)
         uart_debug(s);
         fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
     }
-    uart_debug("Opened successfully");
 
     // Determine the size of the file
     fsz = f_size(&fil);
@@ -105,25 +104,22 @@ int main(void)
 
     // Try and read from the file
     fr = f_read(&fil, filebuf, fsz - 1, &bw);
-    _delay_ms(1000);
     sprintf(s, "af read: %d and %d", fil.fs->id, fil.id);
     uart_debug(s);
     filebuf[fsz-1] = '\0';
-    //sprintf(s, "Read %d bytes with result code %d", bw, fr);
-    //uart_debug(s);
+
+    sprintf(s, "Read %d bytes, result %d", bw, fr);
+    uart_debug(s);
+
     lcd_debug(filebuf);
 
     // Try and write something new, move to beginning of file
-    sprintf(s, "bf seek: %d and %d", fil.fs->id, fil.id);
-    uart_debug(s);
     fr = f_lseek(&fil, 0);
-    //sprintf(s, "lseek returned %d", fr);
-    //uart_debug(s);
 
     // Write something else
-    fr = f_write(&fil, "ohhai world", 12, &bw);
-    //sprintf(s, "Wrote %d bytes with result code %d", bw, fr);
-    //uart_debug(s);
+    fr = f_write(&fil, "test two", 12, &bw);
+    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
+    uart_debug(s);
 
     // Close the file
     f_close(&fil);
