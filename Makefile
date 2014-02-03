@@ -11,12 +11,12 @@
 # $(TARGET).elf $(TARGET).hex and $(TARGET).txt nad $(TARGET).map are all generated.
 # The TXT file is used for BSL loading, the ELF can be used for JTAG use
 # 
-TARGET     = logger
+TARGET     = evlogger_bin
 MCU        = msp430f5529
 PROGRAMMER = rf2500
 # List all the source files here
 # eg if you have a source file foo.c then list it here
-SOURCES = main.c uart.c adc.c delay.c clock.c ff.c diskio.c HAL_Dogs102x6.c HAL_Cma3000.c
+SOURCES = main.c uart.c adc.c delay.c clock.c ff.c diskio.c HAL_Dogs102x6.c HAL_Cma3000.c logger.c
 # Include are located in the Include directory
 INCLUDES = -isystem /usr/msp430/include/
 

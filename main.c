@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "logger.h"
 #include "HAL_Dogs102x6.h"
 #include "HAL_Cma3000.h"
 #include "typedefs.h"
@@ -21,11 +22,8 @@
 #include "ff.h"
 #include "diskio.h"
 
-#define _BV(x) (1<<x)
-
 // Private prototypes
 void sys_clock_init(void);
-void logger_init(void);
 void update_lcd(void);
     
 // Character buffer for LCD and UART debugging
@@ -129,22 +127,6 @@ int main(void)
     while(1);
 
     return 0;
-}
-
-/**
- * Set up the hardware for logging functionality
- */
-void logger_init(void)
-{
-    // Enable LED on P1.0 and turn it off
-    P1DIR |= _BV(0);
-    P1OUT &= ~_BV(0);
-
-    // Select the potentiometer and enable the ADC on that channel
-    P8DIR |= _BV(0);
-    P8OUT |= _BV(0);
-    P6SEL |= _BV(5);
-    adc_select(0x05);
 }
 
 /**

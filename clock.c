@@ -7,8 +7,6 @@
 
 #include "clock.h"
 
-#define _BV(x) (1<<x)
-
 volatile uint32_t ticks;
 
 // We can register a function to be called at each of 10ms, 100ms, and 1s
