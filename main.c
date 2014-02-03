@@ -174,8 +174,6 @@ void update_lcd(void)
             Cma3000_yAccel, Cma3000_zAccel);
     Dogs102x6_clearRow(3);
     Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
-
-    _delay_ms(100);
 }
 
 /**
