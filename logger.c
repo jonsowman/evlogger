@@ -22,4 +22,22 @@ void logger_init(void)
     P8OUT |= _BV(0);
     P6SEL |= _BV(5);
     adc_select(0x05);
+
+    // Enable the buttons
+    // S1 is on P1.7, S2 is on P2.2
+    S1_PORT_OUT |= S1_PIN;
+    S1_PORT_REN |= S1_PIN;
+    // Trigger on falling edge, clear int flags, enable interupts
+    S1_PORT_IES &= ~S1_PIN;
+    S1_PORT_IFG &= ~S1_PIN;
+    S1_PORT_IE |= S1_PIN;
+}
+
+/**
+ * Interrupt vector for button 1
+ */
+interrupt(PORT1_VECTOR) PORT1_ISR(void)
+{
+    if(P1IV & P1IV_P1IFG7)
+        P1OUT ^= _BV(0);
 }

@@ -137,9 +137,6 @@ void update_lcd(void)
 {
     uint16_t adc_read;
 
-    // Toggle the LCD 
-    P1OUT ^= _BV(0);
-
     // Print the free space (assuming 512 bytes/sector)
     f_getfree("", &fre_clust, &fs);
     sprintf(s, "fre_clust = %lu", fre_clust);
