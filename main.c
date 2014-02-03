@@ -25,11 +25,20 @@
 
 // Private prototypes
 void sys_clock_init(void);
-void led_toggle(void);
+void logger_init(void);
 void update_lcd(void);
     
 // Character buffer for LCD and UART debugging
 char s[UART_BUF_LEN];
+
+// Variables required for the operation of the FAT filesystem library
+FATFS FatFs;
+FRESULT fr;
+FIL fil;
+UINT bw;
+DWORD fsz;
+FATFS *fs = &FatFs;
+DWORD fre_clust, fre_sect, tot_sect;
 
 /**
  * main() is run by the micro when execution begins. Call initialisation
@@ -39,14 +48,6 @@ int main(void)
 {
     // Buffer for reading data from the SD card
     char filebuf[15];
-
-    // Variables required for the operation of the FAT filesystem library
-    FATFS FatFs;
-    FRESULT fr;
-    FIL fil;
-    UINT bw;
-    DWORD fsz, fre_clust, fre_sect, tot_sect;
-    FATFS *fs;
 
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
@@ -61,24 +62,13 @@ int main(void)
     Dogs102x6_init();
     Dogs102x6_backlightInit();
 
-    // Enable LED on P1.0 and turn it off
-    P1DIR |= _BV(0);
-    P1OUT &= ~_BV(0);
-
-    // Select the potentiometer and enable the ADC on that channel
-    P8DIR |= _BV(0);
-    P8OUT |= _BV(0);
-    P6SEL |= _BV(5);
-    adc_select(0x05);
+    logger_init();
 
     // Wait for peripherals to boot
     _delay_ms(100);
     
     // Test that minicom/term is behaving
     uart_debug("Hello world");
-
-    // Flash the LED at 1 second
-    register_function_1s(&led_toggle);
 
     // Call the periodic fatfs timer functionality
     register_function_10ms(&disk_timerproc);
@@ -95,25 +85,12 @@ int main(void)
     while( fr != FR_OK )
     {
         sprintf(s, "Mount fail: %d", fr);
-        uart_debug(s);
+        lcd_debug(s);
         _delay_ms(100);
         fr = f_mount(&FatFs, "", 1);
     }
 
-    // Find free space
-    fs = &FatFs;
-    fr = f_getfree("", &fre_clust, &fs);
-
-    // Get total sectors and free sectors
-    tot_sect = (fs->n_fatent - 2) * fs->csize;
-    fre_sect = fre_clust * fs->csize;
-
-    // Print the free space (assuming 512 bytes/sector)
-    sprintf(s, "%lukiB available, %lukib free", tot_sect/2, fre_sect/2);
-    uart_debug(s);
-    sprintf(s, "%lu/%luMiB (%lu%%)", ((tot_sect - fre_sect)/2000), 
-            (tot_sect/2000), 100-((fre_sect*100)/tot_sect));
-    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
+    f_getfree("", &fre_clust, &fs);
 
     // Attempt to open a file
     fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
@@ -155,12 +132,42 @@ int main(void)
 }
 
 /**
+ * Set up the hardware for logging functionality
+ */
+void logger_init(void)
+{
+    // Enable LED on P1.0 and turn it off
+    P1DIR |= _BV(0);
+    P1OUT &= ~_BV(0);
+
+    // Select the potentiometer and enable the ADC on that channel
+    P8DIR |= _BV(0);
+    P8OUT |= _BV(0);
+    P6SEL |= _BV(5);
+    adc_select(0x05);
+}
+
+/**
  * This function is run repeatedly to run systems and update the
  * LCD display.
  */
 void update_lcd(void)
 {
     uint16_t adc_read;
+
+    // Toggle the LCD 
+    P1OUT ^= _BV(0);
+
+    // Print the free space (assuming 512 bytes/sector)
+    f_getfree("", &fre_clust, &fs);
+    sprintf(s, "fre_clust = %lu", fre_clust);
+    uart_debug(s);
+    tot_sect = (fs->n_fatent - 2) * fs->csize;
+    fre_sect = fre_clust * fs->csize;
+    sprintf(s, "%lu/%luMiB (%lu%%)", ((tot_sect - fre_sect)/2000), 
+            (tot_sect/2000), 100-((fre_sect*100)/tot_sect));
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Run an ADC conversion and display the result
     adc_read = adc_convert();
@@ -219,13 +226,4 @@ void sys_clock_init( void )
     // So set MCLK and SMCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }
-
-/**
- * Toggle the LED on P1.0, requires already set as output
- */
-void led_toggle(void)
-{
-    P1OUT ^= _BV(0);
-}
-
 
