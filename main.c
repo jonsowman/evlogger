@@ -87,7 +87,6 @@ int main(void)
         _delay_ms(100);
         fr = f_mount(&FatFs, "", 1);
     }
-
     f_getfree("", &fre_clust, &fs);
 
     // Attempt to open a file
@@ -139,8 +138,6 @@ void update_lcd(void)
 
     // Print the free space (assuming 512 bytes/sector)
     f_getfree("", &fre_clust, &fs);
-    sprintf(s, "fre_clust = %lu", fre_clust);
-    uart_debug(s);
     tot_sect = (fs->n_fatent - 2) * fs->csize;
     fre_sect = fre_clust * fs->csize;
     sprintf(s, "%lu/%luMiB (%lu%%)", ((tot_sect - fre_sect)/2000), 
