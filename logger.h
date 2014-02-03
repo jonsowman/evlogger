@@ -29,6 +29,7 @@
 #define S2_PIN _BV(2)
 
 void logger_init(void);
+void sd_setup(void);
 void logger_enable(void);
 void logger_disable(void);
 
