@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "HAL_Dogs102x6.h"
+#include "HAL_Cma3000.h"
 #include "typedefs.h"
 #include "delay.h"
 #include "uart.h"
@@ -22,14 +23,24 @@
 
 #define _BV(x) (1<<x)
 
+// Private prototypes
 void sys_clock_init(void);
 void led_toggle(void);
+void update_lcd(void);
+    
+// Character buffer for LCD and UART debugging
+char s[UART_BUF_LEN];
 
+/**
+ * main() is run by the micro when execution begins. Call initialisation
+ * routines and set up functionality to trigger as appropriate.
+ */
 int main(void)
 {
-    uint16_t adc_read;
-    char s[UART_BUF_LEN];
+    // Buffer for reading data from the SD card
     char filebuf[15];
+
+    // Variables required for the operation of the FAT filesystem library
     FATFS FatFs;
     FRESULT fr;
     FIL fil;
@@ -46,6 +57,7 @@ int main(void)
     uart_init();
     sd_init();
     adc_init();
+    Cma3000_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
 
@@ -135,16 +147,35 @@ int main(void)
     // Close the file
     f_close(&fil);
 
-    while(1)
-    {
-        adc_read = adc_convert();
-        sprintf(s, "ADC: %u", adc_read);
-        Dogs102x6_clearRow(2);
-        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
-        _delay_ms(100);
-    }
+    // Everything is done with interrupts, so just do nothing here.
+    register_function_100ms(&update_lcd);
+    while(1);
 
     return 0;
+}
+
+/**
+ * This function is run repeatedly to run systems and update the
+ * LCD display.
+ */
+void update_lcd(void)
+{
+    uint16_t adc_read;
+
+    // Run an ADC conversion and display the result
+    adc_read = adc_convert();
+    sprintf(s, "ADC: %u", adc_read);
+    Dogs102x6_clearRow(2);
+    Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+
+    // Run an accelerometer conversion and display the result
+    Cma3000_readAccel();
+    sprintf(s, "X:%d, Y:%d, Z:%d", Cma3000_xAccel, 
+            Cma3000_yAccel, Cma3000_zAccel);
+    Dogs102x6_clearRow(3);
+    Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
+
+    _delay_ms(100);
 }
 
 /**
