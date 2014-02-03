@@ -103,21 +103,16 @@ int main(void)
     uart_debug(s);
 
     // Try and read from the file
-    fr = f_read(&fil, filebuf, fsz - 1, &bw);
-    sprintf(s, "af read: %d and %d", fil.fs->id, fil.id);
-    uart_debug(s);
-    filebuf[fsz-1] = '\0';
-
+    fr = f_read(&fil, filebuf, fsz, &bw);
     sprintf(s, "Read %d bytes, result %d", bw, fr);
     uart_debug(s);
-
     lcd_debug(filebuf);
 
     // Try and write something new, move to beginning of file
     fr = f_lseek(&fil, 0);
 
     // Write something else
-    fr = f_write(&fil, "test two", 12, &bw);
+    fr = f_write(&fil, "o hai world", 12, &bw);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 

@@ -3410,7 +3410,7 @@ FRESULT f_unlink (
 				if (dclst < 2) {
 					res = FR_INT_ERR;
 				} else {
-					mem_cpy(&sdj, &dj, sizeof (DIR));	/* Check if the sub-directory is empty or not */
+					mem_cpy(&sdj, &dj, sizeof (FFDIR));	/* Check if the sub-directory is empty or not */
 					sdj.sclust = dclst;
 					res = dir_sdi(&sdj, 2);		/* Exclude dot entries */
 					if (res == FR_OK) {
