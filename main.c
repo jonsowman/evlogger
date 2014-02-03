@@ -29,24 +29,12 @@ void update_lcd(void);
 // Character buffer for LCD and UART debugging
 char s[UART_BUF_LEN];
 
-// Variables required for the operation of the FAT filesystem library
-FATFS FatFs;
-FRESULT fr;
-FIL fil;
-UINT bw;
-DWORD fsz;
-FATFS *fs = &FatFs;
-DWORD fre_clust, fre_sect, tot_sect;
-
 /**
  * main() is run by the micro when execution begins. Call initialisation
  * routines and set up functionality to trigger as appropriate.
  */
 int main(void)
 {
-    // Buffer for reading data from the SD card
-    char filebuf[15];
-
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
@@ -59,8 +47,6 @@ int main(void)
     Cma3000_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
-
-    logger_init();
 
     // Wait for peripherals to boot
     _delay_ms(100);
@@ -77,49 +63,8 @@ int main(void)
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
-    // Mount the FAT filesystem
-    _delay_ms(100);
-    fr = f_mount(&FatFs, "", 1);
-    while( fr != FR_OK )
-    {
-        sprintf(s, "Mount fail: %d", fr);
-        lcd_debug(s);
-        _delay_ms(100);
-        fr = f_mount(&FatFs, "", 1);
-    }
-    f_getfree("", &fre_clust, &fs);
-
-    // Attempt to open a file
-    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    while( fr != FR_OK )
-    {
-        _delay_ms(500);
-        sprintf(s, "Open fail: %d", fr);
-        uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    }
-
-    // Determine the size of the file
-    fsz = f_size(&fil);
-    sprintf(s, "file is %d bytes", (int)fsz);
-    uart_debug(s);
-
-    // Try and read from the file
-    fr = f_read(&fil, filebuf, fsz, &bw);
-    sprintf(s, "Read %d bytes, result %d", bw, fr);
-    uart_debug(s);
-    lcd_debug(filebuf);
-
-    // Try and write something new, move to beginning of file
-    fr = f_lseek(&fil, 0);
-
-    // Write something else
-    fr = f_write(&fil, "o hai world", 12, &bw);
-    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
-    uart_debug(s);
-
-    // Close the file
-    f_close(&fil);
+    // Start the logger system
+    logger_init();
 
     // Everything is done with interrupts, so just do nothing here.
     register_function_100ms(&update_lcd);
@@ -135,16 +80,7 @@ int main(void)
 void update_lcd(void)
 {
     uint16_t adc_read;
-
-    // Print the free space (assuming 512 bytes/sector)
-    f_getfree("", &fre_clust, &fs);
-    tot_sect = (fs->n_fatent - 2) * fs->csize;
-    fre_sect = fre_clust * fs->csize;
-    sprintf(s, "%lu/%luMiB (%lu%%)", ((tot_sect - fre_sect)/2000), 
-            (tot_sect/2000), 100-((fre_sect*100)/tot_sect));
-    Dogs102x6_clearRow(1);
-    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
-
+    
     // Run an ADC conversion and display the result
     adc_read = adc_convert();
     sprintf(s, "ADC: %u", adc_read);

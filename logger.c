@@ -7,8 +7,16 @@
 
 #include "logger.h"
 #include "adc.h"
+#include "ff.h"
+#include "HAL_Dogs102x6.h"
+#include "uart.h"
+#include "delay.h"
 
 volatile uint8_t logger_running;
+char s[UART_BUF_LEN];
+
+// A FAT filesystem appears!
+FATFS FatFs;
 
 /**
  * Set up the hardware for logging functionality
@@ -52,10 +60,67 @@ void logger_init(void)
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
 
+    // Call the SD setup routine
+    sd_setup();
+
     logger_enable();
 
     // Enable interrupts (if they're not already)
     eint();
+}
+
+/**
+ * Set up the SD card for logging to it
+ */
+void sd_setup(void)
+{
+    // Variables for fatfs stuff
+    FRESULT fr;
+    FIL fil;
+    UINT bw;
+    DWORD fsz;
+    char filebuf[15];
+
+    fr = f_mount(&FatFs, "", 1);
+    while( fr != FR_OK )
+    {
+        sprintf(s, "Mount fail: %d", fr);
+        lcd_debug(s);
+        _delay_ms(100);
+        fr = f_mount(&FatFs, "", 1);
+    }
+
+    // Attempt to open a file
+    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    while( fr != FR_OK )
+    {
+        _delay_ms(500);
+        sprintf(s, "Open fail: %d", fr);
+        uart_debug(s);
+        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    }
+
+    // Determine the size of the file
+    fsz = f_size(&fil);
+    sprintf(s, "file is %d bytes", (int)fsz);
+    uart_debug(s);
+
+    // Try and read from the file
+    fr = f_read(&fil, filebuf, fsz, &bw);
+    sprintf(s, "Read %d bytes, result %d", bw, fr);
+    uart_debug(s);
+    lcd_debug(filebuf);
+
+    // Try and write something new, move to beginning of file
+    fr = f_lseek(&fil, 0);
+
+    // Write something else
+    fr = f_write(&fil, "o hai world", 12, &bw);
+    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
+    uart_debug(s);
+
+    // Close the file
+    f_close(&fil);
 }
 
 /**
