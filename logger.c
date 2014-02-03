@@ -60,13 +60,14 @@ void logger_init(void)
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
 
+    // Enable interrupts (if they're not already)
+    eint();
+
     // Call the SD setup routine
     sd_setup();
 
-    logger_enable();
-
-    // Enable interrupts (if they're not already)
-    eint();
+    // The logger should start in its OFF state
+    logger_disable();
 }
 
 /**
@@ -132,8 +133,9 @@ void logger_enable(void)
     // Clear bits 4 and 5
     TA1CTL &= ~MC_3;
     TA1CTL |= MC_1;
-    P1OUT |= _BV(0);
     logger_running = 1;
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: On", DOGS102x6_DRAW_NORMAL);
 }
 
 /**
@@ -143,8 +145,9 @@ void logger_disable(void)
 {
     // Clear bits 4 and 5
     TA1CTL &= ~MC_3;
-    P1OUT &= ~_BV(0);
     logger_running = 0;
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: Off", DOGS102x6_DRAW_NORMAL);
 }
 
 /**

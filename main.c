@@ -61,7 +61,7 @@ int main(void)
     Dogs102x6_setBacklight(6);
     Dogs102x6_setContrast(6);
     Dogs102x6_clearScreen();
-    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
     
     // Start the logger system
     logger_init();
