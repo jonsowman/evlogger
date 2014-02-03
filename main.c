@@ -34,7 +34,8 @@ int main(void)
     FRESULT fr;
     FIL fil;
     UINT bw;
-    DWORD fsz;
+    DWORD fsz, fre_clust, fre_sect, tot_sect;
+    FATFS *fs;
 
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
@@ -86,6 +87,21 @@ int main(void)
         _delay_ms(100);
         fr = f_mount(&FatFs, "", 1);
     }
+
+    // Find free space
+    fs = &FatFs;
+    fr = f_getfree("", &fre_clust, &fs);
+
+    // Get total sectors and free sectors
+    tot_sect = (fs->n_fatent - 2) * fs->csize;
+    fre_sect = fre_clust * fs->csize;
+
+    // Print the free space (assuming 512 bytes/sector)
+    sprintf(s, "%lukiB available, %lukib free", tot_sect/2, fre_sect/2);
+    uart_debug(s);
+    sprintf(s, "%lu/%luMiB (%lu%%)", ((tot_sect - fre_sect)/2000), 
+            (tot_sect/2000), 100-((fre_sect*100)/tot_sect));
+    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Attempt to open a file
     fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
