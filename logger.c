@@ -19,6 +19,7 @@ char s[UART_BUF_LEN];
 
 // A FAT filesystem appears!
 FATFS FatFs;
+FIL fil;
 
 /**
  * Set up the hardware for logging functionality
@@ -70,7 +71,10 @@ void logger_init(void)
     sd_setup();
 
     // The logger should start in its OFF state
-    logger_disable();
+    P1OUT &= ~_BV(0);
+    logger_running = 0;
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: Off", DOGS102x6_DRAW_NORMAL);
 }
 
 /**
@@ -80,7 +84,6 @@ void sd_setup(void)
 {
     // Variables for fatfs stuff
     FRESULT fr;
-    FIL fil;
     UINT bw;
     DWORD fsz;
     char filebuf[15];
@@ -89,10 +92,14 @@ void sd_setup(void)
     while( fr != FR_OK )
     {
         sprintf(s, "Mount fail: %d", fr);
-        lcd_debug(s);
+        uart_debug(s);
         _delay_ms(100);
         fr = f_mount(&FatFs, "", 1);
     }
+
+    uart_debug("Mnt success");
+
+    /*
 
     // Attempt to open a file
     fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
@@ -126,6 +133,8 @@ void sd_setup(void)
 
     // Close the file
     f_close(&fil);
+
+    */
 }
 
 /**
@@ -134,12 +143,28 @@ void sd_setup(void)
  */
 void logger_enable(void)
 {
-    // Clear bits 4 and 5
+    FRESULT fr;
+    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    while( fr != FR_OK )
+    {
+        _delay_ms(500);
+        sprintf(s, "Open fail: %d", fr);
+        uart_debug(s);
+        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    }
+
+    uart_debug("f_open ok");
+
+    // Stop any timer activity
     TA1CTL &= ~MC_3;
-    TA1CTL |= MC_1;
+
+    P1OUT |= _BV(0);
     logger_running = 1;
     Dogs102x6_clearRow(1);
     Dogs102x6_stringDraw(1, 0, "Logging: On", DOGS102x6_DRAW_NORMAL);
+
+    // Start the timer
+    TA1CTL |= MC_1;
 }
 
 /**
@@ -147,8 +172,19 @@ void logger_enable(void)
  */
 void logger_disable(void)
 {
+    FRESULT fr;
+    
     // Clear bits 4 and 5
     TA1CTL &= ~MC_3;
+    
+    // Close log file
+    fr = f_close(&fil);
+    if( fr == FR_OK )
+        uart_debug("f_close ok");
+    else
+        uart_debug("f_close fail");
+
+    P1OUT &= ~_BV(0);
     logger_running = 0;
     Dogs102x6_clearRow(1);
     Dogs102x6_stringDraw(1, 0, "Logging: Off", DOGS102x6_DRAW_NORMAL);
@@ -169,6 +205,7 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
  */
 interrupt(PORT1_VECTOR) PORT1_ISR(void)
 {
+    eint();
     if(P1IV & P1IV_P1IFG7)
     {
         if(logger_running)
@@ -184,6 +221,7 @@ interrupt(PORT1_VECTOR) PORT1_ISR(void)
  */
 interrupt(PORT2_VECTOR) PORT2_ISR(void)
 {
+    eint();
     if(P2IV & P2IV_P2IFG2)
         ; // Do something here
 }
