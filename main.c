@@ -42,7 +42,6 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
-    sd_init();
     adc_init();
     Cma3000_init();
     Dogs102x6_init();

@@ -66,6 +66,7 @@ void logger_init(void)
     eint();
 
     // Call the SD setup routine
+    sd_init();
     sd_setup();
 
     // The logger should start in its OFF state
