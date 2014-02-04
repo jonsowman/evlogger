@@ -5,6 +5,8 @@
  * University of Southampton
  */
 
+#include <string.h>
+
 #include "logger.h"
 #include "adc.h"
 #include "ff.h"
@@ -116,7 +118,8 @@ void sd_setup(void)
     fr = f_lseek(&fil, 0);
 
     // Write something else
-    fr = f_write(&fil, "o hai world", 12, &bw);
+    strcpy(s, "logger data");
+    fr = f_write(&fil, s, strlen(s), &bw);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 
