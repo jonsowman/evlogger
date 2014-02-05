@@ -34,6 +34,4 @@
 void uart_init(void);
 void uart_debug(char* string);
 
-void sd_init(void);
-
 #endif /* __UART_H__ */

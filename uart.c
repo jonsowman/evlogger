@@ -63,31 +63,3 @@ void uart_debug(char* string)
     _uart_tx("\r\n");
 }
 
-/**
- * Initialise UCB1 for the SD card SPI unit.
- */
-void sd_init(void)
-{
-    // Port initialisation
-    SPI_SEL |= SPI_CLK + SPI_SOMI + SPI_SIMO;
-    SPI_DIR |= SPI_CLK + SPI_SIMO;
-    SPI_REN |= SPI_SOMI;                                   // Pull-Ups on SD Card SOMI
-    SPI_OUT |= SPI_SOMI;                                   // Certain SD Card Brands need pull-ups
-
-    SD_CS_SEL &= ~SD_CS;
-    SD_CS_OUT |= SD_CS;
-    SD_CS_DIR |= SD_CS;
-
-    // Put UCSI state machine in reset
-    UCB1CTL1 |= UCSWRST;
-
-    // MSB first, be a master
-    // Clock idles high, change data on falling edge, sync mode
-    UCB1CTL0 |= UCMSB | UCMST | UCCKPL | UCMODE_0 | UCSYNC;
-
-    // Clock from SMCLK
-    UCB1CTL1 |= UCSSEL__SMCLK;
-
-    // Release the USCI reset logic
-    UCB1CTL1 &= ~UCSWRST;
-}
