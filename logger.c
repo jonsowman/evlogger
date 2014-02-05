@@ -66,6 +66,7 @@ void logger_init(void)
     TA1CCTL0 |= CCIE;
 
     // Update the LCD regularly
+    update_lcd();
     register_function_1s(&update_lcd);
 
     // Enable interrupts (if they're not already)

@@ -53,13 +53,11 @@ int main(void)
     uart_debug("Hello world");
 
     // Test the LCD
-    Dogs102x6_setBacklight(11);
-    Dogs102x6_setContrast(11);
+    Dogs102x6_setBacklight(1);
+    Dogs102x6_setContrast(6);
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
 
-    _delay_ms(100);
-    
     // Wait for periphs to boot and start logging
     logger_init();
      
