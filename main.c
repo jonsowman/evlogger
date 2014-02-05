@@ -68,7 +68,6 @@ int main(void)
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
     // Wait for periphs to boot and start logging
-    _delay_ms(100);
     logger_init();
 
     while(1)
