@@ -10,12 +10,12 @@
 #include "logger.h"
 #include "adc.h"
 #include "ff.h"
-#include "HAL_Dogs102x6.h"
 #include "uart.h"
 #include "delay.h"
 
 volatile uint8_t logger_running;
 char s[UART_BUF_LEN];
+char sdbuf[SD_BUF_LEN];
 
 // A FAT filesystem appears!
 FATFS FatFs;
@@ -57,8 +57,8 @@ void logger_init(void)
     // Set up 16 bit timer TIMER1 to interrupt at the log frequency
     TA1CCR0 = 19999;
 
-    // Clock from SMCLK with no divider, use "up" mode, use interrupts
-    TA1CTL |= TASSEL_2 | TACLR;
+    // Clock from SMCLK with /8 divider, use "up" mode, use interrupts
+    TA1CTL |= TASSEL_2 | TACLR | ID_3;
 
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
@@ -71,10 +71,7 @@ void logger_init(void)
     sd_setup();
 
     // The logger should start in its OFF state
-    P1OUT &= ~_BV(0);
     logger_running = 0;
-    Dogs102x6_clearRow(1);
-    Dogs102x6_stringDraw(1, 0, "Logging: Off", DOGS102x6_DRAW_NORMAL);
 }
 
 /**
@@ -84,10 +81,15 @@ void sd_setup(void)
 {
     // Variables for fatfs stuff
     FRESULT fr;
-    UINT bw;
     DWORD fsz;
-    char filebuf[15];
+    UINT bw;
+    uint16_t i;
 
+    // Fill the SD buffer with some rubbish
+    for(i = 0; i < 512; i++)
+        sdbuf[i] = 'U';
+    
+    // Mount the fs
     fr = f_mount(&FatFs, "", 1);
     while( fr != FR_OK )
     {
@@ -99,42 +101,36 @@ void sd_setup(void)
 
     uart_debug("Mnt success");
 
-    /*
-
     // Attempt to open a file
-    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    fr = f_open(&fil, "hello.txt", FA_WRITE | FA_READ);
     while( fr != FR_OK )
     {
         _delay_ms(500);
         sprintf(s, "Open fail: %d", fr);
         uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+        fr = f_open(&fil, "hello.txt", FA_WRITE | FA_READ);
     }
 
-    // Determine the size of the file
-    fsz = f_size(&fil);
-    sprintf(s, "file is %d bytes", (int)fsz);
+    sprintf(s, "file is %lu bytes", f_size(&fil));
     uart_debug(s);
 
-    // Try and read from the file
-    fr = f_read(&fil, filebuf, fsz, &bw);
-    sprintf(s, "Read %d bytes, result %d", bw, fr);
+    f_lseek(&fil, 16);
+    sprintf(s, "fptr is %lu, mv->0", f_tell(&fil));
     uart_debug(s);
-    lcd_debug(filebuf);
+    f_lseek(&fil, 0);
 
-    // Try and write something new, move to beginning of file
-    fr = f_lseek(&fil, 0);
-
-    // Write something else
-    strcpy(s, "logger data");
-    fr = f_write(&fil, s, strlen(s), &bw);
+    // Write buffer to the card
+    P1OUT |= _BV(0);
+    fr = f_write(&fil, sdbuf, 150, &bw);
+    f_sync(&fil);
+    P1OUT &= ~_BV(0);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 
     // Close the file
     f_close(&fil);
 
-    */
+    uart_debug("Done");
 }
 
 /**
@@ -143,25 +139,10 @@ void sd_setup(void)
  */
 void logger_enable(void)
 {
-    FRESULT fr;
-    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    while( fr != FR_OK )
-    {
-        _delay_ms(500);
-        sprintf(s, "Open fail: %d", fr);
-        uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    }
-
-    uart_debug("f_open ok");
-
     // Stop any timer activity
     TA1CTL &= ~MC_3;
 
-    P1OUT |= _BV(0);
     logger_running = 1;
-    Dogs102x6_clearRow(1);
-    Dogs102x6_stringDraw(1, 0, "Logging: On", DOGS102x6_DRAW_NORMAL);
 
     // Start the timer
     TA1CTL |= MC_1;
@@ -172,22 +153,9 @@ void logger_enable(void)
  */
 void logger_disable(void)
 {
-    FRESULT fr;
-    
     // Clear bits 4 and 5
     TA1CTL &= ~MC_3;
-    
-    // Close log file
-    fr = f_close(&fil);
-    if( fr == FR_OK )
-        uart_debug("f_close ok");
-    else
-        uart_debug("f_close fail");
-
-    P1OUT &= ~_BV(0);
     logger_running = 0;
-    Dogs102x6_clearRow(1);
-    Dogs102x6_stringDraw(1, 0, "Logging: Off", DOGS102x6_DRAW_NORMAL);
 }
 
 /**
@@ -197,7 +165,7 @@ void logger_disable(void)
  */
 interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
-    P8OUT ^= _BV(1);
+    ;
 }
 
 /**
@@ -205,7 +173,6 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
  */
 interrupt(PORT1_VECTOR) PORT1_ISR(void)
 {
-    eint();
     if(P1IV & P1IV_P1IFG7)
     {
         if(logger_running)
@@ -221,7 +188,8 @@ interrupt(PORT1_VECTOR) PORT1_ISR(void)
  */
 interrupt(PORT2_VECTOR) PORT2_ISR(void)
 {
-    eint();
     if(P2IV & P2IV_P2IFG2)
-        ; // Do something here
+    {
+        P8OUT ^= _BV(1);
+    }
 }

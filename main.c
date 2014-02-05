@@ -11,7 +11,6 @@
 #include <stdio.h>
 
 #include "logger.h"
-#include "HAL_Dogs102x6.h"
 #include "HAL_Cma3000.h"
 #include "typedefs.h"
 #include "delay.h"
@@ -44,8 +43,8 @@ int main(void)
     uart_init();
     adc_init();
     Cma3000_init();
-    Dogs102x6_init();
-    Dogs102x6_backlightInit();
+    //Dogs102x6_init();
+    //Dogs102x6_backlightInit();
 
     // Wait for peripherals to boot
     _delay_ms(100);
@@ -57,16 +56,17 @@ int main(void)
     register_function_10ms(&disk_timerproc);
 
     // Test the LCD
+    /*
     Dogs102x6_setBacklight(6);
     Dogs102x6_setContrast(6);
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
+    */
     
     // Start the logger system
     logger_init();
 
     // Everything is done with interrupts, so just do nothing here.
-    register_function_100ms(&update_lcd);
     while(1);
 
     return 0;
@@ -83,15 +83,15 @@ void update_lcd(void)
     // Run an ADC conversion and display the result
     adc_read = adc_convert();
     sprintf(s, "ADC: %u", adc_read);
-    Dogs102x6_clearRow(2);
-    Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+    //Dogs102x6_clearRow(2);
+    //Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Run an accelerometer conversion and display the result
     Cma3000_readAccel();
     sprintf(s, "X:%d, Y:%d, Z:%d", Cma3000_xAccel, 
             Cma3000_yAccel, Cma3000_zAccel);
-    Dogs102x6_clearRow(3);
-    Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
+    //Dogs102x6_clearRow(3);
+    //Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
 }
 
 /**

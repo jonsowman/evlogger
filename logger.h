@@ -28,6 +28,10 @@
 #define S2_PORT_IFG P2IFG
 #define S2_PIN _BV(2)
 
+// Ring buffer length for the SD card, should be a multiple of 2 of the
+// sector size (512 bytes)
+#define SD_BUF_LEN 1024
+
 void logger_init(void);
 void sd_setup(void);
 void logger_enable(void);
