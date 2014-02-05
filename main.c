@@ -21,16 +21,10 @@
 #include "HAL_SDCard.h"
 #include "ff.h"
 
-#define _BV(x) (1<<x)
-
 void sys_clock_init(void);
-void led_toggle(void);
 
 int main(void)
 {
-    uint16_t adc_read;
-    char s[UART_BUF_LEN];
-
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
@@ -58,26 +52,18 @@ int main(void)
     // Test that minicom/term is behaving
     uart_debug("Hello world");
 
-    // Flash the LED at 1 second
-    register_function_1s(&led_toggle);
-
     // Test the LCD
-    Dogs102x6_setBacklight(6);
-    Dogs102x6_setContrast(6);
+    Dogs102x6_setBacklight(11);
+    Dogs102x6_setContrast(11);
     Dogs102x6_clearScreen();
-    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
+
+    _delay_ms(100);
     
     // Wait for periphs to boot and start logging
     logger_init();
-
-    while(1)
-    {
-        adc_read = adc_convert();
-        sprintf(s, "ADC: %u", adc_read);
-        Dogs102x6_clearRow(2);
-        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
-        _delay_ms(100);
-    }
+     
+    while(1);
 
     return 0;
 }
@@ -125,13 +111,4 @@ void sys_clock_init( void )
     // So set MCLK and SMCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }
-
-/**
- * Toggle the LED on P1.0, requires already set as output
- */
-void led_toggle(void)
-{
-    P1OUT ^= _BV(0);
-}
-
 

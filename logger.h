@@ -34,6 +34,7 @@
 
 void logger_init(void);
 void sd_setup(void);
+void update_lcd(void);
 void logger_enable(void);
 void logger_disable(void);
 

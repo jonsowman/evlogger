@@ -7,11 +7,13 @@
 
 #include <string.h>
 
+#include "HAL_Dogs102x6.h"
 #include "logger.h"
 #include "adc.h"
 #include "ff.h"
 #include "uart.h"
 #include "delay.h"
+#include "clock.h"
 
 volatile uint8_t logger_running;
 char s[UART_BUF_LEN];
@@ -63,6 +65,9 @@ void logger_init(void)
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
 
+    // Update the LCD regularly
+    register_function_1s(&update_lcd);
+
     // Enable interrupts (if they're not already)
     eint();
 
@@ -71,6 +76,25 @@ void logger_init(void)
 
     // The logger should start in its OFF state
     logger_running = 0;
+}
+
+/**
+ * Update the LCD with the current status of the logger service. This should
+ * not be called too regularly on the MSP-EXP430 board due to the SD card and
+ * LCD panel being on the same SPI bus and will cause slowdown of SD
+ * transactions.
+ */
+void update_lcd(void)
+{
+    uint16_t adc_read;
+
+    P1OUT ^= _BV(0);
+
+    adc_read = adc_convert();
+    sprintf(s, "ADC: %u", adc_read);
+    Dogs102x6_clearRow(2);
+    Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+    _delay_ms(100);
 }
 
 /**
