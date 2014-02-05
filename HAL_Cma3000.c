@@ -44,8 +44,7 @@
 #include "HAL_Cma3000.h"
 
 // CONSTANTS
-#define MCLK                    20000000
-#define TICKSPERUS              (MCLK / 1000000)
+#define TICKSPERUS              (F_CPU/ 1000000)
 
 // PORT DEFINITIONS
 #define ACCEL_INT_IN            P2IN

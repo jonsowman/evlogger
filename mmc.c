@@ -19,10 +19,9 @@
 /*-------------------------------------------------------------------------*/
 
 // CPU Frequency.
-#define MCLK_FREQ   25000000
 #define	INIT_PORT()     SDCard_init()       /* Initialize MMC control port */
 #define FAST_MODE()     SDCard_fastMode()   /* Maximize SD Card transfer speed */
-#define DLY_US(n)       __delay_cycles(n * (MCLK_FREQ/1000000))  // Delay n microseconds           // KLQ
+#define DLY_US(n)       __delay_cycles(n * (F_CPU/1000000))  // Delay n microseconds           // KLQ
 
 #define	CS_H()          SDCard_setCSHigh()  /* Set MMC CS "high" */
 #define CS_L()          SDCard_setCSLow()   /* Set MMC CS "low" */
