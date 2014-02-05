@@ -87,6 +87,23 @@ void logger_init(void)
 void update_lcd(void)
 {
     uint16_t adc_read;
+    FRESULT fr;
+    FATFS *fs;
+    DWORD fre_clust, fre_sect, tot_sect;
+
+    /* Get volume information and free clusters of drive 1 */
+    fs = &FatFs;
+    fr = f_getfree("", &fre_clust, &fs);
+
+    /* Get total sectors and free sectors */
+    tot_sect = (fs->n_fatent - 2) * fs->csize;
+    fre_sect = fre_clust * fs->csize;
+
+    /* Print the free space (assuming 512 bytes/sector) */
+    sprintf(s, "%lu/%luMB (%lu%%)", (tot_sect-fre_sect)/2000, 
+            tot_sect/2000, (100 - (100*fre_sect)/tot_sect));
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
 
     P1OUT ^= _BV(0);
 
