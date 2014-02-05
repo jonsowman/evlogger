@@ -67,7 +67,6 @@ void logger_init(void)
     eint();
 
     // Call the SD setup routine
-    sd_init();
     sd_setup();
 
     // The logger should start in its OFF state
@@ -78,57 +77,59 @@ void logger_init(void)
  * Set up the SD card for logging to it
  */
 void sd_setup(void)
-{
-    // Variables for fatfs stuff
+{   
     FRESULT fr;
-    DWORD fsz;
     UINT bw;
-    uint16_t i;
+    DWORD fsz;
+    char filebuf[15];
+    char stw[20] = "sometextsometext";
 
-    // Fill the SD buffer with some rubbish
-    for(i = 0; i < 512; i++)
-        sdbuf[i] = 'U';
-    
-    // Mount the fs
-    fr = f_mount(&FatFs, "", 1);
+    fr = f_mount(0, &FatFs);
     while( fr != FR_OK )
     {
         sprintf(s, "Mount fail: %d", fr);
         uart_debug(s);
         _delay_ms(100);
-        fr = f_mount(&FatFs, "", 1);
+        fr = f_mount(0, &FatFs);
     }
 
-    uart_debug("Mnt success");
-
     // Attempt to open a file
-    fr = f_open(&fil, "hello.txt", FA_WRITE | FA_READ);
+    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
     while( fr != FR_OK )
     {
         _delay_ms(500);
         sprintf(s, "Open fail: %d", fr);
         uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_WRITE | FA_READ);
+        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
     }
 
-    sprintf(s, "file is %lu bytes", f_size(&fil));
+    // Determine the size of the file
+    fsz = f_size(&fil);
+    sprintf(s, "file is %d bytes", (int)fsz);
     uart_debug(s);
 
-    f_lseek(&fil, 16);
-    sprintf(s, "fptr is %lu, mv->0", f_tell(&fil));
+    // Try and read from the file
+    fr = f_read(&fil, filebuf, 12, &bw);
+    sprintf(s, "Read %d bytes, result %d", bw, fr);
     uart_debug(s);
-    f_lseek(&fil, 0);
 
-    // Write buffer to the card
-    P1OUT |= _BV(0);
-    fr = f_write(&fil, sdbuf, 150, &bw);
-    f_sync(&fil);
-    P1OUT &= ~_BV(0);
+    // Try and write something new, move to beginning of file
+    fr = f_lseek(&fil, 16);
+    fr = f_lseek(&fil, 0);
+
+    // Write something else
+    fr = f_write(&fil, stw, 2, &bw);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 
+    fr = f_sync(&fil);
+    sprintf(s, "synced, result %d", fr);
+    uart_debug(s);
+
     // Close the file
-    f_close(&fil);
+    fr = f_close(&fil);
+    sprintf(s, "closed, result %d", fr);
+    uart_debug(s);
 
     uart_debug("Done");
 }

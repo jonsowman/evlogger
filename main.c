@@ -16,6 +16,7 @@
 #include "uart.h"
 #include "adc.h"
 #include "clock.h"
+#include "logger.h"
 
 #include "HAL_SDCard.h"
 #include "ff.h"
@@ -29,13 +30,6 @@ int main(void)
 {
     uint16_t adc_read;
     char s[UART_BUF_LEN];
-    char filebuf[15];
-    char stw[20] = "sometextsometext";
-    FATFS FatFs;
-    FRESULT fr;
-    FIL fil;
-    UINT bw;
-    DWORD fsz;
 
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
@@ -73,54 +67,9 @@ int main(void)
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
-    // Mount the FAT filesystem
+    // Wait for periphs to boot and start logging
     _delay_ms(100);
-    fr = f_mount(0, &FatFs);
-    while( fr != FR_OK )
-    {
-        sprintf(s, "Mount fail: %d", fr);
-        uart_debug(s);
-        _delay_ms(100);
-        fr = f_mount(0, &FatFs);
-    }
-
-    // Attempt to open a file
-    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    while( fr != FR_OK )
-    {
-        _delay_ms(500);
-        sprintf(s, "Open fail: %d", fr);
-        uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
-    }
-
-    // Determine the size of the file
-    fsz = f_size(&fil);
-    sprintf(s, "file is %d bytes", (int)fsz);
-    uart_debug(s);
-
-    // Try and read from the file
-    fr = f_read(&fil, filebuf, 12, &bw);
-    sprintf(s, "Read %d bytes, result %d", bw, fr);
-    uart_debug(s);
-
-    // Try and write something new, move to beginning of file
-    fr = f_lseek(&fil, 16);
-    fr = f_lseek(&fil, 0);
-
-    // Write something else
-    fr = f_write(&fil, stw, 2, &bw);
-    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
-    uart_debug(s);
-
-    fr = f_sync(&fil);
-    sprintf(s, "synced, result %d", fr);
-    uart_debug(s);
-
-    // Close the file
-    fr = f_close(&fil);
-    sprintf(s, "closed, result %d", fr);
-    uart_debug(s);
+    logger_init();
 
     while(1)
     {
