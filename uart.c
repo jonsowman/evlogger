@@ -68,18 +68,22 @@ void uart_debug(char* string)
  */
 void sd_init(void)
 {
+    // Port initialisation
+    SPI_SEL |= SPI_CLK + SPI_SOMI + SPI_SIMO;
+    SPI_DIR |= SPI_CLK + SPI_SIMO;
+    SPI_REN |= SPI_SOMI;                                   // Pull-Ups on SD Card SOMI
+    SPI_OUT |= SPI_SOMI;                                   // Certain SD Card Brands need pull-ups
+
+    SD_CS_SEL &= ~SD_CS;
+    SD_CS_OUT |= SD_CS;
+    SD_CS_DIR |= SD_CS;
+
     // Put UCSI state machine in reset
     UCB1CTL1 |= UCSWRST;
 
-    // Set SD CS line to output, and SPI lines to alt. digital fn
-    // CS in on P3.7
-    // SIMO, SOMI, SCLK on P4.1, P4.2, P4.3
-    P3DIR |= _BV(7);
-    P4SEL |= _BV(1) | _BV(2) | _BV(3);
-
     // MSB first, be a master
-    // Clock idles high, change data on falling edge
-    UCB1CTL0 |= UCMSB | UCMST | UCCKPL;
+    // Clock idles high, change data on falling edge, sync mode
+    UCB1CTL0 |= UCMSB | UCMST | UCCKPL | UCMODE_0 | UCSYNC;
 
     // Clock from SMCLK
     UCB1CTL1 |= UCSSEL__SMCLK;

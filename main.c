@@ -17,8 +17,8 @@
 #include "adc.h"
 #include "clock.h"
 
+#include "HAL_SDCard.h"
 #include "ff.h"
-#include "diskio.h"
 
 #define _BV(x) (1<<x)
 
@@ -30,6 +30,7 @@ int main(void)
     uint16_t adc_read;
     char s[UART_BUF_LEN];
     char filebuf[15];
+    char stw[20] = "sometextsometext";
     FATFS FatFs;
     FRESULT fr;
     FIL fil;
@@ -43,7 +44,8 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
-    sd_init();
+    //sd_init();
+    SDCard_init();
     adc_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
@@ -67,9 +69,6 @@ int main(void)
     // Flash the LED at 1 second
     register_function_1s(&led_toggle);
 
-    // Call the periodic fatfs timer functionality
-    register_function_10ms(&disk_timerproc);
-
     // Test the LCD
     Dogs102x6_setBacklight(6);
     Dogs102x6_setContrast(6);
@@ -78,13 +77,13 @@ int main(void)
     
     // Mount the FAT filesystem
     _delay_ms(100);
-    fr = f_mount(&FatFs, "", 1);
+    fr = f_mount(0, &FatFs);
     while( fr != FR_OK )
     {
         sprintf(s, "Mount fail: %d", fr);
         uart_debug(s);
         _delay_ms(100);
-        fr = f_mount(&FatFs, "", 1);
+        fr = f_mount(0, &FatFs);
     }
 
     // Attempt to open a file
@@ -103,21 +102,27 @@ int main(void)
     uart_debug(s);
 
     // Try and read from the file
-    fr = f_read(&fil, filebuf, fsz, &bw);
+    fr = f_read(&fil, filebuf, 12, &bw);
     sprintf(s, "Read %d bytes, result %d", bw, fr);
     uart_debug(s);
-    lcd_debug(filebuf);
 
     // Try and write something new, move to beginning of file
+    fr = f_lseek(&fil, 16);
     fr = f_lseek(&fil, 0);
 
     // Write something else
-    fr = f_write(&fil, "o hai world", 12, &bw);
+    fr = f_write(&fil, stw, 2, &bw);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 
+    fr = f_sync(&fil);
+    sprintf(s, "synced, result %d", fr);
+    uart_debug(s);
+
     // Close the file
-    f_close(&fil);
+    fr = f_close(&fil);
+    sprintf(s, "closed, result %d", fr);
+    uart_debug(s);
 
     while(1)
     {
