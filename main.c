@@ -10,30 +10,33 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "logger.h"
-#include "HAL_Cma3000.h"
+#include "HAL_Dogs102x6.h"
 #include "typedefs.h"
 #include "delay.h"
 #include "uart.h"
 #include "adc.h"
 #include "clock.h"
 
+#include "HAL_SDCard.h"
 #include "ff.h"
-#include "diskio.h"
 
-// Private prototypes
+#define _BV(x) (1<<x)
+
 void sys_clock_init(void);
-void update_lcd(void);
-    
-// Character buffer for LCD and UART debugging
-char s[UART_BUF_LEN];
+void led_toggle(void);
 
-/**
- * main() is run by the micro when execution begins. Call initialisation
- * routines and set up functionality to trigger as appropriate.
- */
 int main(void)
 {
+    uint16_t adc_read;
+    char s[UART_BUF_LEN];
+    char filebuf[15];
+    char stw[20] = "sometextsometext";
+    FATFS FatFs;
+    FRESULT fr;
+    FIL fil;
+    UINT bw;
+    DWORD fsz;
+
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
@@ -41,10 +44,21 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
+    //sd_init();
+    SDCard_init();
     adc_init();
-    Cma3000_init();
-    //Dogs102x6_init();
-    //Dogs102x6_backlightInit();
+    Dogs102x6_init();
+    Dogs102x6_backlightInit();
+
+    // Enable LED on P1.0 and turn it off
+    P1DIR |= _BV(0);
+    P1OUT &= ~_BV(0);
+
+    // Select the potentiometer and enable the ADC on that channel
+    P8DIR |= _BV(0);
+    P8OUT |= _BV(0);
+    P6SEL |= _BV(5);
+    adc_select(0x05);
 
     // Wait for peripherals to boot
     _delay_ms(100);
@@ -52,46 +66,74 @@ int main(void)
     // Test that minicom/term is behaving
     uart_debug("Hello world");
 
-    // Call the periodic fatfs timer functionality
-    register_function_10ms(&disk_timerproc);
+    // Flash the LED at 1 second
+    register_function_1s(&led_toggle);
 
     // Test the LCD
-    /*
     Dogs102x6_setBacklight(6);
     Dogs102x6_setContrast(6);
     Dogs102x6_clearScreen();
-    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
-    */
+    Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_NORMAL);
     
-    // Start the logger system
-    logger_init();
+    // Mount the FAT filesystem
+    _delay_ms(100);
+    fr = f_mount(0, &FatFs);
+    while( fr != FR_OK )
+    {
+        sprintf(s, "Mount fail: %d", fr);
+        uart_debug(s);
+        _delay_ms(100);
+        fr = f_mount(0, &FatFs);
+    }
 
-    // Everything is done with interrupts, so just do nothing here.
-    while(1);
+    // Attempt to open a file
+    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    while( fr != FR_OK )
+    {
+        _delay_ms(500);
+        sprintf(s, "Open fail: %d", fr);
+        uart_debug(s);
+        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    }
+
+    // Determine the size of the file
+    fsz = f_size(&fil);
+    sprintf(s, "file is %d bytes", (int)fsz);
+    uart_debug(s);
+
+    // Try and read from the file
+    fr = f_read(&fil, filebuf, 12, &bw);
+    sprintf(s, "Read %d bytes, result %d", bw, fr);
+    uart_debug(s);
+
+    // Try and write something new, move to beginning of file
+    fr = f_lseek(&fil, 16);
+    fr = f_lseek(&fil, 0);
+
+    // Write something else
+    fr = f_write(&fil, stw, 2, &bw);
+    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
+    uart_debug(s);
+
+    fr = f_sync(&fil);
+    sprintf(s, "synced, result %d", fr);
+    uart_debug(s);
+
+    // Close the file
+    fr = f_close(&fil);
+    sprintf(s, "closed, result %d", fr);
+    uart_debug(s);
+
+    while(1)
+    {
+        adc_read = adc_convert();
+        sprintf(s, "ADC: %u", adc_read);
+        Dogs102x6_clearRow(2);
+        Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+        _delay_ms(100);
+    }
 
     return 0;
-}
-
-/**
- * This function is run repeatedly to run systems and update the
- * LCD display.
- */
-void update_lcd(void)
-{
-    uint16_t adc_read;
-    
-    // Run an ADC conversion and display the result
-    adc_read = adc_convert();
-    sprintf(s, "ADC: %u", adc_read);
-    //Dogs102x6_clearRow(2);
-    //Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
-
-    // Run an accelerometer conversion and display the result
-    Cma3000_readAccel();
-    sprintf(s, "X:%d, Y:%d, Z:%d", Cma3000_xAccel, 
-            Cma3000_yAccel, Cma3000_zAccel);
-    //Dogs102x6_clearRow(3);
-    //Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
 }
 
 /**
@@ -137,4 +179,13 @@ void sys_clock_init( void )
     // So set MCLK and SMCLK to use this
     UCSCTL4 = SELS_3 | SELM_3;
 }
+
+/**
+ * Toggle the LED on P1.0, requires already set as output
+ */
+void led_toggle(void)
+{
+    P1OUT ^= _BV(0);
+}
+
 
