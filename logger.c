@@ -17,14 +17,16 @@
 #include "typedefs.h"
 #include "mmc.h"
 
-volatile uint8_t logger_running;
+volatile uint8_t logger_running, file_open;
 char s[UART_BUF_LEN];
 char ringbuf[SD_RINGBUF_LEN];
+char writebuf[512];
 RingBuffer sdbuf;
 
 // A FAT filesystem appears!
 FATFS FatFs;
 FIL fil;
+DWORD fsz;
 
 /**
  * Set up the hardware for logging functionality
@@ -62,8 +64,8 @@ void logger_init(void)
     // Set up 16 bit timer TIMER1 to interrupt at the log frequency
     TA1CCR0 = 19999;
 
-    // Clock from SMCLK with /8 divider, use "up" mode, use interrupts
-    TA1CTL |= TASSEL_2 | TACLR | ID_3;
+    // Clock from SMCLK with /1 divider, use "up" mode, use interrupts
+    TA1CTL |= TASSEL_2 | TACLR;
 
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
@@ -71,17 +73,15 @@ void logger_init(void)
     // Enable interrupts (if they're not already)
     eint();
 
-    // Call the SD setup routine
-    sd_setup(&sdbuf);
-
-    // Update the LCD regularly
-    register_function_1s(&update_lcd);
-
     // The logger should start in its OFF state
     Dogs102x6_clearRow(1);
     Dogs102x6_stringDraw(1, 0, "Logging: OFF", DOGS102x6_DRAW_NORMAL);
     logger_running = 0;
+
+    // Call the SD setup routine (this doesn't terminate)
+    sd_setup(&sdbuf);
 }
+
 
 /**
  * Update the LCD with the current status of the logger service. This should
@@ -107,6 +107,11 @@ void update_lcd(void)
     /* Print the free space (assuming 512 bytes/sector) */
     sprintf(s, "%lu/%luMB (%lu%%)", (tot_sect-fre_sect)/2000, 
             tot_sect/2000, (100 - (100*fre_sect)/tot_sect));
+    Dogs102x6_clearRow(3);
+    Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
+
+    // Show bytes in buffer
+    sprintf(s, "Buf: %u bytes", ringbuf_getused(&sdbuf));
     Dogs102x6_clearRow(2);
     Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
 
@@ -126,20 +131,12 @@ void sd_setup(RingBuffer* sdbuf)
 {   
     FRESULT fr;
     UINT bw;
-    DWORD fsz;
 
     // Initialise the ring buffer for SD transfers
     sdbuf->buffer = ringbuf;
     sdbuf->head = sdbuf->tail = sdbuf->overflow = 0;
     sdbuf->len = SD_RINGBUF_LEN;
     sdbuf->mask = sdbuf->len - 1;
-
-    // Write something to the ringbuf
-    ringbuf_write(sdbuf, "hello world", 11);
-    sprintf(s, "%u bytes used, %u free", ringbuf_getused(sdbuf), ringbuf_getfree(sdbuf));
-    uart_debug(s);
-    ringbuf_read(sdbuf, s, 11);
-    uart_debug(s);
 
     // Wait for an SD card to be inserted
     while(!detectCard())
@@ -160,16 +157,22 @@ void sd_setup(RingBuffer* sdbuf)
 
     // Now we can begin updating the LCD
     update_lcd();
+    register_function_100ms(&update_lcd);
+
+    /*
 
     // Attempt to open a file
-    fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+    fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
     while( fr != FR_OK )
     {
         _delay_ms(500);
         sprintf(s, "Open fail: %d", fr);
         uart_debug(s);
-        fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
+        fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
     }
+
+    // Note that the file is open
+    file_open = 1;
 
     // Determine the size of the file
     fsz = f_size(&fil);
@@ -181,21 +184,51 @@ void sd_setup(RingBuffer* sdbuf)
     sprintf(s, "Read %d bytes, result %d", bw, fr);
     uart_debug(s);
 
-    // Try and write something new, move to beginning of file
-    fr = f_lseek(&fil, 0);
+    */
 
-    // Write something else
-    P1OUT |= _BV(0);
-    fr = f_write(&fil, ringbuf, 512, &bw);
-    f_sync(&fil);
-    P1OUT &= ~_BV(0);
-    sprintf(s, "Wrote %d bytes, result %d", bw, fr);
-    uart_debug(s);
+    while(1)
+    {
+        _delay_ms(100);
+        
+        // If we just started logging then open the file
+        if(logger_running && !file_open)
+        {
+            fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
+            while( fr != FR_OK )
+            {
+                _delay_ms(500);
+                sprintf(s, "Open fail: %d", fr);
+                uart_debug(s);
+                fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
+            }
+    
+            fsz = f_size(&fil);
+            sprintf(s, "file is %d bytes", (int)fsz);
+            uart_debug(s);
 
-    // Close the file
-    fr = f_close(&fil);
+            // Empty the file by moving r/w pointer then truncating
+            f_lseek(&fil, 0);
+            f_truncate(&fil);
 
-    uart_debug("Done");
+            file_open = 1;
+        }
+
+        // If we just stopped logging then close the file
+        if(!logger_running && file_open)
+        {
+            f_close(&fil);
+            file_open = 0;
+            uart_debug("file closed");
+        }
+
+        if(ringbuf_getused(sdbuf) > 512)
+        {
+            ringbuf_read(sdbuf, writebuf, 512);
+            P1OUT |= _BV(0);
+            fr = f_write(&fil, writebuf, 512, &bw);
+            P1OUT &= ~_BV(0);
+        }
+    }
 }
 
 /**
@@ -331,7 +364,8 @@ void logger_disable(void)
  */
 interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
-    ;
+    // Put some things in the buffer
+    ringbuf_write(&sdbuf, "test\r\n", 6);
 }
 
 /**
