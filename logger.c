@@ -76,6 +76,8 @@ void logger_init(void)
     register_function_1s(&update_lcd);
 
     // The logger should start in its OFF state
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: OFF", DOGS102x6_DRAW_NORMAL);
     logger_running = 0;
 }
 
@@ -103,15 +105,15 @@ void update_lcd(void)
     /* Print the free space (assuming 512 bytes/sector) */
     sprintf(s, "%lu/%luMB (%lu%%)", (tot_sect-fre_sect)/2000, 
             tot_sect/2000, (100 - (100*fre_sect)/tot_sect));
-    Dogs102x6_clearRow(1);
-    Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_clearRow(2);
+    Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
 
     P8OUT ^= _BV(1);
 
     adc_read = adc_convert();
     sprintf(s, "ADC: %u", adc_read);
-    Dogs102x6_clearRow(2);
-    Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_clearRow(5);
+    Dogs102x6_stringDraw(5, 0, s, DOGS102x6_DRAW_NORMAL);
     _delay_ms(100);
 }
 
@@ -196,6 +198,8 @@ void logger_enable(void)
     // Stop any timer activity
     TA1CTL &= ~MC_3;
 
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: ON", DOGS102x6_DRAW_NORMAL);
     logger_running = 1;
 
     // Start the timer
@@ -210,6 +214,8 @@ void logger_disable(void)
     // Clear bits 4 and 5
     TA1CTL &= ~MC_3;
     logger_running = 0;
+    Dogs102x6_clearRow(1);
+    Dogs102x6_stringDraw(1, 0, "Logging: OFF", DOGS102x6_DRAW_NORMAL);
 }
 
 /**
