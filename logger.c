@@ -65,15 +65,14 @@ void logger_init(void)
     // Enable interrupts on CCR0
     TA1CCTL0 |= CCIE;
 
-    // Update the LCD regularly
-    update_lcd();
-    register_function_1s(&update_lcd);
-
     // Enable interrupts (if they're not already)
     eint();
 
     // Call the SD setup routine
     sd_setup();
+
+    // Update the LCD regularly
+    register_function_1s(&update_lcd);
 
     // The logger should start in its OFF state
     logger_running = 0;
@@ -134,6 +133,9 @@ void sd_setup(void)
         _delay_ms(100);
         fr = f_mount(0, &FatFs);
     }
+
+    // Now we can begin updating the LCD
+    update_lcd();
 
     // Attempt to open a file
     fr = f_open(&fil, "hello.txt", FA_READ | FA_WRITE);
