@@ -14,6 +14,7 @@
 #include "uart.h"
 #include "delay.h"
 #include "clock.h"
+#include "typedefs.h"
 
 volatile uint8_t logger_running;
 char s[UART_BUF_LEN];
@@ -123,7 +124,10 @@ void sd_setup(void)
     UINT bw;
     DWORD fsz;
     char filebuf[15];
-    char stw[20] = "sometextsometext";
+    uint16_t i;
+
+    for(i=0; i<512; i++)
+        sdbuf[i] = 'U';
 
     fr = f_mount(0, &FatFs);
     while( fr != FR_OK )
@@ -158,22 +162,18 @@ void sd_setup(void)
     uart_debug(s);
 
     // Try and write something new, move to beginning of file
-    fr = f_lseek(&fil, 16);
     fr = f_lseek(&fil, 0);
 
     // Write something else
-    fr = f_write(&fil, stw, 2, &bw);
+    P8OUT |= _BV(1);
+    fr = f_write(&fil, sdbuf, 512, &bw);
+    f_sync(&fil);
+    P8OUT &= ~_BV(1);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
-    uart_debug(s);
-
-    fr = f_sync(&fil);
-    sprintf(s, "synced, result %d", fr);
     uart_debug(s);
 
     // Close the file
     fr = f_close(&fil);
-    sprintf(s, "closed, result %d", fr);
-    uart_debug(s);
 
     uart_debug("Done");
 }
@@ -235,6 +235,6 @@ interrupt(PORT2_VECTOR) PORT2_ISR(void)
 {
     if(P2IV & P2IV_P2IFG2)
     {
-        P8OUT ^= _BV(1);
+        ;
     }
 }
