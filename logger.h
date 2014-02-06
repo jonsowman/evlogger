@@ -43,12 +43,10 @@ typedef struct RingBuffer
 } RingBuffer;
 
 void logger_init(void);
-void sd_setup(RingBuffer* sdbuf);
+void sd_setup(RingBuffer *sdbuf);
 uint8_t ringbuf_write(RingBuffer* buf, char* data, uint16_t n);
 uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n);
-uint16_t ringbuf_getused(RingBuffer *buf);
-uint16_t ringbuf_getfree(RingBuffer *buf);
-void update_lcd(void);
+void update_lcd(RingBuffer *buf);
 void logger_enable(void);
 void logger_disable(void);
 

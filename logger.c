@@ -94,7 +94,7 @@ void logger_init(void)
  * LCD panel being on the same SPI bus and will cause slowdown of SD
  * transactions.
  */
-void update_lcd(void)
+void update_lcd(RingBuffer *buf)
 {
     FATFS *fs;
     fs = &FatFs;
@@ -114,7 +114,7 @@ void update_lcd(void)
     Dogs102x6_stringDraw(4, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Show bytes in buffer
-    sprintf(s, "Buffer: %u%%", (100*ringbuf_getused(&sdbuf))/sdbuf.len);
+    sprintf(s, "Buffer: %u%%", (100*rb_getused_m(buf))/buf->len);
     Dogs102x6_clearRow(2);
     Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
 
@@ -125,7 +125,7 @@ void update_lcd(void)
     Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Monitor buffer overflow
-    if(sdbuf.overflow)
+    if(buf->overflow)
         lcd_debug("Buffer overflow");
 }
 
@@ -161,7 +161,7 @@ void sd_setup(RingBuffer* sdbuf)
     }
 
     // Now we can begin updating the LCD
-    update_lcd();
+    update_lcd(sdbuf);
     //register_function_100ms(&update_lcd);
 
     while(1)
@@ -218,7 +218,7 @@ void sd_setup(RingBuffer* sdbuf)
 
         // Update the LCD once every 200ms
         if((clock_time() % 200) == 0)
-            update_lcd();
+            update_lcd(sdbuf);
     }
 }
 
@@ -238,7 +238,7 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
         return 1;
 
     // Make sure there's enough free space in the buffer for our data
-    if(ringbuf_getfree(buf) < n)
+    if(rb_getfree_m(buf) < n)
     {
         buf->overflow = 1;
         return 1;
@@ -279,8 +279,8 @@ uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
         return 1;
 
     // We can't read more bytes than the buffer currently contains
-    if(n > ringbuf_getused(buf))
-        n = ringbuf_getused(buf);
+    if(n > rb_getused_m(buf))
+        n = rb_getused_m(buf);
 
     if(buf->tail + n < buf->len)
     {
@@ -298,28 +298,6 @@ uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
         buf->tail = (buf->tail + (n-rem)) & buf->mask;
     }
     return 0;
-}
-
-/**
- * Return the number of bytes in the ring buffer
- * \param buf The ring buffer to query
- * \returns The number of used bytes in the buffer
- */
-uint16_t ringbuf_getused(RingBuffer *buf)
-{
-    return (buf->tail == buf->head) ? 0
-        : (buf->head - buf->tail + buf->len) % buf->len;
-}
-
-/**
- * Return the free space in the ring buffer
- * \param buf The ring buffer to query
- * \returns The number of free bytes in the buffer
- */
-uint16_t ringbuf_getfree(RingBuffer *buf)
-{
-    return (buf->tail == buf->head) ? buf->len
-        : (buf->tail - buf->head + buf->len) % buf->len;
 }
 
 /**
