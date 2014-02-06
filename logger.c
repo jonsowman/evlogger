@@ -210,8 +210,9 @@ void sd_setup(RingBuffer* sdbuf)
             P1OUT &= ~_BV(0);
         }
 
-        // Update the LCD once every 100ms
-        if((clock_time() % 100) == 0) update_lcd();
+        // Update the LCD once every 200ms
+        if((clock_time() % 200) == 0)
+            update_lcd();
     }
 }
 
@@ -353,7 +354,7 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
     // Put some things in the buffer
     if(file_open)
-        ringbuf_write(&sdbuf, "9999,9999,9999,9999,9999,9999\r\n", 31);
+        ringbuf_write(&sdbuf, "$9999,9999,9999,9999,9999,9999\r\n", 32);
 }
 
 /**
