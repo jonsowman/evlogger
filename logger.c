@@ -126,8 +126,17 @@ void sd_setup(void)
     char filebuf[15];
     uint16_t i;
 
+    // FIXME: Temporarily fill the SD buffer
     for(i=0; i<512; i++)
         sdbuf[i] = 'U';
+
+    // Wait for an SD card to be inserted
+    while(!detectCard())
+    {
+        _delay_ms(250);
+        lcd_debug("Insert SD Card");
+    }
+    lcd_debug("");
 
     fr = f_mount(0, &FatFs);
     while( fr != FR_OK )
