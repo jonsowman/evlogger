@@ -30,7 +30,7 @@
 
 // Ring buffer length for the SD card, should be a multiple of 2 of the
 // sector size (512 bytes)
-#define SD_RINGBUF_LEN 2048
+#define SD_RINGBUF_LEN 1024
 
 // Don't change the below line
 #define SD_RINGBUF_MASK (SD_RINGBUF_LEN - 1)

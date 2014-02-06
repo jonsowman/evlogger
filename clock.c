@@ -39,6 +39,14 @@ void clock_init(void)
 }
 
 /**
+ * Return the current system time
+ */
+uint32_t clock_time(void)
+{
+    return ticks;
+}
+
+/**
  * Register a function to be run by the clock module every
  * ten milliseconds (10ms)
  * \param function_10ms The pointer to the function to be run

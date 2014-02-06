@@ -17,6 +17,7 @@
 #include "typedefs.h"
 #include "mmc.h"
 
+volatile uint32_t time;
 volatile uint8_t logger_running, file_open;
 char s[UART_BUF_LEN];
 char ringbuf[SD_RINGBUF_LEN];
@@ -91,7 +92,6 @@ void logger_init(void)
  */
 void update_lcd(void)
 {
-    uint16_t adc_read;
     FRESULT fr;
     FATFS *fs;
     DWORD fre_clust, fre_sect, tot_sect;
@@ -107,21 +107,21 @@ void update_lcd(void)
     /* Print the free space (assuming 512 bytes/sector) */
     sprintf(s, "%lu/%luMB (%lu%%)", (tot_sect-fre_sect)/2000, 
             tot_sect/2000, (100 - (100*fre_sect)/tot_sect));
-    Dogs102x6_clearRow(3);
-    Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
+    Dogs102x6_clearRow(4);
+    Dogs102x6_stringDraw(4, 0, s, DOGS102x6_DRAW_NORMAL);
 
     // Show bytes in buffer
-    sprintf(s, "Buf: %u bytes", ringbuf_getused(&sdbuf));
+    sprintf(s, "Buffer: %u%%", (100*ringbuf_getused(&sdbuf))/sdbuf.len);
     Dogs102x6_clearRow(2);
     Dogs102x6_stringDraw(2, 0, s, DOGS102x6_DRAW_NORMAL);
 
-    P8OUT ^= _BV(1);
+    // Show size of file
+    fsz = f_size(&fil);
+    sprintf(s, "File: %lukb", (unsigned long)fsz/1000);
+    Dogs102x6_clearRow(3);
+    Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
 
-    adc_read = adc_convert();
-    sprintf(s, "ADC: %u", adc_read);
-    Dogs102x6_clearRow(5);
-    Dogs102x6_stringDraw(5, 0, s, DOGS102x6_DRAW_NORMAL);
-    _delay_ms(100);
+    P8OUT ^= _BV(1);
 }
 
 /**
@@ -159,71 +159,47 @@ void sd_setup(RingBuffer* sdbuf)
     update_lcd();
     register_function_100ms(&update_lcd);
 
-    /*
-
-    // Attempt to open a file
-    fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
-    while( fr != FR_OK )
-    {
-        _delay_ms(500);
-        sprintf(s, "Open fail: %d", fr);
-        uart_debug(s);
-        fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
-    }
-
-    // Note that the file is open
-    file_open = 1;
-
-    // Determine the size of the file
-    fsz = f_size(&fil);
-    sprintf(s, "file is %d bytes", (int)fsz);
-    uart_debug(s);
-
-    // Try and read from the file
-    fr = f_read(&fil, sdbuf, 12, &bw);
-    sprintf(s, "Read %d bytes, result %d", bw, fr);
-    uart_debug(s);
-
-    */
-
     while(1)
     {
         // If we just started logging then open the file
         if(logger_running && !file_open)
         {
-            fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
+            fr = f_open(&fil, "data.log", FA_READ | FA_WRITE | FA_CREATE_ALWAYS);
             while( fr != FR_OK )
             {
                 _delay_ms(500);
                 sprintf(s, "Open fail: %d", fr);
                 uart_debug(s);
-                fr = f_open(&fil, "data.log", FA_READ | FA_WRITE);
+                fr = f_open(&fil, "data.log", FA_READ | FA_WRITE | FA_CREATE_ALWAYS);
             }
-    
-            fsz = f_size(&fil);
-            sprintf(s, "file is %d bytes", (int)fsz);
-            uart_debug(s);
-
-            // Empty the file by moving r/w pointer then truncating
-            f_lseek(&fil, 0);
-            f_truncate(&fil);
-
             file_open = 1;
         }
 
         // If we just stopped logging then close the file
         if(!logger_running && file_open)
         {
-            f_close(&fil);
-            file_open = 0;
-            uart_debug("file closed");
+            // Write any remaining data to the disk
+            if(!f_sync(&fil))
+                uart_debug("sync fail");
+
+            // Close the file
+            if(f_close(&fil))
+            {
+                uart_debug("cls");
+                file_open = 0;
+            }
+            else
+            {
+                uart_debug("f_close fail");
+            }
         }
 
-        if(ringbuf_getused(sdbuf) > 512)
+        if((ringbuf_getused(sdbuf) > 512) && file_open)
         {
             ringbuf_read(sdbuf, writebuf, 512);
             P1OUT |= _BV(0);
             fr = f_write(&fil, writebuf, 512, &bw);
+            if(fr) uart_debug("write fail");
             P1OUT &= ~_BV(0);
         }
     }
@@ -363,7 +339,8 @@ void logger_disable(void)
 interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
     // Put some things in the buffer
-    ringbuf_write(&sdbuf, "test\r\n", 6);
+    if(file_open)
+        ringbuf_write(&sdbuf, "test\r\n", 6);
 }
 
 /**
@@ -371,8 +348,10 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
  */
 interrupt(PORT1_VECTOR) PORT1_ISR(void)
 {
-    if(P1IV & P1IV_P1IFG7)
+    // If button S1 was pressed and >250ms has passed...
+    if((P1IV & P1IV_P1IFG7) && (clock_time() - time) > 250)
     {
+        time = clock_time();
         if(logger_running)
             logger_disable();
         else

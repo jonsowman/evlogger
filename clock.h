@@ -15,6 +15,7 @@
 #include "typedefs.h"
 
 void clock_init(void);
+uint32_t clock_time(void);
 void register_function_10ms(void (*function_10ms)(void));
 void register_function_100ms(void (*function_100ms)(void));
 void register_function_1s(void (*function_1s)(void));
