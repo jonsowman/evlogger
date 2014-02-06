@@ -17,6 +17,10 @@
 #include "typedefs.h"
 #include "mmc.h"
 
+// Quick facilities to get the used/free values of a ring buffer
+#define rb_getused_m(b) ((b->tail==b->head) ? 0:(b->head - b->tail + b->len) % b->len)
+#define rb_getfree_m(b) ((b->tail==b->head) ? b->len : (b->tail - b->head + b->len) % b->len)
+
 volatile uint32_t time;
 volatile uint8_t logger_running, file_open;
 char s[UART_BUF_LEN];
@@ -197,7 +201,9 @@ void sd_setup(RingBuffer* sdbuf)
             file_open = 0;
         }
 
-        if((ringbuf_getused(sdbuf) > 512) && file_open && logger_running)
+        // Use the fast getused() ring buffer function since we care about
+        // speed
+        if((rb_getused_m(sdbuf) > 512) && file_open && logger_running)
         {
             ringbuf_read(sdbuf, writebuf, 512);
             P1OUT |= _BV(0);
