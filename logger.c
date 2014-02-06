@@ -173,6 +173,8 @@ void sd_setup(RingBuffer* sdbuf)
                 uart_debug(s);
                 fr = f_open(&fil, "data.log", FA_READ | FA_WRITE | FA_CREATE_ALWAYS);
             }
+            sdbuf->overflow = 0;
+            lcd_debug("");
             file_open = 1;
         }
 
@@ -351,7 +353,7 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
     // Put some things in the buffer
     if(file_open)
-        ringbuf_write(&sdbuf, "test\r\n", 6);
+        ringbuf_write(&sdbuf, "9999,9999,9999,9999,9999,9999\r\n", 31);
 }
 
 /**
