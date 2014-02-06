@@ -92,13 +92,12 @@ void logger_init(void)
  */
 void update_lcd(void)
 {
-    FRESULT fr;
     FATFS *fs;
+    fs = &FatFs;
     DWORD fre_clust, fre_sect, tot_sect;
 
     /* Get volume information and free clusters of drive 1 */
-    fs = &FatFs;
-    fr = f_getfree("", &fre_clust, &fs);
+    f_getfree("", &fre_clust, &fs);
 
     /* Get total sectors and free sectors */
     tot_sect = (fs->n_fatent - 2) * fs->csize;
@@ -120,6 +119,10 @@ void update_lcd(void)
     sprintf(s, "File: %lukb", (unsigned long)fsz/1000);
     Dogs102x6_clearRow(3);
     Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
+
+    // Monitor buffer overflow
+    if(sdbuf.overflow)
+        lcd_debug("Buffer overflow");
 }
 
 /**
@@ -155,7 +158,7 @@ void sd_setup(RingBuffer* sdbuf)
 
     // Now we can begin updating the LCD
     update_lcd();
-    register_function_100ms(&update_lcd);
+    //register_function_100ms(&update_lcd);
 
     while(1)
     {
@@ -177,29 +180,36 @@ void sd_setup(RingBuffer* sdbuf)
         if(!logger_running && file_open)
         {
             // Write any remaining data to the disk
-            if(!f_sync(&fil))
-                uart_debug("sync fail");
+            if(f_sync(&fil))
+                lcd_debug("sync fail");
 
             // Close the file
-            if(f_close(&fil))
+            fr = f_close(&fil);
+            while(fr != FR_OK)
             {
-                uart_debug("cls");
-                file_open = 0;
+                sprintf(s, "close fail: %d", fr);
+                lcd_debug(s);
+                fr = f_close(&fil);
+                _delay_ms(100);
             }
-            else
-            {
-                uart_debug("f_close fail");
-            }
+            file_open = 0;
         }
 
-        if((ringbuf_getused(sdbuf) > 512) && file_open)
+        if((ringbuf_getused(sdbuf) > 512) && file_open && logger_running)
         {
             ringbuf_read(sdbuf, writebuf, 512);
             P1OUT |= _BV(0);
             fr = f_write(&fil, writebuf, 512, &bw);
-            if(fr) uart_debug("write fail");
+            if(fr)
+            {
+                sprintf(s, "write fail: %u", fr);
+                lcd_debug(s);
+            }
             P1OUT &= ~_BV(0);
         }
+
+        // Update the LCD once every 100ms
+        if((clock_time() % 100) == 0) update_lcd();
     }
 }
 
@@ -220,7 +230,10 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 
     // Make sure there's enough free space in the buffer for our data
     if(ringbuf_getfree(buf) < n)
+    {
+        buf->overflow = 1;
         return 1;
+    }
 
     // We can do a single memcpy as long as we don't wrap around the buffer
     if(buf->head + n < buf->len)
