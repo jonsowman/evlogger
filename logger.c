@@ -64,7 +64,7 @@ void logger_init(void)
     // Set up 16 bit timer TIMER1 to interrupt at the log frequency
     TA1CCR0 = 19999;
 
-    // Clock from SMCLK with /1 divider, use "up" mode, use interrupts
+    // Clock from SMCLK with /8 divider, use "up" mode, use interrupts
     TA1CTL |= TASSEL_2 | TACLR;
 
     // Enable interrupts on CCR0
@@ -188,8 +188,6 @@ void sd_setup(RingBuffer* sdbuf)
 
     while(1)
     {
-        _delay_ms(100);
-        
         // If we just started logging then open the file
         if(logger_running && !file_open)
         {
