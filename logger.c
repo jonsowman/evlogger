@@ -120,8 +120,6 @@ void update_lcd(void)
     sprintf(s, "File: %lukb", (unsigned long)fsz/1000);
     Dogs102x6_clearRow(3);
     Dogs102x6_stringDraw(3, 0, s, DOGS102x6_DRAW_NORMAL);
-
-    P8OUT ^= _BV(1);
 }
 
 /**
