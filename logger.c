@@ -133,8 +133,8 @@ void sd_setup(RingBuffer* sdbuf)
     sdbuf->head = sdbuf->tail = sdbuf->overflow = 0;
 
     // Write something to the ringbuf
-    ringbuf_write(sdbuf, "helloworld", 10);
-    ringbuf_write(sdbuf, "helloworld", 10);
+    sprintf(s, "%u bytes free", ringbuf_getfree(sdbuf));
+    uart_debug(s);
 
     // Wait for an SD card to be inserted
     while(!detectCard())
@@ -203,6 +203,7 @@ void sd_setup(RingBuffer* sdbuf)
 uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 {
     uint16_t rem;
+
     // Check we're not writing more than the buffer can hold
     if(n >= SD_RINGBUF_LEN)
         return 1;
@@ -217,7 +218,7 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
         // We're going to wrap, copy in 2 blocks
         // Copy the first (SD_BUF_LEN - buf->head) bytes
         rem = SD_RINGBUF_LEN - buf->head;
-        memcpy(buf->buffer + (buf->head & SD_RINGBUF_MASK), data, rem);
+        memcpy(buf->buffer + buf->head, data, rem);
         buf->head = (buf->head + rem) & SD_RINGBUF_MASK;
         // Copy the remaining bytes
         memcpy(buf->buffer + buf->head, data + rem, n - rem);
@@ -227,12 +228,46 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 }
 
 /**
- * Read n bytes from the a ring buffer
+ * Read n bytes from a ring buffer
+ * \param buf A pointer to the ring buffer we want to write to
+ * \param read_buffer Copy data into this array
+ * \param n The number of bytes to be read from the ring buffer
+ * \returns 0 for success, non-0 for failure
  */
-void ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
+uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
 {
-    memcpy(read_buffer, buf->buffer + (buf->tail & SD_RINGBUF_MASK), n);
-    buf->tail += n;
+    uint16_t rem;
+
+    // We can't read more data than the buffer holds!
+    if(n >= SD_RINGBUF_LEN)
+        return 1;
+
+    if(buf->tail + n < SD_RINGBUF_LEN)
+    {
+        // We won't wrap, we can quickly memcpy
+        memcpy(read_buffer, buf->buffer + buf->tail, n);
+        buf->tail = (buf->tail + n) & SD_RINGBUF_MASK;
+    } else {
+        // We're going to wrap, copy in 2 blocks
+        // Copy the first (SD_BUF_LEN - buf->head) bytes
+        rem = SD_RINGBUF_LEN - buf->tail;
+        memcpy(read_buffer, buf->buffer + buf->tail, rem);
+        buf->tail = (buf->tail + rem) & SD_RINGBUF_MASK;
+        // Copy the remaining bytes
+        memcpy(read_buffer + rem, buf->buffer + buf->tail, n - rem);
+        buf->tail = (buf->tail + (n-rem)) & SD_RINGBUF_MASK;
+    }
+    return 0;
+}
+
+/**
+ * Return the free space in the ring buffer
+ * \param buf The ring buffer to query
+ * \returns The number of free bytes in the buffer
+ */
+uint16_t ringbuf_getfree(RingBuffer *buf)
+{
+    return (buf->tail - buf->head + SD_RINGBUF_LEN) % SD_RINGBUF_LEN;
 }
 
 /**
