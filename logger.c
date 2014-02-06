@@ -106,7 +106,7 @@ void update_lcd(void)
     Dogs102x6_clearRow(1);
     Dogs102x6_stringDraw(1, 0, s, DOGS102x6_DRAW_NORMAL);
 
-    P1OUT ^= _BV(0);
+    P8OUT ^= _BV(1);
 
     adc_read = adc_convert();
     sprintf(s, "ADC: %u", adc_read);
@@ -174,10 +174,10 @@ void sd_setup(void)
     fr = f_lseek(&fil, 0);
 
     // Write something else
-    P8OUT |= _BV(1);
+    P1OUT |= _BV(0);
     fr = f_write(&fil, sdbuf, 512, &bw);
     f_sync(&fil);
-    P8OUT &= ~_BV(1);
+    P1OUT &= ~_BV(0);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
     uart_debug(s);
 
