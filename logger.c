@@ -15,10 +15,12 @@
 #include "delay.h"
 #include "clock.h"
 #include "typedefs.h"
+#include "mmc.h"
 
 volatile uint8_t logger_running;
 char s[UART_BUF_LEN];
-char sdbuf[SD_BUF_LEN];
+char ringbuf[SD_RINGBUF_LEN];
+RingBuffer sdbuf;
 
 // A FAT filesystem appears!
 FATFS FatFs;
@@ -70,7 +72,7 @@ void logger_init(void)
     eint();
 
     // Call the SD setup routine
-    sd_setup();
+    sd_setup(&sdbuf);
 
     // Update the LCD regularly
     register_function_1s(&update_lcd);
@@ -120,17 +122,19 @@ void update_lcd(void)
 /**
  * Set up the SD card for logging to it
  */
-void sd_setup(void)
+void sd_setup(RingBuffer* sdbuf)
 {   
     FRESULT fr;
     UINT bw;
     DWORD fsz;
-    char filebuf[15];
-    uint16_t i;
 
-    // FIXME: Temporarily fill the SD buffer
-    for(i=0; i<512; i++)
-        sdbuf[i] = 'U';
+    // Initialise the ring buffer for SD transfers
+    sdbuf->buffer = ringbuf;
+    sdbuf->head = sdbuf->tail = sdbuf->overflow = 0;
+
+    // Write something to the ringbuf
+    ringbuf_write(sdbuf, "helloworld", 10);
+    ringbuf_write(sdbuf, "helloworld", 10);
 
     // Wait for an SD card to be inserted
     while(!detectCard())
@@ -168,7 +172,7 @@ void sd_setup(void)
     uart_debug(s);
 
     // Try and read from the file
-    fr = f_read(&fil, filebuf, 12, &bw);
+    fr = f_read(&fil, sdbuf, 12, &bw);
     sprintf(s, "Read %d bytes, result %d", bw, fr);
     uart_debug(s);
 
@@ -177,7 +181,7 @@ void sd_setup(void)
 
     // Write something else
     P1OUT |= _BV(0);
-    fr = f_write(&fil, sdbuf, 512, &bw);
+    fr = f_write(&fil, ringbuf, 512, &bw);
     f_sync(&fil);
     P1OUT &= ~_BV(0);
     sprintf(s, "Wrote %d bytes, result %d", bw, fr);
@@ -187,6 +191,48 @@ void sd_setup(void)
     fr = f_close(&fil);
 
     uart_debug("Done");
+}
+
+/**
+ * Write n bytes to a ring buffer
+ * \param buf A pointer to the ring buffer we want to write to
+ * \param data A pointer to the data to be written
+ * \param n The number of bytes to be written to the ring buffer
+ * \returns 0 for success, non-0 for failure
+ */
+uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
+{
+    uint16_t rem;
+    // Check we're not writing more than the buffer can hold
+    if(n >= SD_RINGBUF_LEN)
+        return 1;
+
+    // We can do a single memcpy as long as we don't wrap around the buffer
+    if(buf->head + n < SD_RINGBUF_LEN)
+    {
+        // We won't wrap, we can quickly memcpy
+        memcpy(buf->buffer + buf->head, data, n);
+        buf->head = (buf->head + n) & SD_RINGBUF_MASK;
+    } else {
+        // We're going to wrap, copy in 2 blocks
+        // Copy the first (SD_BUF_LEN - buf->head) bytes
+        rem = SD_RINGBUF_LEN - buf->head;
+        memcpy(buf->buffer + (buf->head & SD_RINGBUF_MASK), data, rem);
+        buf->head = (buf->head + rem) & SD_RINGBUF_MASK;
+        // Copy the remaining bytes
+        memcpy(buf->buffer + buf->head, data + rem, n - rem);
+        buf->head = (buf->head + (n-rem)) & SD_RINGBUF_MASK;
+    }
+    return 0;
+}
+
+/**
+ * Read n bytes from the a ring buffer
+ */
+void ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
+{
+    memcpy(read_buffer, buf->buffer + (buf->tail & SD_RINGBUF_MASK), n);
+    buf->tail += n;
 }
 
 /**

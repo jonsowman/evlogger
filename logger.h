@@ -30,10 +30,21 @@
 
 // Ring buffer length for the SD card, should be a multiple of 2 of the
 // sector size (512 bytes)
-#define SD_BUF_LEN 1024
+#define SD_RINGBUF_LEN 1024
+
+// Don't change the below line
+#define SD_RINGBUF_MASK (SD_RINGBUF_LEN - 1)
+
+typedef struct RingBuffer
+{
+    char* buffer;
+    uint16_t head, tail;
+    uint8_t overflow;
+} RingBuffer;
 
 void logger_init(void);
-void sd_setup(void);
+void sd_setup(RingBuffer* sdbuf);
+void ringbuf_write(RingBuffer* buf, char* data, uint16_t n);
 void update_lcd(void);
 void logger_enable(void);
 void logger_disable(void);
