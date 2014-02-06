@@ -138,6 +138,8 @@ void sd_setup(RingBuffer* sdbuf)
     ringbuf_write(sdbuf, "hello world", 11);
     sprintf(s, "%u bytes used, %u free", ringbuf_getused(sdbuf), ringbuf_getfree(sdbuf));
     uart_debug(s);
+    ringbuf_read(sdbuf, s, 11);
+    uart_debug(s);
 
     // Wait for an SD card to be inserted
     while(!detectCard())
@@ -211,6 +213,10 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
     if(n >= buf->len)
         return 1;
 
+    // Make sure there's enough free space in the buffer for our data
+    if(ringbuf_getfree(buf) < n)
+        return 1;
+
     // We can do a single memcpy as long as we don't wrap around the buffer
     if(buf->head + n < buf->len)
     {
@@ -245,6 +251,10 @@ uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
     if(n >= buf->len)
         return 1;
 
+    // We can't read more bytes than the buffer currently contains
+    if(n > ringbuf_getused(buf))
+        n = ringbuf_getused(buf);
+
     if(buf->tail + n < buf->len)
     {
         // We won't wrap, we can quickly memcpy
@@ -270,7 +280,8 @@ uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
  */
 uint16_t ringbuf_getused(RingBuffer *buf)
 {
-    return (buf->head - buf->tail + buf->len) % buf->len;
+    return (buf->tail == buf->head) ? 0
+        : (buf->head - buf->tail + buf->len) % buf->len;
 }
 
 /**
@@ -280,7 +291,8 @@ uint16_t ringbuf_getused(RingBuffer *buf)
  */
 uint16_t ringbuf_getfree(RingBuffer *buf)
 {
-    return (buf->tail - buf->head + buf->len) % buf->len;
+    return (buf->tail == buf->head) ? buf->len
+        : (buf->tail - buf->head + buf->len) % buf->len;
 }
 
 /**

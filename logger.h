@@ -38,9 +38,8 @@
 typedef struct RingBuffer
 {
     char* buffer;
-    uint16_t head, tail;
+    uint16_t head, tail, len, mask;
     uint8_t overflow;
-    uint16_t len, mask;
 } RingBuffer;
 
 void logger_init(void);
