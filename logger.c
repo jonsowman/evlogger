@@ -135,7 +135,6 @@ void update_lcd(RingBuffer *buf)
 void sd_setup(RingBuffer* sdbuf)
 {   
     FRESULT fr;
-    UINT bw;
 
     // Initialise the ring buffer for SD transfers
     sdbuf->buffer = ringbuf;
@@ -186,6 +185,7 @@ void sd_setup(RingBuffer* sdbuf)
         if(!logger_running && file_open)
         {
             // Write any remaining data to the disk
+            sd_write(sdbuf, writebuf, &fil, rb_getused_m(sdbuf));
             if(f_sync(&fil))
                 lcd_debug("sync fail");
 
@@ -202,25 +202,37 @@ void sd_setup(RingBuffer* sdbuf)
         }
 
         // Use the fast getused() ring buffer function since we care about
-        // speed
+        // speed. Write one sector to the SD card.
         if((rb_getused_m(sdbuf) > 512) && file_open && logger_running)
-        {
-            ringbuf_read(sdbuf, writebuf, 512);
-            P1OUT |= _BV(0);
-            fr = f_write(&fil, writebuf, 512, &bw);
-            if(fr)
-            {
-                sprintf(s, "write fail: %u", fr);
-                lcd_debug(s);
-            }
-            P1OUT &= ~_BV(0);
-        }
+            sd_write(sdbuf, writebuf, &fil, 512);
 
         // Update the LCD once every 200ms
         if((clock_time() % 200) == 0)
             update_lcd(sdbuf);
     }
 }
+
+/**
+ * Write n bytes from a ring buffer to an SD card controlled by fatfs
+ */
+FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
+{
+    FRESULT fr;
+    UINT bw;
+
+    ringbuf_read(rb, writebuf, n);
+    P1OUT |= _BV(0);
+    fr = f_write(fil, writebuf, n, &bw);
+    
+    if(fr)
+    {
+        sprintf(s, "write fail: %u", fr);
+        lcd_debug(s);
+    }
+    P1OUT &= ~_BV(0);
+    return fr;
+}
+
 
 /**
  * Write n bytes to a ring buffer

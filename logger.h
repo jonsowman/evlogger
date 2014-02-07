@@ -13,6 +13,7 @@
 #include <msp430f5529.h>
 #include <legacymsp430.h>
 #include "typedefs.h"
+#include "ff.h"
 
 #define S1_PORT_OUT P1OUT
 #define S1_PORT_REN P1REN
@@ -44,6 +45,7 @@ typedef struct RingBuffer
 
 void logger_init(void);
 void sd_setup(RingBuffer *sdbuf);
+FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n);
 uint8_t ringbuf_write(RingBuffer* buf, char* data, uint16_t n);
 uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n);
 void update_lcd(RingBuffer *buf);
