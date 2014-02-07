@@ -233,7 +233,6 @@ FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
     return fr;
 }
 
-
 /**
  * Write n bytes to a ring buffer
  * \param buf A pointer to the ring buffer we want to write to
