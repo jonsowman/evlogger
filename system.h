@@ -15,6 +15,7 @@
 #include "typedefs.h"
 
 void clock_init(void);
+void sys_clock_init(void);
 uint32_t clock_time(void);
 
 #endif /* __CLOCK_H__ */
