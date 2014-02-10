@@ -10,7 +10,7 @@
 
 /**
  * Set up the UCSI for UART operation at 9600 baud. The baud rate
- * generator is currently hard coded for 20MHz SMCLK.
+ * generator is currently hard coded for 25MHz SMCLK.
  * TODO: Fix this to calculate BRR values from F_CPU.
  */
 void uart_init(void)
@@ -23,10 +23,10 @@ void uart_init(void)
     // Clock the USCI from SMCLK
     UCA1CTL1 |= UCSSEL_2;
 
-    // Baud rate should be 9600 at 20MHz (see datasheet for these)
+    // Baud rate should be 9600 at 25MHz (see datasheet for these)
     // UCOS16 = 0
-    UCA1BR0 = 2083 & 0xFF;
-    UCA1BR1 = 2083 >> 8;
+    UCA1BR0 = 2603 & 0xFF;
+    UCA1BR1 = 2603 >> 8;
     UCA1MCTL = UCBRS_2;
 
     // Finally, release the USCI reset logic to enable the peripheral
