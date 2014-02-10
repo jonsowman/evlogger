@@ -12,7 +12,6 @@
 #include "adc.h"
 #include "ff.h"
 #include "uart.h"
-#include "delay.h"
 #include "system.h"
 #include "typedefs.h"
 #include "mmc.h"

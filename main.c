@@ -12,7 +12,6 @@
 
 #include "HAL_Dogs102x6.h"
 #include "typedefs.h"
-#include "delay.h"
 #include "uart.h"
 #include "adc.h"
 #include "system.h"

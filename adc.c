@@ -6,7 +6,7 @@
  */
 
 #include "adc.h"
-#include "delay.h"
+#include "system.h"
 
 /**
  * Set up the ADC clock and configure resolution, then enable the ADC
