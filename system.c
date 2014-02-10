@@ -1,7 +1,7 @@
 /**
  * EV Datalogger Project
  *
- * Jon Sowman 2013 <js39g13@soton.ac.uk>
+ * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
  */
 
@@ -9,14 +9,8 @@
 
 volatile uint32_t ticks;
 
-// We can register a function to be called at each of 10ms, 100ms, and 1s
-void (*fn_10ms)(void);
-void (*fn_100ms)(void);
-void (*fn_1s)(void);
-
 /**
  * Use timer A0 to set up a system clock ticking at 1ms intervals.
- * We will register functions to be called at 1ms, 10ms and 100ms intervals.
  */
 void clock_init(void)
 {
