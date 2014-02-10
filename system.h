@@ -5,8 +5,8 @@
  * University of Southampton
  */
 
-#ifndef __CLOCK_H__
-#define __CLOCK_H__
+#ifndef __SYSTEM_H__
+#define __SYSTEM_H__
 
 #include <stdio.h>
 #include <msp430.h>
@@ -21,4 +21,4 @@ void sys_clock_init(void);
 clock_time_t clock_time(void);
 void _delay_ms(uint32_t delay);
 
-#endif /* __CLOCK_H__ */
+#endif /* __SYSTEM_H__ */
