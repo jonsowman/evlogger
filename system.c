@@ -5,7 +5,7 @@
  * University of Southampton
  */
 
-#include "clock.h"
+#include "system.h"
 
 volatile uint32_t ticks;
 
@@ -47,50 +47,10 @@ uint32_t clock_time(void)
 }
 
 /**
- * Register a function to be run by the clock module every
- * ten milliseconds (10ms)
- * \param function_10ms The pointer to the function to be run
- */
-void register_function_10ms(void (*function_10ms)(void))
-{
-    fn_10ms = function_10ms;
-}
-
-/**
- * Register a function to be run by the clock module every
- * one hundred milliseconds (100ms)
- * \param function_100ms The pointer to the function to be run
- */
-void register_function_100ms(void (*function_100ms)(void))
-{
-    fn_100ms = function_100ms;
-}
-
-/**
- * Register a function to be run by the clock module every 
- * one second period.
- * \param function_1s The pointer to the function to be run
- */
-void register_function_1s(void (*function_1s)(void))
-{
-    fn_1s = function_1s;
-}
-
-/**
  * Interrupt service routine for the system ticks counter.
  * the interrupt() macro is from legacymsp430.h
  */
 interrupt(TIMER0_A0_VECTOR) TIMER0_A0_ISR(void)
 {
     ticks++;
-
-    // Run through and call all registered functions
-    if(ticks % 10 == 0)
-        if(fn_10ms != NULL) (*fn_10ms)();
-
-    if(ticks % 100 == 0)
-        if(fn_100ms != NULL) (*fn_100ms)();
-
-    if(ticks % 1000 == 0)
-        if(fn_1s != NULL) (*fn_1s)();
 }
