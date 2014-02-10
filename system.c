@@ -16,7 +16,6 @@ void clock_init(void)
 {
     // Reset the local tick counter and set function ptrs to null
     ticks = 0;
-    fn_10ms = fn_100ms = fn_1s = NULL;
 
     // Count to 19999 (20000 actual counts)
     TA0CCR0 = 19999;
@@ -82,6 +81,19 @@ void sys_clock_init( void )
 uint32_t clock_time(void)
 {
     return ticks;
+}
+
+/**
+ * Delay for the provided number of milliseconds
+ * \param delay The number of ms to delay.
+ */ 
+void _delay_ms(uint32_t delay)
+{
+    uint32_t i;
+    for(i=0; i < delay; i++)
+    {
+        __delay_cycles(20000);
+    }
 }
 
 /**

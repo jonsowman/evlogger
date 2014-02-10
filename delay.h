@@ -11,6 +11,5 @@
 #include <stdio.h>
 #include "typedefs.h"
 
-void _delay_ms(uint32_t delay);
 
 #endif /* __DELAY_H__ */

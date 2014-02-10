@@ -17,5 +17,6 @@
 void clock_init(void);
 void sys_clock_init(void);
 uint32_t clock_time(void);
+void _delay_ms(uint32_t delay);
 
 #endif /* __CLOCK_H__ */
