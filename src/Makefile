@@ -14,14 +14,19 @@
 TARGET     = evlogger_bin
 MCU        = msp430f5529
 PROGRAMMER = rf2500
+
+# Include and build directories
+INCDIR = ../inc/HAL
+OBJDIR = ../build
+
 # List all the source files here
 # eg if you have a source file foo.c then list it here
-SOURCES = main.c uart.c adc.c system.c ff.c HAL_Dogs102x6.c HAL_SDCard.c HAL_PMM.c mmc.c logger.c
+SOURCES = $(wildcard *.c) $(wildcard ${INCDIR}/*.c) 
 # Include are located in the Include directory
 INCLUDES = -isystem /usr/msp430/include/
 
 #######################################################################################
-CFLAGS   = -mmcu=$(MCU) -DF_CPU=25000000 -g -Os -Wall -Wunused $(INCLUDES)   
+CFLAGS   = -mmcu=$(MCU) -I${INCDIR} -DF_CPU=25000000 -g -Os -Wall -Wunused $(INCLUDES)   
 ASFLAGS  = -mmcu=$(MCU) -x assembler-with-cpp -Wa,-gstabs
 LDFLAGS  = -mmcu=$(MCU) -Wl,-Map=$(TARGET).map
 ########################################################################################
