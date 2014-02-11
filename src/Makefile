@@ -50,42 +50,47 @@ MV       = mv
 # the file which will include dependencies
 DEPEND = $(SOURCES:.c=.d)
 
+# look in the build directory for pre-reqs
+vpath %.o ${OBJDIR}
+vpath %.c ${INCDIR}
+vpath %.h ${INCDIR}
+
 # all the object files
 OBJECTS = $(SOURCES:.c=.o)
 
-all: $(TARGET).elf $(TARGET).hex $(TARGET).txt 
+all: ${OBJDIR}/$(TARGET).elf ${OBJDIR}/${TARGET}.hex ${OBJDIR}/${TARGET}.txt
 
-$(TARGET).elf: $(OBJECTS)
+${OBJDIR}/$(TARGET).elf: $(addprefix ${OBJDIR}/, ${notdir $(DEPEND)}) $(addprefix ${OBJDIR}/, ${notdir $(OBJECTS)})
 	echo "Linking $@"
-	$(CC) $(addprefix ${OBJDIR}/, ${notdir $(OBJECTS)}) $(LDFLAGS) -o ${OBJDIR}/$@
+	$(CC) $(addprefix ${OBJDIR}/, ${notdir $(OBJECTS)}) $(LDFLAGS) -o $@
 	echo
 	echo ">>>> Size of Firmware <<<<"
 	$(SIZE) ${OBJDIR}/$(TARGET).elf
 	echo
 
-%.hex: %.elf
-	$(OBJCOPY) -O ihex ${OBJDIR}/$< ${OBJDIR}/$@
+${OBJDIR}/${TARGET}.hex: ${OBJDIR}/${TARGET}.elf
+	$(OBJCOPY) -O ihex $< $@
 
-%.txt: %.hex
-	$(MAKETXT) -O ${OBJDIR}/$@ -TITXT ${OBJDIR}/$< -I
+${OBJDIR}/${TARGET}.txt: ${OBJDIR}/${TARGET}.hex
+	$(MAKETXT) -O $@ -TITXT $< -I
 	unix2dos ${OBJDIR}/$(TARGET).txt
 #  The above line is required for the DOS based TI BSL tool to be able to read the txt file generated from linux/unix systems.
 
-%.o: %.c
-	echo "Compiling $<"
-	$(CC) -c $(CFLAGS) -o ${OBJDIR}/${notdir $@} $<
+${OBJDIR}/%.o: %.c
+	echo "Compiling $< to $@"
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 # include the dependencies unless we're going to clean, then forget about them.
 ifneq ($(MAKECMDGOALS), clean)
--include $(DEPEND)
+-include $(addprefix ${OBJDIR}/, ${notdir $(DEPEND)})
 endif
 
 # dependencies file
 # includes also considered, since some of these are our own
 # (otherwise use -MM instead of -M)
-%.d: %.c
+${OBJDIR}/%.d: %.c
 	echo "Generating dependencies $@ from $<"
-	$(CC) -M ${CFLAGS} $< > ${OBJDIR}/${notdir $@}
+	$(CC) -M ${CFLAGS} $< > $@
 
 .SILENT:
 .PHONY:	clean
