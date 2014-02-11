@@ -90,7 +90,7 @@ endif
 # (otherwise use -MM instead of -M)
 ${OBJDIR}/%.d: %.c
 	echo "Generating dependencies $@ from $<"
-	$(CC) -M ${CFLAGS} $< > $@
+	$(CC) -MT '$(basename $@).o' -M ${CFLAGS} $< > $@
 
 .SILENT:
 .PHONY:	clean
