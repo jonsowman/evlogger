@@ -1,7 +1,7 @@
-#
+
 # Makefile for msp430 (based on mspgcc example)
 #
-# Jon Sowman 2013
+# Jon Sowman 2014
 # <jon@jonsowman.com>
 #
 # 'make' builds everything
@@ -17,7 +17,7 @@ PROGRAMMER = rf2500
 
 # Include and build directories
 INCDIR = ../inc/HAL
-OBJDIR = ../build
+OBJDIR = build
 
 # List all the source files here
 # eg if you have a source file foo.c then list it here
@@ -28,7 +28,7 @@ INCLUDES = -isystem /usr/msp430/include/
 #######################################################################################
 CFLAGS   = -mmcu=$(MCU) -I${INCDIR} -DF_CPU=25000000 -g -Os -Wall -Wunused $(INCLUDES)   
 ASFLAGS  = -mmcu=$(MCU) -x assembler-with-cpp -Wa,-gstabs
-LDFLAGS  = -mmcu=$(MCU) -Wl,-Map=$(TARGET).map
+LDFLAGS  = -mmcu=$(MCU) -Wl,-Map=${OBJDIR}/$(TARGET).map
 ########################################################################################
 CC       = msp430-gcc
 LD       = msp430-ld
@@ -49,45 +49,48 @@ MV       = mv
 ########################################################################################
 # the file which will include dependencies
 DEPEND = $(SOURCES:.c=.d)
+
 # all the object files
 OBJECTS = $(SOURCES:.c=.o)
+
 all: $(TARGET).elf $(TARGET).hex $(TARGET).txt 
+
 $(TARGET).elf: $(OBJECTS)
 	echo "Linking $@"
-	$(CC) $(OBJECTS) $(LDFLAGS) $(LIBS) -o $@
+	$(CC) $(addprefix ${OBJDIR}/, ${notdir $(OBJECTS)}) $(LDFLAGS) -o ${OBJDIR}/$@
 	echo
 	echo ">>>> Size of Firmware <<<<"
-	$(SIZE) $(TARGET).elf
+	$(SIZE) ${OBJDIR}/$(TARGET).elf
 	echo
+
 %.hex: %.elf
-	$(OBJCOPY) -O ihex $< $@
+	$(OBJCOPY) -O ihex ${OBJDIR}/$< ${OBJDIR}/$@
+
 %.txt: %.hex
-	$(MAKETXT) -O $@ -TITXT $< -I
-	unix2dos $(TARGET).txt
+	$(MAKETXT) -O ${OBJDIR}/$@ -TITXT ${OBJDIR}/$< -I
+	unix2dos ${OBJDIR}/$(TARGET).txt
 #  The above line is required for the DOS based TI BSL tool to be able to read the txt file generated from linux/unix systems.
+
 %.o: %.c
 	echo "Compiling $<"
-	$(CC) -c $(CFLAGS) -o $@ $<
-# rule for making assembler source listing, to see the code
-%.lst: %.c
-	$(CC) -c $(ASFLAGS) -Wa,-anlhd $< > $@
+	$(CC) -c $(CFLAGS) -o ${OBJDIR}/${notdir $@} $<
+
 # include the dependencies unless we're going to clean, then forget about them.
 ifneq ($(MAKECMDGOALS), clean)
 -include $(DEPEND)
 endif
+
 # dependencies file
 # includes also considered, since some of these are our own
 # (otherwise use -MM instead of -M)
 %.d: %.c
 	echo "Generating dependencies $@ from $<"
-	$(CC) -M ${CFLAGS} $< >$@
+	$(CC) -M ${CFLAGS} $< > ${OBJDIR}/${notdir $@}
+
 .SILENT:
 .PHONY:	clean
 clean:
-	-$(RM) $(OBJECTS)
-	-$(RM) $(TARGET).*
-	-$(RM) $(SOURCES.c=.lst)
-	-$(RM) $(DEPEND)
+	-$(RM) ${OBJDIR}/*
 
 flash:  all
-	$(MSPDEBUG) $(PROGRAMMER) --force-reset "prog $(TARGET).elf"
+	$(MSPDEBUG) $(PROGRAMMER) --force-reset "prog ${OBJDIR}/$(TARGET).elf"
