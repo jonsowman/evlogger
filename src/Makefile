@@ -1,4 +1,3 @@
-
 # Makefile for msp430 (based on mspgcc example)
 #
 # Jon Sowman 2014
@@ -6,9 +5,11 @@
 #
 # 'make' builds everything
 # 'make clean' deletes everything except source files and Makefile
-# You need to set TARGET, MCU and SOURCES for your project.
+# 'make flash' builds everything (if not already built) and flashes to target
+#
+# You need to set TARGET, MCU & PROGRAMMER for your project.
 # TARGET is the name of the executable file to be produced 
-# $(TARGET).elf $(TARGET).hex and $(TARGET).txt nad $(TARGET).map are all generated.
+# $(TARGET).elf $(TARGET).hex and $(TARGET).txt and $(TARGET).map are all generated.
 # The TXT file is used for BSL loading, the ELF can be used for JTAG use
 # 
 TARGET     = evlogger_bin
@@ -90,7 +91,7 @@ endif
 # (otherwise use -MM instead of -M)
 ${OBJDIR}/%.d: %.c
 	echo "Generating dependencies $@ from $<"
-	$(CC) -MT '$(basename $@).o' -M ${CFLAGS} $< > $@
+	$(CC) -MT '$(basename $@).o' -MM ${CFLAGS} $< > $@
 
 .SILENT:
 .PHONY:	clean
