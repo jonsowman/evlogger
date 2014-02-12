@@ -49,6 +49,8 @@ int main(void)
     // Test that minicom/term is behaving
     uart_debug("Hello world");
 
+    adc_convert();
+
     // Test the LCD
     Dogs102x6_setBacklight(1);
     Dogs102x6_setContrast(6);
