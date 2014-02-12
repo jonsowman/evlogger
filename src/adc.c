@@ -5,8 +5,13 @@
  * University of Southampton
  */
 
+#include <inttypes.h>
 #include "adc.h"
 #include "system.h"
+
+#define ADC_CHANNELS 7
+
+uint16_t adcbuf[ADC_CHANNELS];
 
 /**
  * Set up the ADC clock and configure resolution, then enable the ADC
@@ -14,6 +19,12 @@
  */
 void adc_init(void)
 {
+    uint8_t i;
+
+    // Clear the ADC sample buffer
+    for(i = 0; i < ADC_CHANNELS; i++)
+        adcbuf[i] = 0;
+
     // Be sure that conversions are disabled
     ADC12CTL0 &= ~ADC12ENC;
 
@@ -34,11 +45,28 @@ void adc_init(void)
     ADC12MCTL2 = ADC12INCH_12;
     ADC12MCTL3 = ADC12INCH_13;
     ADC12MCTL4 = ADC12INCH_14;
+    ADC12MCTL5 = ADC12INCH_15;
     // Set end of sequence (EOS) for final channel
-    ADC12MCTL5 = ADC12INCH_15 | ADC12EOS;
+    ADC12MCTL6 = ADC12INCH_5 | ADC12EOS;
 
     // Enable conversions last, can't modify ADC12ON whilst ADC12ENC=1
     ADC12CTL0 |= ADC12ENC;
+
+    // Now set up DMA to transfer ADC readings to the ADC buuffer
+    // Set DMA channel 0 trigger to ADC12IFGx
+    DMACTL0 |= DMA0TSEL_24;
+
+    // Don't let DMA interrupt read-modify-write CPU operations
+    DMACTL4 |= DMARMWDIS;
+
+    // Select block transfer, increment both source and dest addresses
+    DMA0CTL |= DMADT_1 | DMADSTINCR_3 | DMASRCINCR_3;
+
+    // Set source address to first ADC conversion memory, destination to ADC
+    // buffer, transfer 6 words (6 channels)
+    DMA0SA = (uintptr_t)&ADC12MEM0;
+    DMA0DA = (uintptr_t)&adcbuf;
+    DMA0SZ = ADC_CHANNELS;
 }
 
 /**
@@ -68,8 +96,11 @@ void adc_select(const uint8_t channel)
  */
 uint16_t adc_convert(void)
 {
-    // Start conversion
+    // Enable DMA on Channel 0
+    DMA0CTL |= DMAEN;
+
+    // Start conversion and wait until the DMA transfer completes
     ADC12CTL0 |= ADC12SC;
-    while(!(ADC12IFG & ADC12IFG5));
-    return ADC12MEM5;
+    while(!(DMA0CTL & DMAIFG));
+    return adcbuf[ADC_CHANNELS-1]; // return final one
 }

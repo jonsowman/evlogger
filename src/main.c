@@ -20,8 +20,12 @@
 #include "HAL_SDCard.h"
 #include "ff.h"
 
+char s[25];
+
 int main(void)
 {
+    uint16_t i;
+
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
@@ -45,11 +49,9 @@ int main(void)
 
     // Wait for peripherals to boot
     _delay_ms(100);
-    
+ 
     // Test that minicom/term is behaving
     uart_debug("Hello world");
-
-    adc_convert();
 
     // Test the LCD
     Dogs102x6_setBacklight(1);
@@ -57,6 +59,14 @@ int main(void)
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
 
+    while(1)
+    {
+        i = adc_convert();
+        sprintf(s, "adc=%u", i);
+        uart_debug(s);
+        _delay_ms(100);
+    }
+   
     // Wait for periphs to boot and start logging
     logger_init();
      
