@@ -9,21 +9,17 @@
 #include "adc.h"
 #include "system.h"
 
-#define ADC_CHANNELS 7
-
-uint16_t adcbuf[ADC_CHANNELS];
-
 /**
  * Set up the ADC clock and configure resolution, then enable the ADC
  * unit.
  */
-void adc_init(void)
+void adc_init(SampleBuffer *sb)
 {
     uint8_t i;
 
     // Clear the ADC sample buffer
     for(i = 0; i < ADC_CHANNELS; i++)
-        adcbuf[i] = 0;
+        sb->adc[i] = 0;
 
     // Be sure that conversions are disabled
     ADC12CTL0 &= ~ADC12ENC;
@@ -65,42 +61,19 @@ void adc_init(void)
     // Set source address to first ADC conversion memory, destination to ADC
     // buffer, transfer 6 words (6 channels)
     DMA0SA = (uintptr_t)&ADC12MEM0;
-    DMA0DA = (uintptr_t)&adcbuf;
+    DMA0DA = (uintptr_t)&(sb->adc);
     DMA0SZ = ADC_CHANNELS;
 }
 
 /**
- * Select which of the channels (0-15) should be:
- * - The channel to read from (single conversion mode)
- * - The start channel (sequential conversion mode)
- * \param channel The channel number
+ * Enable DMA on channel 0 which will move data to the sample buffer
+ * after the ADC conversion run has completed.
  */
-void adc_select(const uint8_t channel)
-{
-    // Need to disable conversions before we can change ADC12MCTLx
-    ADC12CTL0 &= ~ADC12ENC;
-
-    // Set the range to Vcc & GND by clearing bits 4-6 in the MCTLx reg
-    // Also clear the 'EOS' bit 7
-    // Set the channel that this conversion memory register is concerned with
-    ADC12MCTL0 = (channel & 0x0F);
-
-    // Re-enable conversions
-    ADC12CTL0 |= ADC12ENC;
-}
-
-/**
- * Run a single conversion on the currently selected channel (or
- * group of channels for sequential conversion mode).
- * \return The result of the ADC conversion.
- */
-uint16_t adc_convert(void)
+void adc_convert(void)
 {
     // Enable DMA on Channel 0
     DMA0CTL |= DMAEN;
 
     // Start conversion and wait until the DMA transfer completes
     ADC12CTL0 |= ADC12SC;
-    while(!(DMA0CTL & DMAIFG));
-    return adcbuf[ADC_CHANNELS-1]; // return final one
 }

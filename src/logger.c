@@ -27,6 +27,9 @@ char ringbuf[SD_RINGBUF_LEN];
 char writebuf[512];
 RingBuffer sdbuf;
 
+char stringbuf[50];
+SampleBuffer sb;
+
 // A FAT filesystem appears!
 FATFS FatFs;
 FIL fil;
@@ -37,6 +40,9 @@ DWORD fsz;
  */
 void logger_init(void)
 {
+    // Initialise the ADC with the sample buffer `sb`
+    adc_init(&sb);
+    
     // Enable LEDs and turn them off (P1.0, P8.1, P8.2)
     P1DIR |= _BV(0);
     P1OUT &= ~_BV(0);
@@ -49,7 +55,6 @@ void logger_init(void)
     P8DIR |= _BV(0);
     P8OUT |= _BV(0);
     P6SEL |= _BV(5);
-    adc_select(0x05);
 
     // Enable the buttons
     // S1 is on P1.7, S2 is on P2.2
@@ -66,7 +71,7 @@ void logger_init(void)
     S2_PORT_IE |= S2_PIN;
 
     // Set up 16 bit timer TIMER1 to interrupt at the log frequency
-    TA1CCR0 = 19999;
+    TA1CCR0 = 24999;
 
     // Clock from SMCLK with /8 divider, use "up" mode, use interrupts
     TA1CTL |= TASSEL_2 | TACLR;
@@ -160,7 +165,6 @@ void sd_setup(RingBuffer* sdbuf)
 
     // Now we can begin updating the LCD
     update_lcd(sdbuf);
-    //register_function_100ms(&update_lcd);
 
     while(1)
     {
@@ -346,9 +350,20 @@ void logger_disable(void)
  */
 interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
-    // Put some things in the buffer
+    // Write the contents of the sample buffer (sb) to the SD buffer
     if(file_open)
-        ringbuf_write(&sdbuf, "$9999,9999,9999,9999,9999,9999\r\n", 32);
+    {
+        P8OUT |= _BV(1);
+        //sprintf(stringbuf, "%u\r\n", sb.adc[0]);
+        //ringbuf_write(&sdbuf, stringbuf, strlen(stringbuf));
+        //ringbuf_write(&sdbuf, "$9999,9999,9999,9999,9999,9999\r\n", 32);
+        sprintf(stringbuf, "$9999,9999,9999,9999,9999,9999\r\n");
+        ringbuf_write(&sdbuf, stringbuf, strlen(stringbuf));
+        P8OUT &= ~_BV(1);
+    }
+
+    // Trigger the next conversion
+    adc_convert();
 }
 
 /**

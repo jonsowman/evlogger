@@ -11,9 +11,9 @@
 #include <msp430.h>
 #include <msp430f5529.h>
 #include "typedefs.h"
+#include "logger.h"
 
-void adc_init(void);
-uint16_t adc_convert(void);
-void adc_select(const uint8_t channel);
+void adc_init(SampleBuffer *sb);
+void adc_convert(void);
 
 #endif /* __ADC_H__ */

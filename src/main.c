@@ -24,8 +24,6 @@ char s[25];
 
 int main(void)
 {
-    uint16_t i;
-
     // Stop the wdt
     WDTCTL = WDTPW | WDTHOLD;
 
@@ -33,19 +31,8 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
-    adc_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
-
-    // Enable LED on P1.0 and turn it off
-    P1DIR |= _BV(0);
-    P1OUT &= ~_BV(0);
-
-    // Select the potentiometer and enable the ADC on that channel
-    P8DIR |= _BV(0);
-    P8OUT |= _BV(0);
-    P6SEL |= _BV(5);
-    adc_select(0x05);
 
     // Wait for peripherals to boot
     _delay_ms(100);
@@ -59,14 +46,6 @@ int main(void)
     Dogs102x6_clearScreen();
     Dogs102x6_stringDraw(0, 0, "=== EV LOGGER ===", DOGS102x6_DRAW_INVERT);
 
-    while(1)
-    {
-        i = adc_convert();
-        sprintf(s, "adc=%u", i);
-        uart_debug(s);
-        _delay_ms(100);
-    }
-   
     // Wait for periphs to boot and start logging
     logger_init();
      

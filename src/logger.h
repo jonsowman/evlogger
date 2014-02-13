@@ -43,6 +43,15 @@ typedef struct RingBuffer
     uint8_t overflow;
 } RingBuffer;
 
+#define ADC_CHANNELS 7
+#define ACCEL_CHANNELS 3
+
+typedef struct SampleBuffer
+{
+    uint16_t adc[ADC_CHANNELS];
+    int8_t accel[ACCEL_CHANNELS];
+} SampleBuffer;
+
 void logger_init(void);
 void sd_setup(RingBuffer *sdbuf);
 FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n);
