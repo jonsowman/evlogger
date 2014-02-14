@@ -353,13 +353,9 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
     // Write the contents of the sample buffer (sb) to the SD buffer
     if(file_open)
     {
-        P8OUT |= _BV(1);
-        //sprintf(stringbuf, "%u\r\n", sb.adc[0]);
+        ringbuf_write(&sdbuf, (char *)&sb, sizeof(SampleBuffer));
+        //sprintf(stringbuf, "$9999,9999,9999,9999,9999,9999\r\n");
         //ringbuf_write(&sdbuf, stringbuf, strlen(stringbuf));
-        //ringbuf_write(&sdbuf, "$9999,9999,9999,9999,9999,9999\r\n", 32);
-        sprintf(stringbuf, "$9999,9999,9999,9999,9999,9999\r\n");
-        ringbuf_write(&sdbuf, stringbuf, strlen(stringbuf));
-        P8OUT &= ~_BV(1);
     }
 
     // Trigger the next conversion
