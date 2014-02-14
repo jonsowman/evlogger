@@ -49,7 +49,7 @@ typedef struct RingBuffer
 typedef struct SampleBuffer
 {
     uint16_t adc[ADC_CHANNELS];
-    int8_t accel[ACCEL_CHANNELS];
+    uint16_t accel[ACCEL_CHANNELS];
 } SampleBuffer;
 
 void logger_init(void);

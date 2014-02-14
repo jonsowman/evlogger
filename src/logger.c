@@ -19,6 +19,8 @@
 // Quick facilities to get the used/free values of a ring buffer
 #define rb_getused_m(b) ((b->tail==b->head) ? 0:(b->head - b->tail + b->len) % b->len)
 #define rb_getfree_m(b) ((b->tail==b->head) ? b->len : (b->tail - b->head + b->len) % b->len)
+// Reset a ring buffer to its original empty state
+#define rb_reset_m(b) do {b->tail = b->head = 0} while (0)
 
 volatile uint32_t time;
 volatile uint8_t logger_running, file_open;
@@ -354,8 +356,6 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
     if(file_open)
     {
         ringbuf_write(&sdbuf, (char *)&sb, sizeof(SampleBuffer));
-        //sprintf(stringbuf, "$9999,9999,9999,9999,9999,9999\r\n");
-        //ringbuf_write(&sdbuf, stringbuf, strlen(stringbuf));
     }
 
     // Trigger the next conversion
