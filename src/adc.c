@@ -48,7 +48,7 @@ void adc_init(SampleBuffer *sb)
     // Enable conversions last, can't modify ADC12ON whilst ADC12ENC=1
     ADC12CTL0 |= ADC12ENC;
 
-    // Now set up DMA to transfer ADC readings to the ADC buuffer
+    // Now set up DMA to transfer ADC readings to the ADC buffer
     // Set DMA channel 0 trigger to ADC12IFGx
     DMACTL0 |= DMA0TSEL_24;
 
