@@ -55,14 +55,6 @@ void logger_init(void)
     P8DIR |= _BV(2);
     P8OUT &= ~_BV(2);
 
-    while(1)
-    {
-        Cma3000_readAccelDMA();
-        _delay_ms(1);
-        sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
-        uart_debug(s);
-    }
-
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
     P8OUT |= _BV(0);
@@ -222,8 +214,13 @@ void sd_setup(RingBuffer* sdbuf)
             sd_write(sdbuf, writebuf, &fil, 512);
 
         // Update the LCD once every 200ms
-        if((clock_time() % 200) == 0)
+        if((clock_time() % 1000) == 0)
+        {
+            Cma3000_readAccelDMA();
+            sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
+            uart_debug(s);
             update_lcd(sdbuf);
+        }
     }
 }
 

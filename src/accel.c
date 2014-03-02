@@ -357,7 +357,6 @@ void Cma3000_readAccelDMA(void)
     UCA0TXBUF = DOUTX << 2;
 
     // Enable the transfers over the two channels
-    DMA2CTL &= ~DMAIFG;
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
 }
