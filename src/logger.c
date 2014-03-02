@@ -44,7 +44,6 @@ DWORD fsz;
 void logger_init(void)
 {
     char s[20];
-    uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
 
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
@@ -60,7 +59,7 @@ void logger_init(void)
 
     while(1)
     {
-        Cma3000_readRegisterDMA(cmdbuf);
+        Cma3000_readAccelDMA();
         _delay_ms(10);
         sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
         uart_debug(s);
@@ -373,9 +372,6 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 
     // Trigger the next conversion
     adc_convert();
-
-    // Invalidate the accel data so that we get new data
-    accel_invalidate();
 }
 
 /**

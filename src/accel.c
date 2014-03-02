@@ -94,14 +94,14 @@ int8_t Cma3000_yAccel_offset;
 // Stores z-Offset
 int8_t Cma3000_zAccel_offset;
 
-// Store the current reading state
-volatile accel_state_t accel_state;
-
 // Maintain a pointer to the SampleBuffer
 volatile SampleBuffer *sb;
 
 // Temporary place to store incoming accel data
 uint8_t rxbuf[7];
+
+// These are the accel commands to be written via DMA (excluding 1st byte)
+uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
 
 /**
  * @brief  Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
@@ -167,9 +167,6 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
         // Repeat till interrupt Flag is set to show sensor is working
     } while (!(ACCEL_INT_IN & ACCEL_INT));
 
-    // Set the initial state to none since we have no data
-    accel_state = ACCEL_STATE_NONE;
-
     // Clear the sample buffer accelerometer data
     sb = samplebuffer;
     for(i=0; i < ACCEL_CHANNELS; i++)
@@ -190,19 +187,6 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
 
     // Fire an interrupt when receive completes
     DMA2CTL |= DMAIE;
-
-    // Now set up Timer A2 (TA2) to interrupt at 50us and update the current
-    // accelerometer readings if required.
-    TA2CCR0 = 7000;
-
-    // Clock from SMCLK which is 25MHz (F_CPU), clear timer logic
-    TA2CTL |= TASSEL_2 | TACLR;
-
-    // Enable interrupts on CCR
-    TA2CCTL0 |= CCIE;
-
-    // Start the timer by using 'up' mode
-    //TA2CTL |= MC_1; FIXME
 }
 
 /***************************************************************************//**
@@ -349,7 +333,7 @@ int8_t Cma3000_readRegister(uint8_t Address)
     return Result;
 }
 
-void Cma3000_readRegisterDMA(uint8_t *cmdbuf)
+void Cma3000_readAccelDMA(void)
 {
     // Select
     ACCEL_OUT &= ~ACCEL_CS;
@@ -429,61 +413,21 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
 }
 
 /**
- * @brief Invalidate the accelerometer readings in the sample buffer.
+ * Interrupt when the DMA controller has finished receiving new data
+ * from the accelerometer. We should process this data.
+ *
  * @param none
  * @return none
  */
-void accel_invalidate(void)
-{
-    accel_state = ACCEL_STATE_NONE;
-}
-
-/**
- * @brief Check the validity of accel data in the sample buffer.
- * @param none
- * @return 0 for invalid, 1 for valid.
- */
-uint8_t accel_isValid(void)
-{
-    return (accel_state == ACCEL_STATE_ALL);
-}
-
-/**
- * @brief Interrupt to be run every 50us. Check the current state and update.
- * @param none
- * @return none
- */
-interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
-{
-    switch(accel_state)
-    {
-        case ACCEL_STATE_NONE:
-            sb->accel[0] = (uint16_t)Cma3000_readRegister(DOUTX);
-            accel_state = ACCEL_STATE_Y;
-            break;
-        case ACCEL_STATE_X:
-            sb->accel[0] = (uint16_t)Cma3000_readRegister(DOUTX);
-            accel_state = ACCEL_STATE_Y;
-            break;
-        case ACCEL_STATE_Y:
-            sb->accel[1] = (uint16_t)Cma3000_readRegister(DOUTY);
-            accel_state = ACCEL_STATE_Z;
-            break;
-        case ACCEL_STATE_Z:
-            sb->accel[2] = (uint16_t)Cma3000_readRegister(DOUTZ);
-            accel_state = ACCEL_STATE_ALL;
-            break;
-        default:
-            break;
-    }
-}
-
 interrupt(DMA_VECTOR) DMA_ISR(void)
 {
     switch(DMAIV)
     {
         case DMAIV_DMA2IFG:
+            // Deassert CS now that the transfer is complete
             ACCEL_OUT |= ACCEL_CS;
+            
+            // Move data into the sample buffer
             sb->accel[0] = rxbuf[2];
             sb->accel[1] = rxbuf[4];
             sb->accel[2] = rxbuf[6];
