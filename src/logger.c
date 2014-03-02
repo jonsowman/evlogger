@@ -45,6 +45,7 @@ void logger_init(void)
 {
     char s[20];
     uint8_t rxbuf[7];
+    uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
     uint8_t i;
 
     for(i=0; i<7; i++)
@@ -64,7 +65,7 @@ void logger_init(void)
 
     while(1)
     {
-        Cma3000_readRegisterDMA(DOUTX, rxbuf);
+        Cma3000_readRegisterDMA(cmdbuf, rxbuf);
         sprintf(s, "%i %i %i %i %i %i %i", rxbuf[0], rxbuf[1], rxbuf[2],
                 rxbuf[3], rxbuf[4], rxbuf[5], rxbuf[6]);
         uart_debug(s);

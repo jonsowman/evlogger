@@ -330,10 +330,8 @@ int8_t Cma3000_readRegister(uint8_t Address)
     return Result;
 }
 
-void Cma3000_readRegisterDMA(uint8_t addr, uint8_t *rxbuf)
+void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
 {
-    uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
-
     // Select
     ACCEL_OUT &= ~ACCEL_CS;
 
@@ -349,7 +347,7 @@ void Cma3000_readRegisterDMA(uint8_t addr, uint8_t *rxbuf)
     // DMA1 - transfer from command buffer to SPI TX
     // DMA2 - transfer from SPI RX to receive buffer
     // A transfer is 2 bytes each way
-    DMA1SA = (uintptr_t)&cmdbuf;
+    DMA1SA = (uintptr_t)cmdbuf;
     DMA1DA = (uintptr_t)&UCA0TXBUF;
     DMA1SZ = 7;
     DMA2SA = (uintptr_t)&UCA0RXBUF;
@@ -367,9 +365,7 @@ void Cma3000_readRegisterDMA(uint8_t addr, uint8_t *rxbuf)
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
 
-    // Wait until done and return result
-    _delay_ms(100);
-    P8OUT |= _BV(1);
+    _delay_ms(1);
 
     // Deselect
     ACCEL_OUT |= ACCEL_CS;
