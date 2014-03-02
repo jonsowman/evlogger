@@ -54,6 +54,7 @@ extern void Cma3000_readAccel(void);
 extern void Cma3000_setAccel_offset(int8_t xAccel_offset, int8_t yAccel_offset, int8_t zAccel_offset);
 extern void Cma3000_readAccel_offset(void);
 extern int8_t Cma3000_readRegister(uint8_t Address);
+void Cma3000_readRegisterDMA(uint8_t addr, uint8_t *rxbuf);
 extern int8_t Cma3000_writeRegister(uint8_t Address, int8_t Data);
 void accel_invalidate(void);
 uint8_t accel_isValid(void);

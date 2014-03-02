@@ -43,10 +43,17 @@ DWORD fsz;
  */
 void logger_init(void)
 {
+    char s[20];
+    uint8_t rxbuf[7];
+    uint8_t i;
+
+    for(i=0; i<7; i++)
+        rxbuf[i] = 0;
+
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
     Cma3000_init(&sb);
-    
+
     // Enable LEDs and turn them off (P1.0, P8.1, P8.2)
     P1DIR |= _BV(0);
     P1OUT &= ~_BV(0);
@@ -54,6 +61,15 @@ void logger_init(void)
     P8OUT &= ~_BV(1);
     P8DIR |= _BV(2);
     P8OUT &= ~_BV(2);
+
+    while(1)
+    {
+        Cma3000_readRegisterDMA(DOUTX, rxbuf);
+        sprintf(s, "%i %i %i %i %i %i %i", rxbuf[0], rxbuf[1], rxbuf[2],
+                rxbuf[3], rxbuf[4], rxbuf[5], rxbuf[6]);
+        uart_debug(s);
+        _delay_ms(100);
+    }
 
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);

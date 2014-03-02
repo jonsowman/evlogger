@@ -40,8 +40,10 @@
  * @addtogroup HAL_Cma3000
  * @{
  ******************************************************************************/
+#include <inttypes.h>
 #include "msp430.h"
 #include "accel.h"
+#include "system.h"
 
 // CONSTANTS
 #define TICKSPERUS              (F_CPU/ 1000000)
@@ -181,7 +183,7 @@ void Cma3000_init(SampleBuffer *samplebuffer)
     TA2CCTL0 |= CCIE;
 
     // Start the timer by using 'up' mode
-    TA2CTL |= MC_1;
+    //TA2CTL |= MC_1; FIXME
 }
 
 /***************************************************************************//**
@@ -328,6 +330,51 @@ int8_t Cma3000_readRegister(uint8_t Address)
     return Result;
 }
 
+void Cma3000_readRegisterDMA(uint8_t addr, uint8_t *rxbuf)
+{
+    uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
+
+    // Select
+    ACCEL_OUT &= ~ACCEL_CS;
+
+    // Set DMA1 to write, DMA2 to read
+    DMACTL0 |= DMA1TSEL_17;
+    DMACTL1 |= DMA2TSEL_16;
+
+    // Set up block transfer. Increment source for DMA1, dst for DMA2
+    // Source and dest are both bytes
+    DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+    DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+
+    // DMA1 - transfer from command buffer to SPI TX
+    // DMA2 - transfer from SPI RX to receive buffer
+    // A transfer is 2 bytes each way
+    DMA1SA = (uintptr_t)&cmdbuf;
+    DMA1DA = (uintptr_t)&UCA0TXBUF;
+    DMA1SZ = 7;
+    DMA2SA = (uintptr_t)&UCA0RXBUF;
+    DMA2DA = (uintptr_t)rxbuf;
+    DMA2SZ = 7;
+
+    /* UCA0IFG &= ~UCTXIFG;
+    UCA0IFG |= UCTXIFG;
+    UCA0IFG &= ~UCRXIFG;
+    UCA0IFG |= UCRXIFG; */
+    while (!(UCA0IFG & UCTXIFG));
+    UCA0TXBUF = DOUTX << 2;
+
+    // Enable the transfer
+    DMA1CTL |= DMAEN;
+    DMA2CTL |= DMAEN;
+
+    // Wait until done and return result
+    _delay_ms(100);
+    P8OUT |= _BV(1);
+
+    // Deselect
+    ACCEL_OUT |= ACCEL_CS;
+}
+
 /***************************************************************************//**
  * @brief  Writes data to the accelerometer
  * @param  Address  Address of register
@@ -411,7 +458,6 @@ uint8_t accel_isValid(void)
  */
 interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
 {
-    P8OUT |= _BV(1);
     switch(accel_state)
     {
         case ACCEL_STATE_NONE:
@@ -433,7 +479,6 @@ interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
         default:
             break;
     }
-    P8OUT &= ~_BV(1);
 }
 
 /***************************************************************************//**
