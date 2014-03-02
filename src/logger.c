@@ -66,8 +66,7 @@ void logger_init(void)
     while(1)
     {
         Cma3000_readRegisterDMA(cmdbuf, rxbuf);
-        sprintf(s, "%i %i %i %i %i %i %i", rxbuf[0], rxbuf[1], rxbuf[2],
-                rxbuf[3], rxbuf[4], rxbuf[5], rxbuf[6]);
+        sprintf(s, "%i %i %i", rxbuf[2], rxbuf[4], rxbuf[6]);
         uart_debug(s);
         _delay_ms(100);
     }

@@ -172,6 +172,15 @@ void Cma3000_init(SampleBuffer *samplebuffer)
     for(i=0; i < ACCEL_CHANNELS; i++)
         sb->accel[i] = 0;
 
+    // Set DMA1 to write, DMA2 to read
+    DMACTL0 |= DMA1TSEL_17;
+    DMACTL1 |= DMA2TSEL_16;
+
+    // Set up block transfer. Increment source for DMA1, dst for DMA2
+    // Source and dest are both bytes
+    DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+    DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+
     // Now set up Timer A2 (TA2) to interrupt at 50us and update the current
     // accelerometer readings if required.
     TA2CCR0 = 7000;
@@ -335,15 +344,6 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
     // Select
     ACCEL_OUT &= ~ACCEL_CS;
 
-    // Set DMA1 to write, DMA2 to read
-    DMACTL0 |= DMA1TSEL_17;
-    DMACTL1 |= DMA2TSEL_16;
-
-    // Set up block transfer. Increment source for DMA1, dst for DMA2
-    // Source and dest are both bytes
-    DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-    DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-
     // DMA1 - transfer from command buffer to SPI TX
     // DMA2 - transfer from SPI RX to receive buffer
     // A transfer is 2 bytes each way
@@ -362,10 +362,12 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
     UCA0TXBUF = DOUTX << 2;
 
     // Enable the transfer
+    DMA2CTL &= ~DMAIFG;
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
 
-    _delay_ms(1);
+    //_delay_ms(1);
+    while(!(DMA2CTL & DMAIFG));
 
     // Deselect
     ACCEL_OUT |= ACCEL_CS;
