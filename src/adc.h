@@ -13,7 +13,7 @@
 #include "typedefs.h"
 #include "logger.h"
 
-void adc_init(SampleBuffer *sb);
+void adc_init(volatile SampleBuffer *sb);
 void adc_convert(void);
 
 #endif /* __ADC_H__ */

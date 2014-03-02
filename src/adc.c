@@ -13,7 +13,7 @@
  * Set up the ADC clock and configure resolution, then enable the ADC
  * unit.
  */
-void adc_init(SampleBuffer *sb)
+void adc_init(volatile SampleBuffer *sb)
 {
     uint8_t i;
 

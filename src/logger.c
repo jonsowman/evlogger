@@ -31,7 +31,7 @@ char writebuf[512];
 RingBuffer sdbuf;
 
 char stringbuf[50];
-SampleBuffer sb;
+volatile SampleBuffer sb;
 
 // A FAT filesystem appears!
 FATFS FatFs;
@@ -44,12 +44,7 @@ DWORD fsz;
 void logger_init(void)
 {
     char s[20];
-    uint8_t rxbuf[7];
     uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
-    uint8_t i;
-
-    for(i=0; i<7; i++)
-        rxbuf[i] = 0;
 
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
@@ -65,8 +60,8 @@ void logger_init(void)
 
     while(1)
     {
-        Cma3000_readRegisterDMA(cmdbuf, rxbuf);
-        sprintf(s, "%i %i %i", rxbuf[2], rxbuf[4], rxbuf[6]);
+        Cma3000_readRegisterDMA(cmdbuf);
+        sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
         uart_debug(s);
         _delay_ms(100);
     }

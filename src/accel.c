@@ -98,14 +98,17 @@ int8_t Cma3000_zAccel_offset;
 volatile accel_state_t accel_state;
 
 // Maintain a pointer to the SampleBuffer
-SampleBuffer *sb;
+volatile SampleBuffer *sb;
+
+// Temporary place to store incoming accel data
+uint8_t rxbuf[7];
 
 /**
  * @brief  Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
  * @param  none
  * @return none
  */
-void Cma3000_init(SampleBuffer *samplebuffer)
+void Cma3000_init(volatile SampleBuffer *samplebuffer)
 {
     uint8_t i;
 
@@ -171,6 +174,10 @@ void Cma3000_init(SampleBuffer *samplebuffer)
     sb = samplebuffer;
     for(i=0; i < ACCEL_CHANNELS; i++)
         sb->accel[i] = 0;
+
+    // Clear the accel temp buffer
+    for(i=0; i<7; i++)
+        rxbuf[i] = 0;
 
     // Set DMA1 to write, DMA2 to read
     DMACTL0 |= DMA1TSEL_17;
@@ -342,7 +349,7 @@ int8_t Cma3000_readRegister(uint8_t Address)
     return Result;
 }
 
-void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
+void Cma3000_readRegisterDMA(uint8_t *cmdbuf)
 {
     // Select
     ACCEL_OUT &= ~ACCEL_CS;
@@ -479,10 +486,9 @@ interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
 
 interrupt(DMA_VECTOR) DMA_ISR(void)
 {
-    switch(__even_in_range(DMAIV, 16))
+    switch(DMAIV)
     {
         case 6: // DMA Channel 2 interrupt source
-            P8OUT |= _BV(1);
             sb->accel[0] = rxbuf[2];
             sb->accel[1] = rxbuf[4];
             sb->accel[2] = rxbuf[6];
