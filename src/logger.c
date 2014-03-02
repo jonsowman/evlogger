@@ -61,9 +61,9 @@ void logger_init(void)
     while(1)
     {
         Cma3000_readRegisterDMA(cmdbuf);
+        _delay_ms(10);
         sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
         uart_debug(s);
-        _delay_ms(10);
     }
 
     // Select the potentiometer and enable the ADC on that channel

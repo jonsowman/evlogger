@@ -370,11 +370,6 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf)
     DMA2CTL &= ~DMAIFG;
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
-
-    while(!(DMA2CTL & DMAIFG));
-
-    // Deselect
-    ACCEL_OUT |= ACCEL_CS;
 }
 
 /***************************************************************************//**
@@ -488,6 +483,7 @@ interrupt(DMA_VECTOR) DMA_ISR(void)
     switch(DMAIV)
     {
         case 6: // DMA Channel 2 interrupt source
+            ACCEL_OUT |= ACCEL_CS;
             sb->accel[0] = rxbuf[2];
             sb->accel[1] = rxbuf[4];
             sb->accel[2] = rxbuf[6];
