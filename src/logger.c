@@ -43,8 +43,6 @@ DWORD fsz;
  */
 void logger_init(void)
 {
-    char s[20];
-
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
     Cma3000_init(&sb);
@@ -60,7 +58,7 @@ void logger_init(void)
     while(1)
     {
         Cma3000_readAccelDMA();
-        _delay_ms(10);
+        _delay_ms(1);
         sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
         uart_debug(s);
     }
