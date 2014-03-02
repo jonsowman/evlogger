@@ -185,6 +185,16 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
     DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
 
+    // DMA1 - transfer from command buffer to SPI TX
+    // DMA2 - transfer from SPI RX to receive buffer
+    // A transfer is 2 bytes each way
+    DMA1SA = (uintptr_t)cmdbuf;
+    DMA1DA = (uintptr_t)&UCA0TXBUF;
+    DMA1SZ = 7;
+    DMA2SA = (uintptr_t)&UCA0RXBUF;
+    DMA2DA = (uintptr_t)rxbuf;
+    DMA2SZ = 7;
+
     // Fire an interrupt when receive completes
     DMA2CTL |= DMAIE;
 }
@@ -342,16 +352,6 @@ void Cma3000_readAccelDMA(void)
 {
     // Select (deselection happens in the DMA2IFG ISR)
     ACCEL_OUT &= ~ACCEL_CS;
-
-    // DMA1 - transfer from command buffer to SPI TX
-    // DMA2 - transfer from SPI RX to receive buffer
-    // A transfer is 2 bytes each way
-    DMA1SA = (uintptr_t)cmdbuf;
-    DMA1DA = (uintptr_t)&UCA0TXBUF;
-    DMA1SZ = 7;
-    DMA2SA = (uintptr_t)&UCA0RXBUF;
-    DMA2DA = (uintptr_t)rxbuf;
-    DMA2SZ = 7;
 
     // Transmit the first byte manually which will then trigger DMA
     UCA0TXBUF = DOUTX << 2;
