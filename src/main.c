@@ -18,7 +18,6 @@
 #include "logger.h"
 
 #include "HAL_SDCard.h"
-#include "HAL_Cma3000.h"
 #include "ff.h"
 
 int main(void)
@@ -30,7 +29,6 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
-    Cma3000_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
 

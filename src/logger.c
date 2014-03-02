@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "HAL_Dogs102x6.h"
+#include "accel.h"
 #include "logger.h"
 #include "adc.h"
 #include "ff.h"
@@ -44,6 +45,7 @@ void logger_init(void)
 {
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
+    Cma3000_init(&sb);
     
     // Enable LEDs and turn them off (P1.0, P8.1, P8.2)
     P1DIR |= _BV(0);
@@ -75,7 +77,7 @@ void logger_init(void)
     // Set up 16 bit timer TIMER1 to interrupt at the log frequency
     TA1CCR0 = 24999;
 
-    // Clock from SMCLK with /8 divider, use "up" mode, use interrupts
+    // Clock from SMCLK with no divider, use "up" mode, use interrupts
     TA1CTL |= TASSEL_2 | TACLR;
 
     // Enable interrupts on CCR0
@@ -360,6 +362,9 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 
     // Trigger the next conversion
     adc_convert();
+
+    // Invalidate the accel data so that we get new data
+    accel_invalidate();
 }
 
 /**
