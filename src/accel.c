@@ -172,7 +172,7 @@ void Cma3000_init(SampleBuffer *samplebuffer)
 
     // Now set up Timer A2 (TA2) to interrupt at 50us and update the current
     // accelerometer readings if required.
-    TA2CCR0 = 2499;
+    TA2CCR0 = 7000;
 
     // Clock from SMCLK which is 25MHz (F_CPU), clear timer logic
     TA2CTL |= TASSEL_2 | TACLR;
@@ -411,6 +411,7 @@ uint8_t accel_isValid(void)
  */
 interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
 {
+    P8OUT |= _BV(1);
     switch(accel_state)
     {
         case ACCEL_STATE_NONE:
@@ -432,6 +433,7 @@ interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
         default:
             break;
     }
+    P8OUT &= ~_BV(1);
 }
 
 /***************************************************************************//**
