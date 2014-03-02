@@ -176,7 +176,7 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     for(i=0; i<7; i++)
         rxbuf[i] = 0;
 
-    // Set DMA1 to write, DMA2 to read
+    // Set DMA1 to write to the accel, DMA2 to read from it
     DMACTL0 |= DMA1TSEL_17;
     DMACTL1 |= DMA2TSEL_16;
 
@@ -333,9 +333,14 @@ int8_t Cma3000_readRegister(uint8_t Address)
     return Result;
 }
 
+/**
+ * Read all three accelerometer channels to the temporary buffer via DMA.
+ * @param none
+ * @return none
+ */
 void Cma3000_readAccelDMA(void)
 {
-    // Select
+    // Select (deselection happens in the DMA2IFG ISR)
     ACCEL_OUT &= ~ACCEL_CS;
 
     // DMA1 - transfer from command buffer to SPI TX
@@ -348,9 +353,10 @@ void Cma3000_readAccelDMA(void)
     DMA2DA = (uintptr_t)rxbuf;
     DMA2SZ = 7;
 
+    // Transmit the first byte manually which will then trigger DMA
     UCA0TXBUF = DOUTX << 2;
 
-    // Enable the transfer
+    // Enable the transfers over the two channels
     DMA2CTL &= ~DMAIFG;
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
@@ -436,8 +442,6 @@ interrupt(DMA_VECTOR) DMA_ISR(void)
             break;
     }
 }
-
-
 
 /***************************************************************************//**
  * @}
