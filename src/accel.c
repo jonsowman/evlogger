@@ -354,10 +354,6 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
     DMA2DA = (uintptr_t)rxbuf;
     DMA2SZ = 7;
 
-    /* UCA0IFG &= ~UCTXIFG;
-    UCA0IFG |= UCTXIFG;
-    UCA0IFG &= ~UCRXIFG;
-    UCA0IFG |= UCRXIFG; */
     while (!(UCA0IFG & UCTXIFG));
     UCA0TXBUF = DOUTX << 2;
 
@@ -366,7 +362,6 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf, uint8_t *rxbuf)
     DMA1CTL |= DMAEN;
     DMA2CTL |= DMAEN;
 
-    //_delay_ms(1);
     while(!(DMA2CTL & DMAIFG));
 
     // Deselect
