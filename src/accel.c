@@ -364,7 +364,6 @@ void Cma3000_readRegisterDMA(uint8_t *cmdbuf)
     DMA2DA = (uintptr_t)rxbuf;
     DMA2SZ = 7;
 
-    while (!(UCA0IFG & UCTXIFG));
     UCA0TXBUF = DOUTX << 2;
 
     // Enable the transfer
