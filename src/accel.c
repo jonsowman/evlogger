@@ -482,7 +482,7 @@ interrupt(DMA_VECTOR) DMA_ISR(void)
 {
     switch(DMAIV)
     {
-        case 6: // DMA Channel 2 interrupt source
+        case DMAIV_DMA2IFG:
             ACCEL_OUT |= ACCEL_CS;
             sb->accel[0] = rxbuf[2];
             sb->accel[1] = rxbuf[4];
