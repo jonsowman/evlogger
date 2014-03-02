@@ -18,9 +18,8 @@
 #include "logger.h"
 
 #include "HAL_SDCard.h"
+#include "HAL_Cma3000.h"
 #include "ff.h"
-
-char s[25];
 
 int main(void)
 {
@@ -31,6 +30,7 @@ int main(void)
     sys_clock_init();
     clock_init();
     uart_init();
+    Cma3000_init();
     Dogs102x6_init();
     Dogs102x6_backlightInit();
 
@@ -49,6 +49,7 @@ int main(void)
     // Wait for periphs to boot and start logging
     logger_init();
      
+    // We should never get to this point
     while(1);
 
     return 0;
