@@ -181,6 +181,9 @@ void Cma3000_init(SampleBuffer *samplebuffer)
     DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
     DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
 
+    // Fire an interrupt when receive completes
+    DMA2CTL |= DMAIE;
+
     // Now set up Timer A2 (TA2) to interrupt at 50us and update the current
     // accelerometer readings if required.
     TA2CCR0 = 7000;
@@ -473,6 +476,23 @@ interrupt(TIMER2_A0_VECTOR) TIMER2_A0_ISR(void)
             break;
     }
 }
+
+interrupt(DMA_VECTOR) DMA_ISR(void)
+{
+    switch(__even_in_range(DMAIV, 16))
+    {
+        case 6: // DMA Channel 2 interrupt source
+            P8OUT |= _BV(1);
+            sb->accel[0] = rxbuf[2];
+            sb->accel[1] = rxbuf[4];
+            sb->accel[2] = rxbuf[6];
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 /***************************************************************************//**
  * @}
