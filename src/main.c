@@ -6,14 +6,25 @@
  * various channels to be used on an electric vehicle. This project is designed
  * for use on the MSP-EXP430F5529LP experimentation board which is available
  * from Texas Instruments.
+ * 
+ * \section Specification
+ * There are six analogue channels broken out on the development board, plus a
+ * user potentiometer. Additionally, there is a CMA3000 3-axis accelerometer
+ * which is capable of running at up to 400Hz. The analogue channels (including
+ * the pot) are sampled and logged at 1kHz. The accelerometer is also logged at
+ * this frequency though analysis of the output will confirm that its value
+ * only changes at 400Hz.
  *
  * \section Software Architecture
  * The software documented here is written specifically for the project, but
  * libraries and hardware abstraction layer utilities are used from various
- * sources which are documentented in the code.
+ * sources which are documentented in the code. Licenses for these parts of the
+ * code are respected and as such, copyright notices will be found in some
+ * source files where they were used as the basis for the code.
  *
  * \section Authorship
- * Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * Jon Sowman, University of Southampton <js39g13@soton.ac.uk>. Please get in
+ * touch with any questions or comments.
  *
  * @file main.c
  * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>

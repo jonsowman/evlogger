@@ -45,7 +45,7 @@
 
 /**
  * @struct RingBuffer
- * @brief A structure that emulates a ring buffer
+ * A ring buffer which can be attached to given (preallocated) memory area.
  * @var RingBuffer::buffer
  * A pointer to the start of the character buffer to be used by this ring 
  * buffer.
