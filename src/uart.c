@@ -57,7 +57,7 @@ static void _uart_tx(char* string)
 }
 
 /**
- * Send a \r\n terminated string to the debug output (to avoid storing
+ * Send a CRLF terminated string to the debug output (to avoid storing
  * the terminators in RAM all the time).
  * @param string A char pointer to the string to transmit.
  */

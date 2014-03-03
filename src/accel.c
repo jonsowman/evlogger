@@ -75,8 +75,6 @@ char s[20];
 
 /**
  * @brief  Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
- * @param  none
- * @return none
  */
 void Cma3000_init(volatile SampleBuffer *samplebuffer)
 {
@@ -174,8 +172,6 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
 
 /***************************************************************************//**
  * @brief  Disables the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
- * @param  none
- * @return none
  ******************************************************************************/
 
 void Cma3000_disable(void)
@@ -201,8 +197,6 @@ void Cma3000_disable(void)
 
 /***************************************************************************//**
  * @brief  Reads data from the accelerometer
- * @param  None
- * @return None
  ******************************************************************************/
 
 void Cma3000_readAccel(void)
@@ -224,7 +218,6 @@ void Cma3000_readAccel(void)
  * @param  xAccel_offset  x-axis offset
  * @param  yAccel_offset  y-axis offset
  * @param  zAccel_offset  z-axis offset
- * @return None
  ******************************************************************************/
 
 void Cma3000_setAccel_offset(int8_t xAccel_offset,
@@ -243,8 +236,6 @@ void Cma3000_setAccel_offset(int8_t xAccel_offset,
 
 /***************************************************************************//**
  * @brief  Reads data from the accelerometer with removed offset
- * @param  None
- * @return None
  ******************************************************************************/
 
 void Cma3000_readAccel_offset(void)
@@ -318,8 +309,6 @@ int8_t Cma3000_readRegister(uint8_t Address)
 
 /**
  * Read all three accelerometer channels to the temporary buffer via DMA.
- * @param none
- * @return none
  */
 void Cma3000_readAccelDMA(void)
 {
@@ -393,9 +382,6 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
 /**
  * Interrupt when the DMA controller has finished receiving new data
  * from the accelerometer. We should process this data.
- *
- * @param none
- * @return none
  */
 interrupt(DMA_VECTOR) DMA_ISR(void)
 {

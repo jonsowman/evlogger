@@ -267,6 +267,7 @@ void sd_setup(RingBuffer* sdbuf)
  * @param writebuf A short buffer where we can temporarily place a single
  * before before writing it to the card.
  * @param n The number of bytes to be written to the card.
+ * @param fil A pointer to the file to which we want to write.
  * @return FRESULT The fatfs result code for the write operation.
  */
 FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
