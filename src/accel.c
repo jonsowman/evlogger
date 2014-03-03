@@ -46,38 +46,44 @@
 #include "system.h"
 #include "uart.h"
 
-int8_t accelData;
-int8_t RevID;
+static int8_t accelData;
+static int8_t RevID;
+
 int8_t Cma3000_xAccel;
 int8_t Cma3000_yAccel;
 int8_t Cma3000_zAccel;
 
-// Stores x-Offset
+// Stores offsets
 int8_t Cma3000_xAccel_offset;
-
-// Stores y-Offset
 int8_t Cma3000_yAccel_offset;
-
-// Stores z-Offset
 int8_t Cma3000_zAccel_offset;
 
 // Maintain a pointer to the SampleBuffer
-volatile SampleBuffer *sb;
+static volatile SampleBuffer * volatile sb;
+static volatile uint16_t * volatile c;
+static uint16_t tmp; //FIXME
+static char s[30];
 
 /**
  * Contain the current accelerometer state. This is volatile since it is
  * modified in the interrupt service routine.
  */
-volatile accel_state_t accel_state;
+static volatile accel_state_t accel_state;
 
 /**
  * Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
  * @param samplebuffer The SampleBuffer in which to place accelerometer data
  * samples.
  */
-void Cma3000_init(volatile SampleBuffer *samplebuffer)
+void Cma3000_init(volatile SampleBuffer * volatile samplebuffer, 
+        volatile uint16_t *b)
 {
     uint8_t i;
+    sb = samplebuffer;
+    
+    c=b; // FIXME
+    sprintf(s, "init, a=%p, sb=%p", c, &(sb->accel[0]));
+    uart_debug(s);
 
     do
     {
@@ -135,7 +141,6 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     } while (!(ACCEL_INT_IN & ACCEL_INT));
 
     // Clear the sample buffer accelerometer data
-    sb = samplebuffer;
     for(i=0; i < ACCEL_CHANNELS; i++)
         sb->accel[i] = 0;
 
@@ -366,6 +371,7 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
  */
 interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
 {
+    P8OUT |= _BV(1);
     switch(UCA0IV)
     {
         case USCI_UCRXIFG:
@@ -382,7 +388,15 @@ interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
                     break;
                 case STATE_ACCEL_XRDY:
                     // We've got data x, store it and move to y
-                    sb->accel[0] = UCA0RXBUF;
+                    tmp = UCA0RXBUF; // FIXME
+                    *c = tmp;
+                    sb->accel[0] = tmp;
+                    ///////////////////////
+                    sprintf(s, "%u %u %u", tmp, *c, sb->accel[0]);
+                    uart_debug(s);
+                    sprintf(s, "isr, c=%p, sb=%p", c, &(sb->accel[0]));
+                    uart_debug(s);
+                    /////////////////////////
                     UCA0TXBUF = DOUTY << 2;
                     accel_state = STATE_ACCEL_YREQ;
                     break;
@@ -415,6 +429,7 @@ interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
         default:
             break;
     }
+    P8OUT &= ~_BV(1);
 }
 
 /**

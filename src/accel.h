@@ -110,7 +110,8 @@ typedef enum accel_state_t
     STATE_ACCEL_DONE
 } accel_state_t;
 
-extern void Cma3000_init(volatile SampleBuffer *sb);
+extern void Cma3000_init(volatile SampleBuffer * volatile sb, 
+        volatile uint16_t *b);
 extern void Cma3000_disable(void);
 extern void Cma3000_readAccel(void);
 extern void Cma3000_setAccel_offset(int8_t xAccel_offset, int8_t yAccel_offset, int8_t zAccel_offset);

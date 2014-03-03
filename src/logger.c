@@ -40,20 +40,20 @@
  */
 #define rb_reset_m(b) do {b->tail = b->head = 0} while (0)
 
-volatile uint32_t time;
-volatile uint8_t logger_running, file_open;
-char s[UART_BUF_LEN];
-char ringbuf[SD_RINGBUF_LEN];
-char writebuf[512];
-RingBuffer sdbuf;
+static volatile uint32_t time;
+static volatile uint8_t logger_running, file_open;
+static char s[UART_BUF_LEN];
+static char ringbuf[SD_RINGBUF_LEN];
+static char writebuf[512];
+static RingBuffer sdbuf;
 
-char stringbuf[50];
+volatile uint16_t a; //FIXME
 
 /**
  * A SampleBuffer to store a single set of readings before they are transferred
  * into the SD transaction buffer.
  */
-volatile SampleBuffer sb;
+static volatile SampleBuffer sb;
 
 /**
  * @var FatFs
@@ -74,11 +74,9 @@ DWORD fsz;
  */
 void logger_init(void)
 {
-    accel_state_t xl;
-
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
-    Cma3000_init(&sb);
+    Cma3000_init(&sb, &a);
 
     // Enable LEDs and turn them off (P1.0, P8.1, P8.2)
     P1DIR |= _BV(0);
@@ -87,18 +85,6 @@ void logger_init(void)
     P8OUT &= ~_BV(1);
     P8DIR |= _BV(2);
     P8OUT &= ~_BV(2);
-
-    // FIXME
-    while(1)
-    {
-        // Start a reading and wait till done
-        Cma3000_readAccelFSM();
-        while(xl != STATE_ACCEL_DONE)
-            xl = Cma3000_getState();
-        sprintf(s, "done, x = %i", sb.accel[0]);
-        uart_debug(s);
-        _delay_ms(500);
-    }
 
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
@@ -264,7 +250,11 @@ void sd_setup(RingBuffer* sdbuf)
 
         // Update the LCD once every 200ms
         if((clock_time() % 333) == 0)
+        {
+            //sprintf(s, "%i", sb.accel[0]); //FIXME
+            //uart_debug(s);
             update_lcd(sdbuf);
+        }
     }
 }
 
@@ -422,6 +412,8 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 
     // Trigger the next conversion
     adc_convert();
+    if((clock_time() % 100) == 0)
+        Cma3000_readAccelFSM();
 }
 
 /**

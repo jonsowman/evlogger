@@ -15,7 +15,7 @@
 #include "system.h"
 
 /** Current clock time */
-volatile clock_time_t ticks;
+static volatile clock_time_t ticks;
 
 /**
  * Use timer A0 to set up a system clock ticking at 1ms intervals.
