@@ -36,6 +36,13 @@
 // Don't change the below line
 #define SD_RINGBUF_MASK (SD_RINGBUF_LEN - 1)
 
+/**
+ * @struct RingBuffer
+ * @brief A structure that emulates a ring buffer
+ * @var RingBuffer::buffer
+ * A pointer to the start of the character buffer to be
+ * used by this ring buffer.
+ */
 typedef struct RingBuffer
 {
     char* buffer;
@@ -48,8 +55,8 @@ typedef struct RingBuffer
 
 typedef struct SampleBuffer
 {
-    uint16_t adc[ADC_CHANNELS];
-    uint16_t accel[ACCEL_CHANNELS];
+    volatile uint16_t adc[ADC_CHANNELS];
+    volatile uint16_t accel[ACCEL_CHANNELS];
 } SampleBuffer;
 
 void logger_init(void);

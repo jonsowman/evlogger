@@ -44,40 +44,7 @@
 #include "msp430.h"
 #include "accel.h"
 #include "system.h"
-
-// CONSTANTS
-#define TICKSPERUS              (F_CPU/ 1000000)
-
-// PORT DEFINITIONS
-#define ACCEL_INT_IN            P2IN
-#define ACCEL_INT_OUT           P2OUT
-#define ACCEL_INT_DIR           P2DIR
-#define ACCEL_SCK_SEL           P2SEL
-#define ACCEL_INT_IE            P2IE
-#define ACCEL_INT_IES           P2IES
-#define ACCEL_INT_IFG           P2IFG
-#define ACCEL_INT_VECTOR        PORT2_VECTOR
-#define ACCEL_OUT               P3OUT
-#define ACCEL_DIR               P3DIR
-#define ACCEL_SEL               P3SEL
-
-// PIN DEFINITIONS
-#define ACCEL_INT               BIT5
-#define ACCEL_CS                BIT5
-#define ACCEL_SIMO              BIT3
-#define ACCEL_SOMI              BIT4
-#define ACCEL_SCK               BIT7
-#define ACCEL_PWR               BIT6
-
-// ACCELEROMETER REGISTER DEFINITIONS
-#define REVID                   0x01
-#define CTRL                    0x02
-#define MODE_400                0x04        // Measurement mode 400 Hz ODR
-#define DOUTX                   0x06
-#define DOUTY                   0x07
-#define DOUTZ                   0x08
-#define G_RANGE_2               0x80        // 2g range
-#define I2C_DIS                 0x10        // I2C disabled
+#include "uart.h"
 
 int8_t accelData;
 int8_t RevID;
@@ -102,6 +69,9 @@ uint8_t rxbuf[7];
 
 // These are the accel commands to be written via DMA (excluding 1st byte)
 uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
+
+//FIXME
+char s[20];
 
 /**
  * @brief  Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
@@ -180,10 +150,13 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     DMACTL0 |= DMA1TSEL_17;
     DMACTL1 |= DMA2TSEL_16;
 
-    // Set up block transfer. Increment source for DMA1, dst for DMA2
+    // Enable round robin and don't let DMA interrupt RMW cycles
+    DMACTL4 |= ROUNDROBIN | DMARMWDIS;
+
+    // Set up burst block transfer. Increment source for DMA1, dst for DMA2
     // Source and dest are both bytes
-    DMA1CTL |= DMADT_1 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-    DMA2CTL |= DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+    DMA1CTL |= DMADT_2 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+    DMA2CTL |= DMADT_2 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
 
     // DMA1 - transfer from command buffer to SPI TX
     // DMA2 - transfer from SPI RX to receive buffer
@@ -426,16 +399,21 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
  */
 interrupt(DMA_VECTOR) DMA_ISR(void)
 {
+    P8OUT &= ~_BV(1);
     switch(DMAIV)
     {
         case DMAIV_DMA2IFG:
             // Deassert CS now that the transfer is complete
             ACCEL_OUT |= ACCEL_CS;
-            
+
             // Move data into the sample buffer
-            sb->accel[0] = rxbuf[2];
-            sb->accel[1] = rxbuf[4];
-            sb->accel[2] = rxbuf[6];
+            sb->accel[0] = (uint16_t)rxbuf[2];
+            sb->accel[1] = (uint16_t)rxbuf[4];
+            sb->accel[2] = (uint16_t)rxbuf[6];
+            
+            sprintf(s, "%u", sb->accel[0]);
+            uart_debug(s);
+
             break;
         default:
             break;

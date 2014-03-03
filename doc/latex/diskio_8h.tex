@@ -1,0 +1,159 @@
+\hypertarget{diskio_8h}{\section{/home/jon/projects/evlogger/evlogger/src/diskio.h \-File \-Reference}
+\label{diskio_8h}\index{/home/jon/projects/evlogger/evlogger/src/diskio.\-h@{/home/jon/projects/evlogger/evlogger/src/diskio.\-h}}
+}
+{\ttfamily \#include \char`\"{}integer.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{diskio_8h_abd6503c70d862b979a3f7080a59e9acd}{\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T}~0x01	/$\ast$ Drive not initialized $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_aec625080763d6cf487e550a6c9a2dd19}{\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K}~0x02	/$\ast$ No medium in the drive $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_a9ec6dc5f6620a33fabe388d3a111ca8c}{\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T}~0x04	/$\ast$ Write protected $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_a1b3c492f9aec325f0655941b75256f3c}{\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C}~0	/$\ast$ \-Flush disk cache (for write functions) $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_a570216006f6a8fc4e1698b1bbb2d1dde}{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T}~1	/$\ast$ \-Get media size (for only f\-\_\-mkfs()) $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_ac73b5cf2135cbd459d109b96c9aa346a}{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}~2	/$\ast$ \-Get sector size (for multiple sector size (\-\_\-\-M\-A\-X\-\_\-\-S\-S $>$= 1024)) $\ast$/
+\item 
+\#define \hyperlink{diskio_8h_aec3bb4dfe075d0ba2f3b07b300a95500}{\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E}~3	/$\ast$ \-Get erase block size (for only f\-\_\-mkfs()) $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} \hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\-D\-S\-T\-A\-T\-U\-S}
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \{ \*
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba2ea4b6ef3fffc17dd1d38ab5c2837737}{\-R\-E\-S\-\_\-\-O\-K} =  0, 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba78011f5557679ec178fb40bd21e89840}{\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba442a6d4393dc404827067bc4e981b322}{\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T}, 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baad64c27c69eb1ff39ae67c5f77bb2b1d}{\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y}, 
+\*
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baf4dcc07fd46310b5495fa8025c89a9f3}{\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{diskio_8h_acae8a608b63332c8f0232c8b635267dc}{assign\-\_\-drives} (int, int)
+\item 
+\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\-D\-S\-T\-A\-T\-U\-S} \hyperlink{diskio_8h_a2d5ebc53960f1cd48fc6b419d1256df3}{disk\-\_\-initialize} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E})
+\item 
+\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\-D\-S\-T\-A\-T\-U\-S} \hyperlink{diskio_8h_a80b48e03f0a66ea3cd0465654e44ec55}{disk\-\_\-status} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E})
+\item 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{diskio_8h_a75298f57b6d13bd7148bc5dfa0e50472}{disk\-\_\-read} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E}, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} $\ast$, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{\-D\-W\-O\-R\-D}, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E})
+\item 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{diskio_8h_a44e59653a39c1368ee0a8bfa4de78190}{disk\-\_\-write} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E}, const \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} $\ast$, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{\-D\-W\-O\-R\-D}, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E})
+\item 
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{diskio_8h_af4f8c59be828b9f2e83612bca85ca69f}{disk\-\_\-ioctl} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E}, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E}, void $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{diskio_8h_a1b3c492f9aec325f0655941b75256f3c}{\index{diskio.\-h@{diskio.\-h}!\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C@{\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C}}
+\index{\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C@{\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-R\-L\-\_\-\-S\-Y\-N\-C}~0	/$\ast$ \-Flush disk cache (for write functions) $\ast$/}}\label{diskio_8h_a1b3c492f9aec325f0655941b75256f3c}
+\hypertarget{diskio_8h_aec3bb4dfe075d0ba2f3b07b300a95500}{\index{diskio.\-h@{diskio.\-h}!\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E@{\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E}}
+\index{\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E@{\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-G\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-S\-I\-Z\-E}~3	/$\ast$ \-Get erase block size (for only f\-\_\-mkfs()) $\ast$/}}\label{diskio_8h_aec3bb4dfe075d0ba2f3b07b300a95500}
+\hypertarget{diskio_8h_a570216006f6a8fc4e1698b1bbb2d1dde}{\index{diskio.\-h@{diskio.\-h}!\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T@{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T}}
+\index{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T@{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-C\-O\-U\-N\-T}~1	/$\ast$ \-Get media size (for only f\-\_\-mkfs()) $\ast$/}}\label{diskio_8h_a570216006f6a8fc4e1698b1bbb2d1dde}
+\hypertarget{diskio_8h_ac73b5cf2135cbd459d109b96c9aa346a}{\index{diskio.\-h@{diskio.\-h}!\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E@{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}}
+\index{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E@{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-G\-E\-T\-\_\-\-S\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}~2	/$\ast$ \-Get sector size (for multiple sector size (\-\_\-\-M\-A\-X\-\_\-\-S\-S $>$= 1024)) $\ast$/}}\label{diskio_8h_ac73b5cf2135cbd459d109b96c9aa346a}
+\hypertarget{diskio_8h_aec625080763d6cf487e550a6c9a2dd19}{\index{diskio.\-h@{diskio.\-h}!\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K@{\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K}}
+\index{\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K@{\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-T\-A\-\_\-\-N\-O\-D\-I\-S\-K}~0x02	/$\ast$ No medium in the drive $\ast$/}}\label{diskio_8h_aec625080763d6cf487e550a6c9a2dd19}
+\hypertarget{diskio_8h_abd6503c70d862b979a3f7080a59e9acd}{\index{diskio.\-h@{diskio.\-h}!\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T@{\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T}}
+\index{\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T@{\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-T\-A\-\_\-\-N\-O\-I\-N\-I\-T}~0x01	/$\ast$ Drive not initialized $\ast$/}}\label{diskio_8h_abd6503c70d862b979a3f7080a59e9acd}
+\hypertarget{diskio_8h_a9ec6dc5f6620a33fabe388d3a111ca8c}{\index{diskio.\-h@{diskio.\-h}!\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T@{\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T}}
+\index{\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T@{\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-T\-A\-\_\-\-P\-R\-O\-T\-E\-C\-T}~0x04	/$\ast$ Write protected $\ast$/}}\label{diskio_8h_a9ec6dc5f6620a33fabe388d3a111ca8c}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\index{diskio.\-h@{diskio.\-h}!\-D\-S\-T\-A\-T\-U\-S@{\-D\-S\-T\-A\-T\-U\-S}}
+\index{\-D\-S\-T\-A\-T\-U\-S@{\-D\-S\-T\-A\-T\-U\-S}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-D\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf \-B\-Y\-T\-E} {\bf \-D\-S\-T\-A\-T\-U\-S}}}\label{diskio_8h_adba6790898ce4029c20a34b898ce73c1}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\index{diskio.\-h@{diskio.\-h}!\-D\-R\-E\-S\-U\-L\-T@{\-D\-R\-E\-S\-U\-L\-T}}
+\index{\-D\-R\-E\-S\-U\-L\-T@{\-D\-R\-E\-S\-U\-L\-T}!diskio.h@{diskio.\-h}}
+\subsubsection[{\-D\-R\-E\-S\-U\-L\-T}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-D\-R\-E\-S\-U\-L\-T}}}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}
+\begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-R\-E\-S\-\_\-\-O\-K@{\-R\-E\-S\-\_\-\-O\-K}!diskio.\-h@{diskio.\-h}}\index{diskio.\-h@{diskio.\-h}!\-R\-E\-S\-\_\-\-O\-K@{\-R\-E\-S\-\_\-\-O\-K}}\item[{\em 
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba2ea4b6ef3fffc17dd1d38ab5c2837737}{\-R\-E\-S\-\_\-\-O\-K}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba2ea4b6ef3fffc17dd1d38ab5c2837737}
+}]\index{\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R@{\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R}!diskio.\-h@{diskio.\-h}}\index{diskio.\-h@{diskio.\-h}!\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R@{\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba78011f5557679ec178fb40bd21e89840}{\-R\-E\-S\-\_\-\-E\-R\-R\-O\-R}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba78011f5557679ec178fb40bd21e89840}
+}]\index{\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T@{\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T}!diskio.\-h@{diskio.\-h}}\index{diskio.\-h@{diskio.\-h}!\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T@{\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T}}\item[{\em 
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba442a6d4393dc404827067bc4e981b322}{\-R\-E\-S\-\_\-\-W\-R\-P\-R\-T}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2ba442a6d4393dc404827067bc4e981b322}
+}]\index{\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y@{\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y}!diskio.\-h@{diskio.\-h}}\index{diskio.\-h@{diskio.\-h}!\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y@{\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y}}\item[{\em 
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baad64c27c69eb1ff39ae67c5f77bb2b1d}{\-R\-E\-S\-\_\-\-N\-O\-T\-R\-D\-Y}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baad64c27c69eb1ff39ae67c5f77bb2b1d}
+}]\index{\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R@{\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R}!diskio.\-h@{diskio.\-h}}\index{diskio.\-h@{diskio.\-h}!\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R@{\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R}}\item[{\em 
+\hypertarget{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baf4dcc07fd46310b5495fa8025c89a9f3}{\-R\-E\-S\-\_\-\-P\-A\-R\-E\-R\-R}\label{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2baf4dcc07fd46310b5495fa8025c89a9f3}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{diskio_8h_acae8a608b63332c8f0232c8b635267dc}{\index{diskio.\-h@{diskio.\-h}!assign\-\_\-drives@{assign\-\_\-drives}}
+\index{assign\-\_\-drives@{assign\-\_\-drives}!diskio.h@{diskio.\-h}}
+\subsubsection[{assign\-\_\-drives}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf assign\-\_\-drives} (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_acae8a608b63332c8f0232c8b635267dc}
+\hypertarget{diskio_8h_a2d5ebc53960f1cd48fc6b419d1256df3}{\index{diskio.\-h@{diskio.\-h}!disk\-\_\-initialize@{disk\-\_\-initialize}}
+\index{disk\-\_\-initialize@{disk\-\_\-initialize}!diskio.h@{diskio.\-h}}
+\subsubsection[{disk\-\_\-initialize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-S\-T\-A\-T\-U\-S} {\bf disk\-\_\-initialize} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-B\-Y\-T\-E}}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_a2d5ebc53960f1cd48fc6b419d1256df3}
+\hypertarget{diskio_8h_af4f8c59be828b9f2e83612bca85ca69f}{\index{diskio.\-h@{diskio.\-h}!disk\-\_\-ioctl@{disk\-\_\-ioctl}}
+\index{disk\-\_\-ioctl@{disk\-\_\-ioctl}!diskio.h@{diskio.\-h}}
+\subsubsection[{disk\-\_\-ioctl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-ioctl} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-B\-Y\-T\-E}}]{, }
+\item[{{\bf \-B\-Y\-T\-E}}]{, }
+\item[{void $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_af4f8c59be828b9f2e83612bca85ca69f}
+\hypertarget{diskio_8h_a75298f57b6d13bd7148bc5dfa0e50472}{\index{diskio.\-h@{diskio.\-h}!disk\-\_\-read@{disk\-\_\-read}}
+\index{disk\-\_\-read@{disk\-\_\-read}!diskio.h@{diskio.\-h}}
+\subsubsection[{disk\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-read} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-B\-Y\-T\-E}}]{, }
+\item[{{\bf \-B\-Y\-T\-E} $\ast$}]{, }
+\item[{{\bf \-D\-W\-O\-R\-D}}]{, }
+\item[{{\bf \-B\-Y\-T\-E}}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_a75298f57b6d13bd7148bc5dfa0e50472}
+\hypertarget{diskio_8h_a80b48e03f0a66ea3cd0465654e44ec55}{\index{diskio.\-h@{diskio.\-h}!disk\-\_\-status@{disk\-\_\-status}}
+\index{disk\-\_\-status@{disk\-\_\-status}!diskio.h@{diskio.\-h}}
+\subsubsection[{disk\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-S\-T\-A\-T\-U\-S} {\bf disk\-\_\-status} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-B\-Y\-T\-E}}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_a80b48e03f0a66ea3cd0465654e44ec55}
+\hypertarget{diskio_8h_a44e59653a39c1368ee0a8bfa4de78190}{\index{diskio.\-h@{diskio.\-h}!disk\-\_\-write@{disk\-\_\-write}}
+\index{disk\-\_\-write@{disk\-\_\-write}!diskio.h@{diskio.\-h}}
+\subsubsection[{disk\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-write} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-B\-Y\-T\-E}}]{, }
+\item[{const {\bf \-B\-Y\-T\-E} $\ast$}]{, }
+\item[{{\bf \-D\-W\-O\-R\-D}}]{, }
+\item[{{\bf \-B\-Y\-T\-E}}]{}
+\end{DoxyParamCaption}
+)}}\label{diskio_8h_a44e59653a39c1368ee0a8bfa4de78190}

@@ -61,7 +61,7 @@ void adc_init(volatile SampleBuffer *sb)
     // Set source address to first ADC conversion memory, destination to ADC
     // buffer, transfer 6 words (6 channels)
     DMA0SA = (uintptr_t)&ADC12MEM0;
-    DMA0DA = (uintptr_t)&(sb->adc);
+    DMA0DA = (uintptr_t)(sb->adc);
     DMA0SZ = ADC_CHANNELS;
 }
 

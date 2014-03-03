@@ -1,0 +1,264 @@
+\hypertarget{logger_8h}{\section{/home/jon/projects/evlogger/evlogger/src/logger.h \-File \-Reference}
+\label{logger_8h}\index{/home/jon/projects/evlogger/evlogger/src/logger.\-h@{/home/jon/projects/evlogger/evlogger/src/logger.\-h}}
+}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$msp430.\-h$>$}\*
+{\ttfamily \#include $<$msp430f5529.\-h$>$}\*
+{\ttfamily \#include $<$legacymsp430.\-h$>$}\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}ff.\-h\char`\"{}}\*
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structRingBuffer}{\-Ring\-Buffer}
+\begin{DoxyCompactList}\small\item\em \-A structure that emulates a ring buffer. \end{DoxyCompactList}\item 
+struct \hyperlink{structSampleBuffer}{\-Sample\-Buffer}
+\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{logger_8h_ac25d4bda2e5e60901d16ab23fab5f324}{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}~\-P1\-O\-U\-T
+\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\item 
+\#define \hyperlink{logger_8h_ae1407069d60d2d9d6d43e0d872fe5066}{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}~\-P1\-R\-E\-N
+\item 
+\#define \hyperlink{logger_8h_ac543535dbf43aab36ae46b652ac88cee}{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}~\-P1\-I\-E\-S
+\item 
+\#define \hyperlink{logger_8h_a5635524194bbc8911288f76fc0bb6b5b}{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}~\-P1\-I\-E
+\item 
+\#define \hyperlink{logger_8h_a6dab5a96841f65e53b65fc30d25e987c}{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}~\-P1\-I\-F\-G
+\item 
+\#define \hyperlink{logger_8h_a8766620bcdd3b4ffdae69e99def6458e}{\-S1\-\_\-\-P\-I\-N}~\hyperlink{typedefs_8h_a483c9de27db573099572f5485ef841c9}{\-\_\-\-B\-V}(7)
+\item 
+\#define \hyperlink{logger_8h_a7d2c3ed889c26e408d9760010877c743}{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}~\-P2\-O\-U\-T
+\item 
+\#define \hyperlink{logger_8h_a145401ccd2b64b0b27f08e3b7f290d2a}{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}~\-P2\-R\-E\-N
+\item 
+\#define \hyperlink{logger_8h_af4e0d6be993eceb8be68f0225e347b0c}{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}~\-P2\-I\-E\-S
+\item 
+\#define \hyperlink{logger_8h_ac36c10134cfc6b2f1b6c505246a14edc}{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}~\-P2\-I\-E
+\item 
+\#define \hyperlink{logger_8h_ada0fb6bcf89f5f8c0dd989f63a3a5abf}{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}~\-P2\-I\-F\-G
+\item 
+\#define \hyperlink{logger_8h_ad50338afe7b10c1aa188fde925109853}{\-S2\-\_\-\-P\-I\-N}~\hyperlink{typedefs_8h_a483c9de27db573099572f5485ef841c9}{\-\_\-\-B\-V}(2)
+\item 
+\#define \hyperlink{logger_8h_afacd61cc6eb6a06283bfc5a9824e0760}{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N}~2048
+\item 
+\#define \hyperlink{logger_8h_aa92c48a4b6b3ea015e31a01e940c440b}{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K}~(\hyperlink{logger_8h_afacd61cc6eb6a06283bfc5a9824e0760}{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N} -\/ 1)
+\item 
+\#define \hyperlink{logger_8h_a065dcfa648ca52ed6214008cb177de36}{\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}~7
+\item 
+\#define \hyperlink{logger_8h_a97ed3fe57790c99c8e351a42713c604d}{\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}~3
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structRingBuffer}{\-Ring\-Buffer} \hyperlink{logger_8h_acc8f6cda4a415098348d3e3c222b2ac6}{\-Ring\-Buffer}
+\item 
+typedef struct \hyperlink{structSampleBuffer}{\-Sample\-Buffer} \hyperlink{logger_8h_a04b1abe6e9526dc4f1c490318dc72f78}{\-Sample\-Buffer}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}{logger\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em \-Set up the hardware for logging functionality. \end{DoxyCompactList}\item 
+void \hyperlink{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}{sd\-\_\-setup} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$\hyperlink{logger_8c_ad897897d6e8cd86086d5ebaa9a21d0d4}{sdbuf})
+\begin{DoxyCompactList}\small\item\em \-Set up the \-S\-D card for logging to it. \end{DoxyCompactList}\item 
+\-F\-R\-E\-S\-U\-L\-T \hyperlink{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}{sd\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$rb, char $\ast$\hyperlink{logger_8c_a8e106526932e3c95b903409ab35b0882}{writebuf}, \-F\-I\-L $\ast$\hyperlink{logger_8c_a4be63952e3c9cb0f46f9e592b3c78714}{fil}, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\begin{DoxyCompactList}\small\item\em \-Write n bytes from a ring buffer to an \-S\-D card controlled by fatfs. \end{DoxyCompactList}\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}{ringbuf\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$data, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\begin{DoxyCompactList}\small\item\em \-Write n bytes to a ring buffer. \end{DoxyCompactList}\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}{ringbuf\-\_\-read} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$read\-\_\-buffer, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\begin{DoxyCompactList}\small\item\em \-Read n bytes from a ring buffer. \end{DoxyCompactList}\item 
+void \hyperlink{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}{update\-\_\-lcd} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf)
+\begin{DoxyCompactList}\small\item\em \-Update the \-L\-C\-D with the current status of the logger service. \end{DoxyCompactList}\item 
+void \hyperlink{logger_8h_adf69ccbc6389e013322d06a0516d9db5}{logger\-\_\-enable} (void)
+\begin{DoxyCompactList}\small\item\em \-Enable \-T\-A1 to begin logging by setting mode control to \char`\"{}up\char`\"{} mode, counter counts to \-T\-Ax\-C\-C\-R0. \end{DoxyCompactList}\item 
+void \hyperlink{logger_8h_aeb449c011f90affd5c104e98298704b5}{logger\-\_\-disable} (void)
+\begin{DoxyCompactList}\small\item\em \-Disable \-T\-A1 to halt logging by setting mode control to \-S\-T\-O\-P. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{logger_8h_a97ed3fe57790c99c8e351a42713c604d}{\index{logger.\-h@{logger.\-h}!\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S@{\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}}
+\index{\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S@{\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}!logger.h@{logger.\-h}}
+\subsubsection[{\-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-C\-C\-E\-L\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}~3}}\label{logger_8h_a97ed3fe57790c99c8e351a42713c604d}
+\hypertarget{logger_8h_a065dcfa648ca52ed6214008cb177de36}{\index{logger.\-h@{logger.\-h}!\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S@{\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}}
+\index{\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S@{\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}!logger.h@{logger.\-h}}
+\subsubsection[{\-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-D\-C\-\_\-\-C\-H\-A\-N\-N\-E\-L\-S}~7}}\label{logger_8h_a065dcfa648ca52ed6214008cb177de36}
+\hypertarget{logger_8h_a8766620bcdd3b4ffdae69e99def6458e}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-I\-N@{\-S1\-\_\-\-P\-I\-N}}
+\index{\-S1\-\_\-\-P\-I\-N@{\-S1\-\_\-\-P\-I\-N}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-I\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-I\-N}~{\bf \-\_\-\-B\-V}(7)}}\label{logger_8h_a8766620bcdd3b4ffdae69e99def6458e}
+\hypertarget{logger_8h_a5635524194bbc8911288f76fc0bb6b5b}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}}
+\index{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}~\-P1\-I\-E}}\label{logger_8h_a5635524194bbc8911288f76fc0bb6b5b}
+\hypertarget{logger_8h_ac543535dbf43aab36ae46b652ac88cee}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}}
+\index{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}~\-P1\-I\-E\-S}}\label{logger_8h_ac543535dbf43aab36ae46b652ac88cee}
+\hypertarget{logger_8h_a6dab5a96841f65e53b65fc30d25e987c}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}}
+\index{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}~\-P1\-I\-F\-G}}\label{logger_8h_a6dab5a96841f65e53b65fc30d25e987c}
+\hypertarget{logger_8h_ac25d4bda2e5e60901d16ab23fab5f324}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}}
+\index{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}~\-P1\-O\-U\-T}}\label{logger_8h_ac25d4bda2e5e60901d16ab23fab5f324}
+
+
+\-E\-V \-Datalogger \-Project. 
+
+\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton \hypertarget{logger_8h_ae1407069d60d2d9d6d43e0d872fe5066}{\index{logger.\-h@{logger.\-h}!\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}}
+\index{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N@{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}!logger.h@{logger.\-h}}
+\subsubsection[{\-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S1\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}~\-P1\-R\-E\-N}}\label{logger_8h_ae1407069d60d2d9d6d43e0d872fe5066}
+\hypertarget{logger_8h_ad50338afe7b10c1aa188fde925109853}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-I\-N@{\-S2\-\_\-\-P\-I\-N}}
+\index{\-S2\-\_\-\-P\-I\-N@{\-S2\-\_\-\-P\-I\-N}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-I\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-I\-N}~{\bf \-\_\-\-B\-V}(2)}}\label{logger_8h_ad50338afe7b10c1aa188fde925109853}
+\hypertarget{logger_8h_ac36c10134cfc6b2f1b6c505246a14edc}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}}
+\index{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E}~\-P2\-I\-E}}\label{logger_8h_ac36c10134cfc6b2f1b6c505246a14edc}
+\hypertarget{logger_8h_af4e0d6be993eceb8be68f0225e347b0c}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}}
+\index{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-E\-S}~\-P2\-I\-E\-S}}\label{logger_8h_af4e0d6be993eceb8be68f0225e347b0c}
+\hypertarget{logger_8h_ada0fb6bcf89f5f8c0dd989f63a3a5abf}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}}
+\index{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-O\-R\-T\-\_\-\-I\-F\-G}~\-P2\-I\-F\-G}}\label{logger_8h_ada0fb6bcf89f5f8c0dd989f63a3a5abf}
+\hypertarget{logger_8h_a7d2c3ed889c26e408d9760010877c743}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}}
+\index{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-O\-R\-T\-\_\-\-O\-U\-T}~\-P2\-O\-U\-T}}\label{logger_8h_a7d2c3ed889c26e408d9760010877c743}
+\hypertarget{logger_8h_a145401ccd2b64b0b27f08e3b7f290d2a}{\index{logger.\-h@{logger.\-h}!\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}}
+\index{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N@{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}!logger.h@{logger.\-h}}
+\subsubsection[{\-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S2\-\_\-\-P\-O\-R\-T\-\_\-\-R\-E\-N}~\-P2\-R\-E\-N}}\label{logger_8h_a145401ccd2b64b0b27f08e3b7f290d2a}
+\hypertarget{logger_8h_afacd61cc6eb6a06283bfc5a9824e0760}{\index{logger.\-h@{logger.\-h}!\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N@{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N}}
+\index{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N@{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N}!logger.h@{logger.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N}~2048}}\label{logger_8h_afacd61cc6eb6a06283bfc5a9824e0760}
+\hypertarget{logger_8h_aa92c48a4b6b3ea015e31a01e940c440b}{\index{logger.\-h@{logger.\-h}!\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K@{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K}}
+\index{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K@{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K}!logger.h@{logger.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-M\-A\-S\-K}~({\bf \-S\-D\-\_\-\-R\-I\-N\-G\-B\-U\-F\-\_\-\-L\-E\-N} -\/ 1)}}\label{logger_8h_aa92c48a4b6b3ea015e31a01e940c440b}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{logger_8h_acc8f6cda4a415098348d3e3c222b2ac6}{\index{logger.\-h@{logger.\-h}!\-Ring\-Buffer@{\-Ring\-Buffer}}
+\index{\-Ring\-Buffer@{\-Ring\-Buffer}!logger.h@{logger.\-h}}
+\subsubsection[{\-Ring\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \-Ring\-Buffer}  {\bf \-Ring\-Buffer}}}\label{logger_8h_acc8f6cda4a415098348d3e3c222b2ac6}
+\hypertarget{logger_8h_a04b1abe6e9526dc4f1c490318dc72f78}{\index{logger.\-h@{logger.\-h}!\-Sample\-Buffer@{\-Sample\-Buffer}}
+\index{\-Sample\-Buffer@{\-Sample\-Buffer}!logger.h@{logger.\-h}}
+\subsubsection[{\-Sample\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \-Sample\-Buffer}  {\bf \-Sample\-Buffer}}}\label{logger_8h_a04b1abe6e9526dc4f1c490318dc72f78}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{logger_8h_aeb449c011f90affd5c104e98298704b5}{\index{logger.\-h@{logger.\-h}!logger\-\_\-disable@{logger\-\_\-disable}}
+\index{logger\-\_\-disable@{logger\-\_\-disable}!logger.h@{logger.\-h}}
+\subsubsection[{logger\-\_\-disable}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-disable} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_aeb449c011f90affd5c104e98298704b5}
+
+
+\-Disable \-T\-A1 to halt logging by setting mode control to \-S\-T\-O\-P. 
+
+\hypertarget{logger_8h_adf69ccbc6389e013322d06a0516d9db5}{\index{logger.\-h@{logger.\-h}!logger\-\_\-enable@{logger\-\_\-enable}}
+\index{logger\-\_\-enable@{logger\-\_\-enable}!logger.h@{logger.\-h}}
+\subsubsection[{logger\-\_\-enable}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-enable} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_adf69ccbc6389e013322d06a0516d9db5}
+
+
+\-Enable \-T\-A1 to begin logging by setting mode control to \char`\"{}up\char`\"{} mode, counter counts to \-T\-Ax\-C\-C\-R0. 
+
+\hypertarget{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}{\index{logger.\-h@{logger.\-h}!logger\-\_\-init@{logger\-\_\-init}}
+\index{logger\-\_\-init@{logger\-\_\-init}!logger.h@{logger.\-h}}
+\subsubsection[{logger\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}
+
+
+\-Set up the hardware for logging functionality. 
+
+\hypertarget{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}{\index{logger.\-h@{logger.\-h}!ringbuf\-\_\-read@{ringbuf\-\_\-read}}
+\index{ringbuf\-\_\-read@{ringbuf\-\_\-read}!logger.h@{logger.\-h}}
+\subsubsection[{ringbuf\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf ringbuf\-\_\-read} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf, }
+\item[{char $\ast$}]{read\-\_\-buffer, }
+\item[{{\bf uint16\-\_\-t}}]{n}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}
+
+
+\-Read n bytes from a ring buffer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em buf} & \-A pointer to the ring buffer we want to write to \\
+\hline
+{\em read\-\_\-buffer} & \-Copy data into this array \\
+\hline
+{\em n} & \-The number of bytes to be read from the ring buffer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+0 for success, non-\/0 for failure 
+\end{DoxyReturn}
+\hypertarget{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}{\index{logger.\-h@{logger.\-h}!ringbuf\-\_\-write@{ringbuf\-\_\-write}}
+\index{ringbuf\-\_\-write@{ringbuf\-\_\-write}!logger.h@{logger.\-h}}
+\subsubsection[{ringbuf\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf ringbuf\-\_\-write} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf, }
+\item[{char $\ast$}]{data, }
+\item[{{\bf uint16\-\_\-t}}]{n}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}
+
+
+\-Write n bytes to a ring buffer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em buf} & \-A pointer to the ring buffer we want to write to \\
+\hline
+{\em data} & \-A pointer to the data to be written \\
+\hline
+{\em n} & \-The number of bytes to be written to the ring buffer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+0 for success, non-\/0 for failure 
+\end{DoxyReturn}
+\hypertarget{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}{\index{logger.\-h@{logger.\-h}!sd\-\_\-setup@{sd\-\_\-setup}}
+\index{sd\-\_\-setup@{sd\-\_\-setup}!logger.h@{logger.\-h}}
+\subsubsection[{sd\-\_\-setup}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf sd\-\_\-setup} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Ring\-Buffer} $\ast$}]{sdbuf}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}
+
+
+\-Set up the \-S\-D card for logging to it. 
+
+\hypertarget{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}{\index{logger.\-h@{logger.\-h}!sd\-\_\-write@{sd\-\_\-write}}
+\index{sd\-\_\-write@{sd\-\_\-write}!logger.h@{logger.\-h}}
+\subsubsection[{sd\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}\-F\-R\-E\-S\-U\-L\-T {\bf sd\-\_\-write} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Ring\-Buffer} $\ast$}]{rb, }
+\item[{char $\ast$}]{writebuf, }
+\item[{\-F\-I\-L $\ast$}]{fil, }
+\item[{{\bf uint16\-\_\-t}}]{n}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}
+
+
+\-Write n bytes from a ring buffer to an \-S\-D card controlled by fatfs. 
+
+\hypertarget{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}{\index{logger.\-h@{logger.\-h}!update\-\_\-lcd@{update\-\_\-lcd}}
+\index{update\-\_\-lcd@{update\-\_\-lcd}!logger.h@{logger.\-h}}
+\subsubsection[{update\-\_\-lcd}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-lcd} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}}\label{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}
+
+
+\-Update the \-L\-C\-D with the current status of the logger service. 
+
+\-This should not be called too regularly on the \-M\-S\-P-\/\-E\-X\-P430 board due to the \-S\-D card and \-L\-C\-D panel being on the same \-S\-P\-I bus and will cause slowdown of \-S\-D transactions. 

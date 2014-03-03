@@ -44,6 +44,40 @@
 #define DOUTY       0x07
 #define DOUTZ       0x08
 
+// CONSTANTS
+#define TICKSPERUS              (F_CPU/ 1000000)
+
+// PORT DEFINITIONS
+#define ACCEL_INT_IN            P2IN
+#define ACCEL_INT_OUT           P2OUT
+#define ACCEL_INT_DIR           P2DIR
+#define ACCEL_SCK_SEL           P2SEL
+#define ACCEL_INT_IE            P2IE
+#define ACCEL_INT_IES           P2IES
+#define ACCEL_INT_IFG           P2IFG
+#define ACCEL_INT_VECTOR        PORT2_VECTOR
+#define ACCEL_OUT               P3OUT
+#define ACCEL_DIR               P3DIR
+#define ACCEL_SEL               P3SEL
+
+// PIN DEFINITIONS
+#define ACCEL_INT               BIT5
+#define ACCEL_CS                BIT5
+#define ACCEL_SIMO              BIT3
+#define ACCEL_SOMI              BIT4
+#define ACCEL_SCK               BIT7
+#define ACCEL_PWR               BIT6
+
+// ACCELEROMETER REGISTER DEFINITIONS
+#define REVID                   0x01
+#define CTRL                    0x02
+#define MODE_400                0x04        // Measurement mode 400 Hz ODR
+#define DOUTX                   0x06
+#define DOUTY                   0x07
+#define DOUTZ                   0x08
+#define G_RANGE_2               0x80        // 2g range
+#define I2C_DIS                 0x10        // I2C disabled
+
 extern int8_t Cma3000_xAccel;
 extern int8_t Cma3000_yAccel;
 extern int8_t Cma3000_zAccel;

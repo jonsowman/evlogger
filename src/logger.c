@@ -214,11 +214,12 @@ void sd_setup(RingBuffer* sdbuf)
             sd_write(sdbuf, writebuf, &fil, 512);
 
         // Update the LCD once every 200ms
-        if((clock_time() % 1000) == 0)
+        if((clock_time() % 333) == 0)
         {
+            P8OUT |= _BV(1);
             Cma3000_readAccelDMA();
-            sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
-            uart_debug(s);
+            //sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
+            //uart_debug(s);
             update_lcd(sdbuf);
         }
     }

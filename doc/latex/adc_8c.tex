@@ -1,0 +1,39 @@
+\hypertarget{adc_8c}{\section{/home/jon/projects/evlogger/evlogger/src/adc.c \-File \-Reference}
+\label{adc_8c}\index{/home/jon/projects/evlogger/evlogger/src/adc.\-c@{/home/jon/projects/evlogger/evlogger/src/adc.\-c}}
+}
+{\ttfamily \#include $<$inttypes.\-h$>$}\*
+{\ttfamily \#include \char`\"{}adc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{adc_8c_ae16f20c59609962c84f9c030f1d2c079}{adc\-\_\-init} (volatile \hyperlink{structSampleBuffer}{\-Sample\-Buffer} $\ast$\hyperlink{logger_8c_a71df2a91147f5867de7713ac87c8f1aa}{sb})
+\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\item 
+void \hyperlink{adc_8c_ad6c7fee272941116d961899026450d14}{adc\-\_\-convert} (void)
+\begin{DoxyCompactList}\small\item\em \-Enable \-D\-M\-A on channel 0 which will move data to the sample buffer after the \-A\-D\-C conversion run has completed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{adc_8c_ad6c7fee272941116d961899026450d14}{\index{adc.\-c@{adc.\-c}!adc\-\_\-convert@{adc\-\_\-convert}}
+\index{adc\-\_\-convert@{adc\-\_\-convert}!adc.c@{adc.\-c}}
+\subsubsection[{adc\-\_\-convert}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf adc\-\_\-convert} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{adc_8c_ad6c7fee272941116d961899026450d14}
+
+
+\-Enable \-D\-M\-A on channel 0 which will move data to the sample buffer after the \-A\-D\-C conversion run has completed. 
+
+\hypertarget{adc_8c_ae16f20c59609962c84f9c030f1d2c079}{\index{adc.\-c@{adc.\-c}!adc\-\_\-init@{adc\-\_\-init}}
+\index{adc\-\_\-init@{adc\-\_\-init}!adc.c@{adc.\-c}}
+\subsubsection[{adc\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf adc\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{volatile {\bf \-Sample\-Buffer} $\ast$}]{sb}
+\end{DoxyParamCaption}
+)}}\label{adc_8c_ae16f20c59609962c84f9c030f1d2c079}
+
+
+\-E\-V \-Datalogger \-Project. 
+
+\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton \-Set up the \-A\-D\-C clock and configure resolution, then enable the \-A\-D\-C unit. 

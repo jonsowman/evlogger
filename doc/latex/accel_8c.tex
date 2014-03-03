@@ -1,0 +1,56 @@
+\hypertarget{accel_8c}{\section{/home/jon/projects/evlogger/evlogger/src/accel.c \-File \-Reference}
+\label{accel_8c}\index{/home/jon/projects/evlogger/evlogger/src/accel.\-c@{/home/jon/projects/evlogger/evlogger/src/accel.\-c}}
+}
+{\ttfamily \#include $<$inttypes.\-h$>$}\*
+{\ttfamily \#include \char`\"{}msp430.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}accel.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}uart.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__HAL__Cma3000_gac439f32a065c427ffa5df446dd4c67ca}{\-Cma3000\-\_\-init} (volatile \hyperlink{structSampleBuffer}{\-Sample\-Buffer} $\ast$samplebuffer)
+\begin{DoxyCompactList}\small\item\em \-Configures the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga995a83248eda64e38272b13d65adfdd7}{\-Cma3000\-\_\-disable} (void)
+\begin{DoxyCompactList}\small\item\em \-Disables the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga026e2b2fc4fa23ab54d57c8e9f43cb16}{\-Cma3000\-\_\-read\-Accel} (void)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga1cff4c7c212e66af14b2c607dc420e33}{\-Cma3000\-\_\-set\-Accel\-\_\-offset} (int8\-\_\-t x\-Accel\-\_\-offset, int8\-\_\-t y\-Accel\-\_\-offset, int8\-\_\-t z\-Accel\-\_\-offset)
+\begin{DoxyCompactList}\small\item\em \-Sets accelerometer offset. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_gae35d5bf91afe0aac0557c10c5446680c}{\-Cma3000\-\_\-read\-Accel\-\_\-offset} (void)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer with removed offset. \end{DoxyCompactList}\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga3de7d450377baf2c888e76f419cfc21e}{\-Cma3000\-\_\-read\-Register} (\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \-Address)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga7be472db252aa760998fd4f155f2c132}{\-Cma3000\-\_\-read\-Accel\-D\-M\-A} (void)
+\begin{DoxyCompactList}\small\item\em \-Read all three accelerometer channels to the temporary buffer via \-D\-M\-A. \end{DoxyCompactList}\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gafc0c3a516edbfc2e87c514b51b595678}{\-Cma3000\-\_\-write\-Register} (\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \-Address, int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}{accel\-Data})
+\begin{DoxyCompactList}\small\item\em \-Writes data to the accelerometer. \end{DoxyCompactList}\item 
+\hyperlink{group__HAL__Cma3000_gac61bc22c3bb5b6ef2292d1e11e026861}{interrupt} (\-D\-M\-A\-\_\-\-V\-E\-C\-T\-O\-R)
+\begin{DoxyCompactList}\small\item\em \-Interrupt when the \-D\-M\-A controller has finished receiving new data from the accelerometer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}{accel\-Data}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gab84df94ff0cd4d502b2faae204b4d24f}{\-Rev\-I\-D}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gac2f4ad3ece4f2cb31fedfa8628ac1688}{\-Cma3000\-\_\-x\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga847617eef332231c449861a1475e8345}{\-Cma3000\-\_\-y\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga862a9e332db3dc346369fb5fc4ef2e07}{\-Cma3000\-\_\-z\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga335dff88b3e8e05ee7d26177f734faf8}{\-Cma3000\-\_\-x\-Accel\-\_\-offset}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga71431a853962e1aab0d44b3901d9ce53}{\-Cma3000\-\_\-y\-Accel\-\_\-offset}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gaeed4d3e43f6b93fad6b1a8176f3b4ef5}{\-Cma3000\-\_\-z\-Accel\-\_\-offset}
+\item 
+volatile \hyperlink{structSampleBuffer}{\-Sample\-Buffer} $\ast$ \hyperlink{group__HAL__Cma3000_ga13d2ec11123575d9acaa32e40eb4fa8b}{sb}
+\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__HAL__Cma3000_gaacf8a00ccb887c06968f98f27def8716}{rxbuf} \mbox{[}7\mbox{]}
+\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__HAL__Cma3000_gab3dbd75bdfcd17ed7daed83b67e55d25}{cmdbuf} \mbox{[}$\,$\mbox{]} = \{0, \hyperlink{accel_8h_a2d5b60fb9f1b096949528febf596b114}{\-D\-O\-U\-T\-Y} $<$$<$ 2, 0, \hyperlink{accel_8h_a41ef57dfc28efea7d50b295d020a5149}{\-D\-O\-U\-T\-Z} $<$$<$ 2, 0, 0, 0\}
+\item 
+char \hyperlink{group__HAL__Cma3000_ga729a0a31c6732422f598675267b8cb2d}{s} \mbox{[}20\mbox{]}
+\end{DoxyCompactItemize}

@@ -1,0 +1,98 @@
+\hypertarget{system_8c}{\section{/home/jon/projects/evlogger/evlogger/src/system.c \-File \-Reference}
+\label{system_8c}\index{/home/jon/projects/evlogger/evlogger/src/system.\-c@{/home/jon/projects/evlogger/evlogger/src/system.\-c}}
+}
+{\ttfamily \#include $<$in430.\-h$>$}\*
+{\ttfamily \#include \char`\"{}\-H\-A\-L\-\_\-\-P\-M\-M.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{system_8c_a78ab77b57cf2e00089f0a3a22508524c}{clock\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em \-Use timer \-A0 to set up a system clock ticking at 1ms intervals. \end{DoxyCompactList}\item 
+void \hyperlink{system_8c_a02fbef4ca042a3a926a687e81ddf3b61}{sys\-\_\-clock\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em \-Set up the system core clock source as the digitally controlled oscillator (\-D\-C\-O) and have the \-F\-L\-L stabilise the \-D\-C\-O at 25\-M\-Hz with reference to the external high speed crystal \-X\-T2, which is 4\-M\-Hz on the \-M\-S\-P-\/\-E\-X\-P430 board. \end{DoxyCompactList}\item 
+\hyperlink{system_8h_a6e6c13e871b82d881a01d1bc8df69d23}{clock\-\_\-time\-\_\-t} \hyperlink{system_8c_ae5b7160f2e653725ba5e2024c3cb7bff}{clock\-\_\-time} (void)
+\begin{DoxyCompactList}\small\item\em \-Return the current system time. \end{DoxyCompactList}\item 
+void \hyperlink{system_8c_ab3527620075d7c9b9ed0b023eb47fabb}{\-\_\-delay\-\_\-ms} (\hyperlink{system_8h_a6e6c13e871b82d881a01d1bc8df69d23}{clock\-\_\-time\-\_\-t} delay)
+\begin{DoxyCompactList}\small\item\em \-Delay for the provided number of milliseconds. \end{DoxyCompactList}\item 
+\hyperlink{system_8c_a95ca0893fea824b3da8940f52f5ac1b0}{interrupt} (\-T\-I\-M\-E\-R0\-\_\-\-A0\-\_\-\-V\-E\-C\-T\-O\-R)
+\begin{DoxyCompactList}\small\item\em \-Interrupt service routine for the system ticks counter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile \hyperlink{system_8h_a6e6c13e871b82d881a01d1bc8df69d23}{clock\-\_\-time\-\_\-t} \hyperlink{system_8c_ac2c5ac92059be67724d7a2185eaa467c}{ticks}
+\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{system_8c_ab3527620075d7c9b9ed0b023eb47fabb}{\index{system.\-c@{system.\-c}!\-\_\-delay\-\_\-ms@{\-\_\-delay\-\_\-ms}}
+\index{\-\_\-delay\-\_\-ms@{\-\_\-delay\-\_\-ms}!system.c@{system.\-c}}
+\subsubsection[{\-\_\-delay\-\_\-ms}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-\_\-delay\-\_\-ms} (
+\begin{DoxyParamCaption}
+\item[{{\bf clock\-\_\-time\-\_\-t}}]{delay}
+\end{DoxyParamCaption}
+)}}\label{system_8c_ab3527620075d7c9b9ed0b023eb47fabb}
+
+
+\-Delay for the provided number of milliseconds. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em delay} & \-The number of ms to delay. \\
+\hline
+\end{DoxyParams}
+\hypertarget{system_8c_a78ab77b57cf2e00089f0a3a22508524c}{\index{system.\-c@{system.\-c}!clock\-\_\-init@{clock\-\_\-init}}
+\index{clock\-\_\-init@{clock\-\_\-init}!system.c@{system.\-c}}
+\subsubsection[{clock\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf clock\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{system_8c_a78ab77b57cf2e00089f0a3a22508524c}
+
+
+\-Use timer \-A0 to set up a system clock ticking at 1ms intervals. 
+
+\hypertarget{system_8c_ae5b7160f2e653725ba5e2024c3cb7bff}{\index{system.\-c@{system.\-c}!clock\-\_\-time@{clock\-\_\-time}}
+\index{clock\-\_\-time@{clock\-\_\-time}!system.c@{system.\-c}}
+\subsubsection[{clock\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clock\-\_\-time\-\_\-t} {\bf clock\-\_\-time} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{system_8c_ae5b7160f2e653725ba5e2024c3cb7bff}
+
+
+\-Return the current system time. 
+
+\hypertarget{system_8c_a95ca0893fea824b3da8940f52f5ac1b0}{\index{system.\-c@{system.\-c}!interrupt@{interrupt}}
+\index{interrupt@{interrupt}!system.c@{system.\-c}}
+\subsubsection[{interrupt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf interrupt} (
+\begin{DoxyParamCaption}
+\item[{\-T\-I\-M\-E\-R0\-\_\-\-A0\-\_\-\-V\-E\-C\-T\-O\-R}]{}
+\end{DoxyParamCaption}
+)}}\label{system_8c_a95ca0893fea824b3da8940f52f5ac1b0}
+
+
+\-Interrupt service routine for the system ticks counter. 
+
+the \hyperlink{group__HAL__Cma3000_gac61bc22c3bb5b6ef2292d1e11e026861}{interrupt()} macro is from legacymsp430.\-h \hypertarget{system_8c_a02fbef4ca042a3a926a687e81ddf3b61}{\index{system.\-c@{system.\-c}!sys\-\_\-clock\-\_\-init@{sys\-\_\-clock\-\_\-init}}
+\index{sys\-\_\-clock\-\_\-init@{sys\-\_\-clock\-\_\-init}!system.c@{system.\-c}}
+\subsubsection[{sys\-\_\-clock\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf sys\-\_\-clock\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{system_8c_a02fbef4ca042a3a926a687e81ddf3b61}
+
+
+\-Set up the system core clock source as the digitally controlled oscillator (\-D\-C\-O) and have the \-F\-L\-L stabilise the \-D\-C\-O at 25\-M\-Hz with reference to the external high speed crystal \-X\-T2, which is 4\-M\-Hz on the \-M\-S\-P-\/\-E\-X\-P430 board. 
+
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{system_8c_ac2c5ac92059be67724d7a2185eaa467c}{\index{system.\-c@{system.\-c}!ticks@{ticks}}
+\index{ticks@{ticks}!system.c@{system.\-c}}
+\subsubsection[{ticks}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf clock\-\_\-time\-\_\-t} {\bf ticks}}}\label{system_8c_ac2c5ac92059be67724d7a2185eaa467c}
+
+
+\-E\-V \-Datalogger \-Project. 
+
+\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton 

@@ -1,0 +1,275 @@
+\hypertarget{group__HAL__Cma3000}{\section{\-H\-A\-L\-\_\-\-Cma3000}
+\label{group__HAL__Cma3000}\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__HAL__Cma3000_gac439f32a065c427ffa5df446dd4c67ca}{\-Cma3000\-\_\-init} (volatile \hyperlink{structSampleBuffer}{\-Sample\-Buffer} $\ast$samplebuffer)
+\begin{DoxyCompactList}\small\item\em \-Configures the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga995a83248eda64e38272b13d65adfdd7}{\-Cma3000\-\_\-disable} (void)
+\begin{DoxyCompactList}\small\item\em \-Disables the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga026e2b2fc4fa23ab54d57c8e9f43cb16}{\-Cma3000\-\_\-read\-Accel} (void)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga1cff4c7c212e66af14b2c607dc420e33}{\-Cma3000\-\_\-set\-Accel\-\_\-offset} (int8\-\_\-t x\-Accel\-\_\-offset, int8\-\_\-t y\-Accel\-\_\-offset, int8\-\_\-t z\-Accel\-\_\-offset)
+\begin{DoxyCompactList}\small\item\em \-Sets accelerometer offset. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_gae35d5bf91afe0aac0557c10c5446680c}{\-Cma3000\-\_\-read\-Accel\-\_\-offset} (void)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer with removed offset. \end{DoxyCompactList}\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga3de7d450377baf2c888e76f419cfc21e}{\-Cma3000\-\_\-read\-Register} (\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \-Address)
+\begin{DoxyCompactList}\small\item\em \-Reads data from the accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__HAL__Cma3000_ga7be472db252aa760998fd4f155f2c132}{\-Cma3000\-\_\-read\-Accel\-D\-M\-A} (void)
+\begin{DoxyCompactList}\small\item\em \-Read all three accelerometer channels to the temporary buffer via \-D\-M\-A. \end{DoxyCompactList}\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gafc0c3a516edbfc2e87c514b51b595678}{\-Cma3000\-\_\-write\-Register} (\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \-Address, int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}{accel\-Data})
+\begin{DoxyCompactList}\small\item\em \-Writes data to the accelerometer. \end{DoxyCompactList}\item 
+\hyperlink{group__HAL__Cma3000_gac61bc22c3bb5b6ef2292d1e11e026861}{interrupt} (\-D\-M\-A\-\_\-\-V\-E\-C\-T\-O\-R)
+\begin{DoxyCompactList}\small\item\em \-Interrupt when the \-D\-M\-A controller has finished receiving new data from the accelerometer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}{accel\-Data}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gab84df94ff0cd4d502b2faae204b4d24f}{\-Rev\-I\-D}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gac2f4ad3ece4f2cb31fedfa8628ac1688}{\-Cma3000\-\_\-x\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga847617eef332231c449861a1475e8345}{\-Cma3000\-\_\-y\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga862a9e332db3dc346369fb5fc4ef2e07}{\-Cma3000\-\_\-z\-Accel}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga335dff88b3e8e05ee7d26177f734faf8}{\-Cma3000\-\_\-x\-Accel\-\_\-offset}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_ga71431a853962e1aab0d44b3901d9ce53}{\-Cma3000\-\_\-y\-Accel\-\_\-offset}
+\item 
+int8\-\_\-t \hyperlink{group__HAL__Cma3000_gaeed4d3e43f6b93fad6b1a8176f3b4ef5}{\-Cma3000\-\_\-z\-Accel\-\_\-offset}
+\item 
+volatile \hyperlink{structSampleBuffer}{\-Sample\-Buffer} $\ast$ \hyperlink{group__HAL__Cma3000_ga13d2ec11123575d9acaa32e40eb4fa8b}{sb}
+\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__HAL__Cma3000_gaacf8a00ccb887c06968f98f27def8716}{rxbuf} \mbox{[}7\mbox{]}
+\item 
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__HAL__Cma3000_gab3dbd75bdfcd17ed7daed83b67e55d25}{cmdbuf} \mbox{[}$\,$\mbox{]} = \{0, \hyperlink{accel_8h_a2d5b60fb9f1b096949528febf596b114}{\-D\-O\-U\-T\-Y} $<$$<$ 2, 0, \hyperlink{accel_8h_a41ef57dfc28efea7d50b295d020a5149}{\-D\-O\-U\-T\-Z} $<$$<$ 2, 0, 0, 0\}
+\item 
+char \hyperlink{group__HAL__Cma3000_ga729a0a31c6732422f598675267b8cb2d}{s} \mbox{[}20\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{group__HAL__Cma3000_ga995a83248eda64e38272b13d65adfdd7}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-disable@{\-Cma3000\-\_\-disable}}
+\index{\-Cma3000\-\_\-disable@{\-Cma3000\-\_\-disable}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-disable}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-disable} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_ga995a83248eda64e38272b13d65adfdd7}
+
+
+\-Disables the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em none} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+none 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_gac439f32a065c427ffa5df446dd4c67ca}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-init@{\-Cma3000\-\_\-init}}
+\index{\-Cma3000\-\_\-init@{\-Cma3000\-\_\-init}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{volatile {\bf \-Sample\-Buffer} $\ast$}]{samplebuffer}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_gac439f32a065c427ffa5df446dd4c67ca}
+
+
+\-Configures the \-C\-M\-A3000-\/\-D01 3-\/\-Axis \-Ultra \-Low \-Power \-Accelerometer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em none} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+none 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_ga026e2b2fc4fa23ab54d57c8e9f43cb16}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-read\-Accel@{\-Cma3000\-\_\-read\-Accel}}
+\index{\-Cma3000\-\_\-read\-Accel@{\-Cma3000\-\_\-read\-Accel}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-read\-Accel}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-read\-Accel} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_ga026e2b2fc4fa23ab54d57c8e9f43cb16}
+
+
+\-Reads data from the accelerometer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-None 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_gae35d5bf91afe0aac0557c10c5446680c}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-read\-Accel\-\_\-offset@{\-Cma3000\-\_\-read\-Accel\-\_\-offset}}
+\index{\-Cma3000\-\_\-read\-Accel\-\_\-offset@{\-Cma3000\-\_\-read\-Accel\-\_\-offset}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-read\-Accel\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-read\-Accel\-\_\-offset} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_gae35d5bf91afe0aac0557c10c5446680c}
+
+
+\-Reads data from the accelerometer with removed offset. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-None 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_ga7be472db252aa760998fd4f155f2c132}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-read\-Accel\-D\-M\-A@{\-Cma3000\-\_\-read\-Accel\-D\-M\-A}}
+\index{\-Cma3000\-\_\-read\-Accel\-D\-M\-A@{\-Cma3000\-\_\-read\-Accel\-D\-M\-A}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-read\-Accel\-D\-M\-A}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-read\-Accel\-D\-M\-A} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_ga7be472db252aa760998fd4f155f2c132}
+
+
+\-Read all three accelerometer channels to the temporary buffer via \-D\-M\-A. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em none} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+none 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_ga3de7d450377baf2c888e76f419cfc21e}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-read\-Register@{\-Cma3000\-\_\-read\-Register}}
+\index{\-Cma3000\-\_\-read\-Register@{\-Cma3000\-\_\-read\-Register}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-read\-Register}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-read\-Register} (
+\begin{DoxyParamCaption}
+\item[{{\bf uint8\-\_\-t}}]{\-Address}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_ga3de7d450377baf2c888e76f419cfc21e}
+
+
+\-Reads data from the accelerometer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Address} & \-Address of register \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-Register contents 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_ga1cff4c7c212e66af14b2c607dc420e33}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-set\-Accel\-\_\-offset@{\-Cma3000\-\_\-set\-Accel\-\_\-offset}}
+\index{\-Cma3000\-\_\-set\-Accel\-\_\-offset@{\-Cma3000\-\_\-set\-Accel\-\_\-offset}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-set\-Accel\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Cma3000\-\_\-set\-Accel\-\_\-offset} (
+\begin{DoxyParamCaption}
+\item[{int8\-\_\-t}]{x\-Accel\-\_\-offset, }
+\item[{int8\-\_\-t}]{y\-Accel\-\_\-offset, }
+\item[{int8\-\_\-t}]{z\-Accel\-\_\-offset}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_ga1cff4c7c212e66af14b2c607dc420e33}
+
+
+\-Sets accelerometer offset. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em x\-Accel\-\_\-offset} & x-\/axis offset \\
+\hline
+{\em y\-Accel\-\_\-offset} & y-\/axis offset \\
+\hline
+{\em z\-Accel\-\_\-offset} & z-\/axis offset \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-None 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_gafc0c3a516edbfc2e87c514b51b595678}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-write\-Register@{\-Cma3000\-\_\-write\-Register}}
+\index{\-Cma3000\-\_\-write\-Register@{\-Cma3000\-\_\-write\-Register}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-write\-Register}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-write\-Register} (
+\begin{DoxyParamCaption}
+\item[{{\bf uint8\-\_\-t}}]{\-Address, }
+\item[{int8\-\_\-t}]{accel\-Data}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_gafc0c3a516edbfc2e87c514b51b595678}
+
+
+\-Writes data to the accelerometer. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Address} & \-Address of register \\
+\hline
+{\em accel\-Data} & \-Data to be written to the accelerometer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-Received data 
+\end{DoxyReturn}
+\hypertarget{group__HAL__Cma3000_gac61bc22c3bb5b6ef2292d1e11e026861}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!interrupt@{interrupt}}
+\index{interrupt@{interrupt}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{interrupt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf interrupt} (
+\begin{DoxyParamCaption}
+\item[{\-D\-M\-A\-\_\-\-V\-E\-C\-T\-O\-R}]{}
+\end{DoxyParamCaption}
+)}}\label{group__HAL__Cma3000_gac61bc22c3bb5b6ef2292d1e11e026861}
+
+
+\-Interrupt when the \-D\-M\-A controller has finished receiving new data from the accelerometer. 
+
+\-We should process this data.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em none} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+none 
+\end{DoxyReturn}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!accel\-Data@{accel\-Data}}
+\index{accel\-Data@{accel\-Data}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{accel\-Data}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf accel\-Data}}}\label{group__HAL__Cma3000_ga2463200b1bea9027c65cd6a7988b92cc}
+\hypertarget{group__HAL__Cma3000_gac2f4ad3ece4f2cb31fedfa8628ac1688}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-x\-Accel@{\-Cma3000\-\_\-x\-Accel}}
+\index{\-Cma3000\-\_\-x\-Accel@{\-Cma3000\-\_\-x\-Accel}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-x\-Accel}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-x\-Accel}}}\label{group__HAL__Cma3000_gac2f4ad3ece4f2cb31fedfa8628ac1688}
+\hypertarget{group__HAL__Cma3000_ga335dff88b3e8e05ee7d26177f734faf8}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-x\-Accel\-\_\-offset@{\-Cma3000\-\_\-x\-Accel\-\_\-offset}}
+\index{\-Cma3000\-\_\-x\-Accel\-\_\-offset@{\-Cma3000\-\_\-x\-Accel\-\_\-offset}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-x\-Accel\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-x\-Accel\-\_\-offset}}}\label{group__HAL__Cma3000_ga335dff88b3e8e05ee7d26177f734faf8}
+\hypertarget{group__HAL__Cma3000_ga847617eef332231c449861a1475e8345}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-y\-Accel@{\-Cma3000\-\_\-y\-Accel}}
+\index{\-Cma3000\-\_\-y\-Accel@{\-Cma3000\-\_\-y\-Accel}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-y\-Accel}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-y\-Accel}}}\label{group__HAL__Cma3000_ga847617eef332231c449861a1475e8345}
+\hypertarget{group__HAL__Cma3000_ga71431a853962e1aab0d44b3901d9ce53}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-y\-Accel\-\_\-offset@{\-Cma3000\-\_\-y\-Accel\-\_\-offset}}
+\index{\-Cma3000\-\_\-y\-Accel\-\_\-offset@{\-Cma3000\-\_\-y\-Accel\-\_\-offset}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-y\-Accel\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-y\-Accel\-\_\-offset}}}\label{group__HAL__Cma3000_ga71431a853962e1aab0d44b3901d9ce53}
+\hypertarget{group__HAL__Cma3000_ga862a9e332db3dc346369fb5fc4ef2e07}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-z\-Accel@{\-Cma3000\-\_\-z\-Accel}}
+\index{\-Cma3000\-\_\-z\-Accel@{\-Cma3000\-\_\-z\-Accel}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-z\-Accel}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-z\-Accel}}}\label{group__HAL__Cma3000_ga862a9e332db3dc346369fb5fc4ef2e07}
+\hypertarget{group__HAL__Cma3000_gaeed4d3e43f6b93fad6b1a8176f3b4ef5}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Cma3000\-\_\-z\-Accel\-\_\-offset@{\-Cma3000\-\_\-z\-Accel\-\_\-offset}}
+\index{\-Cma3000\-\_\-z\-Accel\-\_\-offset@{\-Cma3000\-\_\-z\-Accel\-\_\-offset}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Cma3000\-\_\-z\-Accel\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Cma3000\-\_\-z\-Accel\-\_\-offset}}}\label{group__HAL__Cma3000_gaeed4d3e43f6b93fad6b1a8176f3b4ef5}
+\hypertarget{group__HAL__Cma3000_gab3dbd75bdfcd17ed7daed83b67e55d25}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!cmdbuf@{cmdbuf}}
+\index{cmdbuf@{cmdbuf}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{cmdbuf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf cmdbuf}\mbox{[}$\,$\mbox{]} = \{0, {\bf \-D\-O\-U\-T\-Y} $<$$<$ 2, 0, {\bf \-D\-O\-U\-T\-Z} $<$$<$ 2, 0, 0, 0\}}}\label{group__HAL__Cma3000_gab3dbd75bdfcd17ed7daed83b67e55d25}
+\hypertarget{group__HAL__Cma3000_gab84df94ff0cd4d502b2faae204b4d24f}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!\-Rev\-I\-D@{\-Rev\-I\-D}}
+\index{\-Rev\-I\-D@{\-Rev\-I\-D}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{\-Rev\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf \-Rev\-I\-D}}}\label{group__HAL__Cma3000_gab84df94ff0cd4d502b2faae204b4d24f}
+\hypertarget{group__HAL__Cma3000_gaacf8a00ccb887c06968f98f27def8716}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!rxbuf@{rxbuf}}
+\index{rxbuf@{rxbuf}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{rxbuf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf rxbuf}\mbox{[}7\mbox{]}}}\label{group__HAL__Cma3000_gaacf8a00ccb887c06968f98f27def8716}
+\hypertarget{group__HAL__Cma3000_ga729a0a31c6732422f598675267b8cb2d}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!s@{s}}
+\index{s@{s}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{s}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf s}\mbox{[}20\mbox{]}}}\label{group__HAL__Cma3000_ga729a0a31c6732422f598675267b8cb2d}
+\hypertarget{group__HAL__Cma3000_ga13d2ec11123575d9acaa32e40eb4fa8b}{\index{\-H\-A\-L\-\_\-\-Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}!sb@{sb}}
+\index{sb@{sb}!HAL_Cma3000@{\-H\-A\-L\-\_\-\-Cma3000}}
+\subsubsection[{sb}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf \-Sample\-Buffer}$\ast$ {\bf sb}}}\label{group__HAL__Cma3000_ga13d2ec11123575d9acaa32e40eb4fa8b}

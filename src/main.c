@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file main.c
+ * @author Jon Sowman
+ * @addtogroup main
+ * @{
  */
 
 #include <msp430.h>
@@ -20,6 +25,11 @@
 #include "HAL_SDCard.h"
 #include "ff.h"
 
+/**
+ * Kill the watchdog timer to prevent it firing, then set up the system clock
+ * followed by onboard peripherals. Wait for all systems to be ready before
+ * starting the datalogger.
+ */
 int main(void)
 {
     // Stop the wdt
@@ -53,3 +63,6 @@ int main(void)
     return 0;
 }
 
+/**
+ * @}
+ */

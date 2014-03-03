@@ -1,0 +1,115 @@
+\hypertarget{uart_8h}{\section{/home/jon/projects/evlogger/evlogger/src/uart.h \-File \-Reference}
+\label{uart_8h}\index{/home/jon/projects/evlogger/evlogger/src/uart.\-h@{/home/jon/projects/evlogger/evlogger/src/uart.\-h}}
+}
+{\ttfamily \#include $<$msp430.\-h$>$}\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{uart_8h_a21c111f78e5bb689a9a72297cf6d1c7c}{\-S\-P\-I\-\_\-\-S\-I\-M\-O}~\-B\-I\-T1
+\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\item 
+\#define \hyperlink{uart_8h_ae4ce0fb686a150e8ecec8279abce31cd}{\-S\-P\-I\-\_\-\-S\-O\-M\-I}~\-B\-I\-T2
+\item 
+\#define \hyperlink{uart_8h_af3cfe48f6efdc257518227b43c1bc3df}{\-S\-P\-I\-\_\-\-C\-L\-K}~\-B\-I\-T3
+\item 
+\#define \hyperlink{uart_8h_a7e2d8ef8f0724f23ce84b1e7d0c171d9}{\-S\-D\-\_\-\-C\-S}~\-B\-I\-T7
+\item 
+\#define \hyperlink{uart_8h_a7e6952c975b1e9c5d631c0b8a96e1cfe}{\-S\-P\-I\-\_\-\-S\-E\-L}~\-P4\-S\-E\-L
+\item 
+\#define \hyperlink{uart_8h_a21cc6faf5964b9af1b09e8b0ebc83497}{\-S\-P\-I\-\_\-\-D\-I\-R}~\-P4\-D\-I\-R
+\item 
+\#define \hyperlink{uart_8h_afecd816cd1c6e979f95ff0d538b28c48}{\-S\-P\-I\-\_\-\-O\-U\-T}~\-P4\-O\-U\-T
+\item 
+\#define \hyperlink{uart_8h_a93f40d420c379337e633e4fd9e68104d}{\-S\-P\-I\-\_\-\-R\-E\-N}~\-P4\-R\-E\-N
+\item 
+\#define \hyperlink{uart_8h_af9c6d4e11b6166ab723a4ad1ff2ada66}{\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L}~\-P3\-S\-E\-L
+\item 
+\#define \hyperlink{uart_8h_a280638e82114f6935a6b013ff0fb9fcb}{\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T}~\-P3\-O\-U\-T
+\item 
+\#define \hyperlink{uart_8h_a5667d96821033d950a439d18376bcc4c}{\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R}~\-P3\-D\-I\-R
+\item 
+\#define \hyperlink{uart_8h_aeec38153163908e428304567b3623e03}{\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N}~50
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{uart_8h_a0c0ca72359ddf28dcd15900dfba19343}{uart\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\item 
+void \hyperlink{uart_8h_a50b070f4cc43030c47d4e8d0317f16f2}{uart\-\_\-debug} (char $\ast$string)
+\begin{DoxyCompactList}\small\item\em \-Send a \par
+ terminated string to the debug output (to avoid storing the terminators in \-R\-A\-M all the time). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{uart_8h_a7e2d8ef8f0724f23ce84b1e7d0c171d9}{\index{uart.\-h@{uart.\-h}!\-S\-D\-\_\-\-C\-S@{\-S\-D\-\_\-\-C\-S}}
+\index{\-S\-D\-\_\-\-C\-S@{\-S\-D\-\_\-\-C\-S}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-C\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-C\-S}~\-B\-I\-T7}}\label{uart_8h_a7e2d8ef8f0724f23ce84b1e7d0c171d9}
+\hypertarget{uart_8h_a5667d96821033d950a439d18376bcc4c}{\index{uart.\-h@{uart.\-h}!\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R@{\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R}}
+\index{\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R@{\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-C\-S\-\_\-\-D\-I\-R}~\-P3\-D\-I\-R}}\label{uart_8h_a5667d96821033d950a439d18376bcc4c}
+\hypertarget{uart_8h_a280638e82114f6935a6b013ff0fb9fcb}{\index{uart.\-h@{uart.\-h}!\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T@{\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T}}
+\index{\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T@{\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-C\-S\-\_\-\-O\-U\-T}~\-P3\-O\-U\-T}}\label{uart_8h_a280638e82114f6935a6b013ff0fb9fcb}
+\hypertarget{uart_8h_af9c6d4e11b6166ab723a4ad1ff2ada66}{\index{uart.\-h@{uart.\-h}!\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L@{\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L}}
+\index{\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L@{\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-D\-\_\-\-C\-S\-\_\-\-S\-E\-L}~\-P3\-S\-E\-L}}\label{uart_8h_af9c6d4e11b6166ab723a4ad1ff2ada66}
+\hypertarget{uart_8h_af3cfe48f6efdc257518227b43c1bc3df}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-C\-L\-K@{\-S\-P\-I\-\_\-\-C\-L\-K}}
+\index{\-S\-P\-I\-\_\-\-C\-L\-K@{\-S\-P\-I\-\_\-\-C\-L\-K}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-C\-L\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-C\-L\-K}~\-B\-I\-T3}}\label{uart_8h_af3cfe48f6efdc257518227b43c1bc3df}
+\hypertarget{uart_8h_a21cc6faf5964b9af1b09e8b0ebc83497}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-D\-I\-R@{\-S\-P\-I\-\_\-\-D\-I\-R}}
+\index{\-S\-P\-I\-\_\-\-D\-I\-R@{\-S\-P\-I\-\_\-\-D\-I\-R}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-D\-I\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-D\-I\-R}~\-P4\-D\-I\-R}}\label{uart_8h_a21cc6faf5964b9af1b09e8b0ebc83497}
+\hypertarget{uart_8h_afecd816cd1c6e979f95ff0d538b28c48}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-O\-U\-T@{\-S\-P\-I\-\_\-\-O\-U\-T}}
+\index{\-S\-P\-I\-\_\-\-O\-U\-T@{\-S\-P\-I\-\_\-\-O\-U\-T}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-O\-U\-T}~\-P4\-O\-U\-T}}\label{uart_8h_afecd816cd1c6e979f95ff0d538b28c48}
+\hypertarget{uart_8h_a93f40d420c379337e633e4fd9e68104d}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-R\-E\-N@{\-S\-P\-I\-\_\-\-R\-E\-N}}
+\index{\-S\-P\-I\-\_\-\-R\-E\-N@{\-S\-P\-I\-\_\-\-R\-E\-N}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-R\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-R\-E\-N}~\-P4\-R\-E\-N}}\label{uart_8h_a93f40d420c379337e633e4fd9e68104d}
+\hypertarget{uart_8h_a7e6952c975b1e9c5d631c0b8a96e1cfe}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-S\-E\-L@{\-S\-P\-I\-\_\-\-S\-E\-L}}
+\index{\-S\-P\-I\-\_\-\-S\-E\-L@{\-S\-P\-I\-\_\-\-S\-E\-L}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-S\-E\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-S\-E\-L}~\-P4\-S\-E\-L}}\label{uart_8h_a7e6952c975b1e9c5d631c0b8a96e1cfe}
+\hypertarget{uart_8h_a21c111f78e5bb689a9a72297cf6d1c7c}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-S\-I\-M\-O@{\-S\-P\-I\-\_\-\-S\-I\-M\-O}}
+\index{\-S\-P\-I\-\_\-\-S\-I\-M\-O@{\-S\-P\-I\-\_\-\-S\-I\-M\-O}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-S\-I\-M\-O}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-S\-I\-M\-O}~\-B\-I\-T1}}\label{uart_8h_a21c111f78e5bb689a9a72297cf6d1c7c}
+
+
+\-E\-V \-Datalogger \-Project. 
+
+\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton \hypertarget{uart_8h_ae4ce0fb686a150e8ecec8279abce31cd}{\index{uart.\-h@{uart.\-h}!\-S\-P\-I\-\_\-\-S\-O\-M\-I@{\-S\-P\-I\-\_\-\-S\-O\-M\-I}}
+\index{\-S\-P\-I\-\_\-\-S\-O\-M\-I@{\-S\-P\-I\-\_\-\-S\-O\-M\-I}!uart.h@{uart.\-h}}
+\subsubsection[{\-S\-P\-I\-\_\-\-S\-O\-M\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-P\-I\-\_\-\-S\-O\-M\-I}~\-B\-I\-T2}}\label{uart_8h_ae4ce0fb686a150e8ecec8279abce31cd}
+\hypertarget{uart_8h_aeec38153163908e428304567b3623e03}{\index{uart.\-h@{uart.\-h}!\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N@{\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N}}
+\index{\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N@{\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N}!uart.h@{uart.\-h}}
+\subsubsection[{\-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-U\-A\-R\-T\-\_\-\-B\-U\-F\-\_\-\-L\-E\-N}~50}}\label{uart_8h_aeec38153163908e428304567b3623e03}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{uart_8h_a50b070f4cc43030c47d4e8d0317f16f2}{\index{uart.\-h@{uart.\-h}!uart\-\_\-debug@{uart\-\_\-debug}}
+\index{uart\-\_\-debug@{uart\-\_\-debug}!uart.h@{uart.\-h}}
+\subsubsection[{uart\-\_\-debug}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf uart\-\_\-debug} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{string}
+\end{DoxyParamCaption}
+)}}\label{uart_8h_a50b070f4cc43030c47d4e8d0317f16f2}
+
+
+\-Send a \par
+ terminated string to the debug output (to avoid storing the terminators in \-R\-A\-M all the time). 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \-A char pointer to the string to transmit. \\
+\hline
+\end{DoxyParams}
+\hypertarget{uart_8h_a0c0ca72359ddf28dcd15900dfba19343}{\index{uart.\-h@{uart.\-h}!uart\-\_\-init@{uart\-\_\-init}}
+\index{uart\-\_\-init@{uart\-\_\-init}!uart.h@{uart.\-h}}
+\subsubsection[{uart\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf uart\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{uart_8h_a0c0ca72359ddf28dcd15900dfba19343}
+
+
+\-E\-V \-Datalogger \-Project. 
+
+\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton \-Set up the \-U\-C\-S\-I for \-U\-A\-R\-T operation at 9600 baud. \-The baud rate generator is currently hard coded for 25\-M\-Hz \-S\-M\-C\-L\-K. \-T\-O\-D\-O\-: \-Fix this to calculate \-B\-R\-R values from \-F\-\_\-\-C\-P\-U. 
