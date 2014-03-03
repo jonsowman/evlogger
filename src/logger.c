@@ -406,8 +406,7 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 
     // Trigger the next conversion
     adc_convert();
-    if((clock_time() % 10) == 0)
-        Cma3000_readAccelFSM();
+    Cma3000_readAccelFSM();
 }
 
 /**
