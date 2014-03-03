@@ -53,11 +53,6 @@ int8_t Cma3000_xAccel;
 int8_t Cma3000_yAccel;
 int8_t Cma3000_zAccel;
 
-// Stores offsets
-int8_t Cma3000_xAccel_offset;
-int8_t Cma3000_yAccel_offset;
-int8_t Cma3000_zAccel_offset;
-
 // Maintain a pointer to the SampleBuffer
 static volatile SampleBuffer *sb;
 
@@ -181,46 +176,6 @@ void Cma3000_readAccel(void)
 
     // Read DOUTZ register
     Cma3000_zAccel = Cma3000_readRegister(DOUTZ);
-}
-
-/**
- * Sets accelerometer offset.
- * @param  xAccel_offset  x-axis offset
- * @param  yAccel_offset  y-axis offset
- * @param  zAccel_offset  z-axis offset
- */
-
-void Cma3000_setAccel_offset(int8_t xAccel_offset,
-                             int8_t yAccel_offset,
-                             int8_t zAccel_offset)
-{
-    // Store x-Offset
-    Cma3000_xAccel_offset = xAccel_offset;
-
-    // Store y-Offset
-    Cma3000_yAccel_offset = yAccel_offset;
-
-    // Store z-Offset
-    Cma3000_zAccel_offset = zAccel_offset;
-}
-
-/**
- * Reads data from the accelerometer with removed offset
- */
-
-void Cma3000_readAccel_offset(void)
-{
-    // Read current accelerometer value
-    Cma3000_readAccel();
-
-    // remove offset
-    Cma3000_xAccel -= Cma3000_xAccel_offset;
-
-    // remove offset
-    Cma3000_yAccel -= Cma3000_yAccel_offset;
-
-    // remove offset
-    Cma3000_zAccel -= Cma3000_zAccel_offset;
 }
 
 /**

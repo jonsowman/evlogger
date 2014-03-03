@@ -105,16 +105,14 @@ typedef enum accel_state_t
     STATE_ACCEL_ZREQ,
     /// A data value for Z is ready
     STATE_ACCEL_ZRDY,
-    /// We have completed, there is a full set of valid data in th
-    /// sample buffer
+    /// We have completed, there is a full set of valid data in the
+    /// SampleBuffer
     STATE_ACCEL_DONE
 } accel_state_t;
 
 extern void Cma3000_init(volatile SampleBuffer *samplebuffer);
 extern void Cma3000_disable(void);
 extern void Cma3000_readAccel(void);
-extern void Cma3000_setAccel_offset(int8_t xAccel_offset, int8_t yAccel_offset, int8_t zAccel_offset);
-extern void Cma3000_readAccel_offset(void);
 extern int8_t Cma3000_readRegister(uint8_t Address);
 void Cma3000_readAccelFSM(void);
 accel_state_t Cma3000_getState(void);
