@@ -1,8 +1,5 @@
 /**
  * Accelerometer header.
- */
-
-/*******************************************************************************
  *
  *  HAL_Cma3000.h
  *
@@ -41,7 +38,7 @@
  *  @addtogroup Accelerometer
  *  @{
  *
- ******************************************************************************/
+ */
 
 #ifndef HAL_CMA3000_H
 #define HAL_CMA3000_H
@@ -87,6 +84,14 @@
 #define G_RANGE_2               0x80        // 2g range
 #define I2C_DIS                 0x10        // I2C disabled
 
+/**
+ * @var Cma3000_xAccel
+ * Data value x from the accelerometer.
+ * @var Cma3000_yAccel
+ * Data value y from the accelerometer.
+ * @var Cma3000_zAccel
+ * Data value z from the accelerometer.
+ */
 extern int8_t Cma3000_xAccel;
 extern int8_t Cma3000_yAccel;
 extern int8_t Cma3000_zAccel;

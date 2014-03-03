@@ -6,9 +6,6 @@
  * code) buit is heavily modified to use a finite state machine (FSM) type
  * approach to getting data from the accelerometer such that very little CPU
  * time is required (since the logger is typically busy with other things).
- */
-
-/*******************************************************************************
  *
  *  HAL_Cma3000.c - Code for using the CMA3000-D01 3-Axis Ultra Low Power
  *                  Accelerometer
@@ -42,15 +39,13 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- ******************************************************************************/
-
-/***************************************************************************//**
  * @file       accel.c
+ *
  * @author TI, Modified by Jon Sowman
  * @addtogroup Accelerometer
  * @{
- ******************************************************************************/
+ */
+
 #include <inttypes.h>
 #include "msp430.h"
 #include "accel.h"
