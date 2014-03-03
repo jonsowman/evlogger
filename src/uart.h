@@ -31,7 +31,12 @@
 #define SD_CS_OUT       P3OUT
 #define SD_CS_DIR       P3DIR
 
-// Length of the char buffer for debugging over UART
+/**
+ * Length of the temporary buffer we will use for containing strings to be
+ * written out over the UART. This should be set to at least the maximum length
+ * of any string to be transmitted, doing otherwise will cause a buffer
+ * overflow and undefined behaviour, even system crashes.
+ */
 #define UART_BUF_LEN 50
 
 void uart_init(void);
