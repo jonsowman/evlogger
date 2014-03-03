@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ * 
+ * @file logger.h
+ * @author Jon Sowman
+ * @addtogroup logger
+ * @{
  */
 
 #ifndef __LOGGER_H__
@@ -29,8 +34,10 @@
 #define S2_PORT_IFG P2IFG
 #define S2_PIN _BV(2)
 
-// Ring buffer length for the SD card, should be a multiple of 2 of the
-// sector size (512 bytes)
+/**
+ * Ring buffer length for the SD card, should be a multiple of 2 of the
+ * sector size (512 bytes)
+ */
 #define SD_RINGBUF_LEN 2048
 
 // Don't change the below line
@@ -40,8 +47,20 @@
  * @struct RingBuffer
  * @brief A structure that emulates a ring buffer
  * @var RingBuffer::buffer
- * A pointer to the start of the character buffer to be
- * used by this ring buffer.
+ * A pointer to the start of the character buffer to be used by this ring 
+ * buffer.
+ * @var RingBuffer::head
+ * A pointer to the head of the ring buffer (i.e. the next free byte available
+ * for writing).
+ * @var RingBuffer::tail
+ * A pointer to the tail of the ring buffer (i.e. the next unread byte)
+ * @var RingBuffer::len
+ * The length of the ring buffer
+ * @var RingBuffer::mask
+ * This value is a ring buffer intrinsic and is automatically generated.
+ * @var RingBuffer::overflow
+ * A flag that will be set non-zero if a buffer overflow occurs (i.e. the head
+ * tries to "overtake" the tail.
  */
 typedef struct RingBuffer
 {
@@ -50,9 +69,26 @@ typedef struct RingBuffer
     uint8_t overflow;
 } RingBuffer;
 
+/**
+ * The number of ADC channels that we will sample from. It is vital that this
+ * is correctly set such that the DMA system will work properly.
+ */
 #define ADC_CHANNELS 7
+
+/**
+ * The number of accelerometer channels (typically 3) to be sampled from. This
+ * must be set correctly such that the DMA transfer system will work correctly.
+ */
 #define ACCEL_CHANNELS 3
 
+/**
+ * @struct SampleBuffer
+ * @brief A structure to contain one 'set' of samples from the vehicle.
+ * @var SampleBuffer::adc
+ * Storage for the ADC channels
+ * @var SampleBuffer::accel
+ * Storage for the accelerometer channels
+ */
 typedef struct SampleBuffer
 {
     volatile uint16_t adc[ADC_CHANNELS];
@@ -69,3 +105,7 @@ void logger_enable(void);
 void logger_disable(void);
 
 #endif /* __LOGGER_H__ */
+
+/**
+ * @}
+ */
