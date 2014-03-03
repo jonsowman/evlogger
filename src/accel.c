@@ -59,10 +59,7 @@ int8_t Cma3000_yAccel_offset;
 int8_t Cma3000_zAccel_offset;
 
 // Maintain a pointer to the SampleBuffer
-static volatile SampleBuffer * volatile sb;
-static volatile uint16_t * volatile c;
-static uint16_t tmp; //FIXME
-static char s[30];
+static volatile SampleBuffer *sb;
 
 /**
  * Contain the current accelerometer state. This is volatile since it is
@@ -75,16 +72,11 @@ static volatile accel_state_t accel_state;
  * @param samplebuffer The SampleBuffer in which to place accelerometer data
  * samples.
  */
-void Cma3000_init(volatile SampleBuffer * volatile samplebuffer, 
-        volatile uint16_t *b)
+void Cma3000_init(volatile SampleBuffer *samplebuffer)
 {
     uint8_t i;
     sb = samplebuffer;
     
-    c=b; // FIXME
-    sprintf(s, "init, a=%p, sb=%p", c, &(sb->accel[0]));
-    uart_debug(s);
-
     do
     {
         // Set P3.6 to output direction high
@@ -388,15 +380,7 @@ interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
                     break;
                 case STATE_ACCEL_XRDY:
                     // We've got data x, store it and move to y
-                    tmp = UCA0RXBUF; // FIXME
-                    *c = tmp;
-                    sb->accel[0] = tmp;
-                    ///////////////////////
-                    sprintf(s, "%u %u %u", tmp, *c, sb->accel[0]);
-                    uart_debug(s);
-                    sprintf(s, "isr, c=%p, sb=%p", c, &(sb->accel[0]));
-                    uart_debug(s);
-                    /////////////////////////
+                    sb->accel[0] = UCA0RXBUF;
                     UCA0TXBUF = DOUTY << 2;
                     accel_state = STATE_ACCEL_YREQ;
                     break;

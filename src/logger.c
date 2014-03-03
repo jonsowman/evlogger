@@ -47,8 +47,6 @@ static char ringbuf[SD_RINGBUF_LEN];
 static char writebuf[512];
 static RingBuffer sdbuf;
 
-volatile uint16_t a; //FIXME
-
 /**
  * A SampleBuffer to store a single set of readings before they are transferred
  * into the SD transaction buffer.
@@ -76,7 +74,7 @@ void logger_init(void)
 {
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
-    Cma3000_init(&sb, &a);
+    Cma3000_init(&sb);
 
     // Enable LEDs and turn them off (P1.0, P8.1, P8.2)
     P1DIR |= _BV(0);
@@ -250,11 +248,7 @@ void sd_setup(RingBuffer* sdbuf)
 
         // Update the LCD once every 200ms
         if((clock_time() % 333) == 0)
-        {
-            //sprintf(s, "%i", sb.accel[0]); //FIXME
-            //uart_debug(s);
             update_lcd(sdbuf);
-        }
     }
 }
 
