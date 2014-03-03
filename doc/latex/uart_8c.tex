@@ -1,45 +1,26 @@
-\hypertarget{uart_8c}{\section{/home/jon/projects/evlogger/evlogger/src/uart.c \-File \-Reference}
-\label{uart_8c}\index{/home/jon/projects/evlogger/evlogger/src/uart.\-c@{/home/jon/projects/evlogger/evlogger/src/uart.\-c}}
+\hypertarget{uart_8c}{\section{/\-Users/js39g13/projects/evlogger/src/uart.c File Reference}
+\label{uart_8c}\index{/\-Users/js39g13/projects/evlogger/src/uart.\-c@{/\-Users/js39g13/projects/evlogger/src/uart.\-c}}
 }
-{\ttfamily \#include $<$string.\-h$>$}\*
-{\ttfamily \#include \char`\"{}uart.\-h\char`\"{}}\*
-\subsection*{\-Functions}
+
+
+E\-V Datalogger Project.  
+
+
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}uart.\-h\char`\"{}}\\*
+\subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{uart_8c_a0c0ca72359ddf28dcd15900dfba19343}{uart\-\_\-init} (void)
-\begin{DoxyCompactList}\small\item\em \-E\-V \-Datalogger \-Project. \end{DoxyCompactList}\item 
-void \hyperlink{uart_8c_a50b070f4cc43030c47d4e8d0317f16f2}{uart\-\_\-debug} (char $\ast$string)
-\begin{DoxyCompactList}\small\item\em \-Send a \par
- terminated string to the debug output (to avoid storing the terminators in \-R\-A\-M all the time). \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{group__UART_ga0c0ca72359ddf28dcd15900dfba19343}{uart\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em Set up the U\-C\-S\-I for U\-A\-R\-T operation at 9600 baud. \end{DoxyCompactList}\item 
+void \hyperlink{group__UART_ga50b070f4cc43030c47d4e8d0317f16f2}{uart\-\_\-debug} (char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Send a \par
+ terminated string to the debug output (to avoid storing the terminators in R\-A\-M all the time). \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{\-Function \-Documentation}
-\hypertarget{uart_8c_a50b070f4cc43030c47d4e8d0317f16f2}{\index{uart.\-c@{uart.\-c}!uart\-\_\-debug@{uart\-\_\-debug}}
-\index{uart\-\_\-debug@{uart\-\_\-debug}!uart.c@{uart.\-c}}
-\subsubsection[{uart\-\_\-debug}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf uart\-\_\-debug} (
-\begin{DoxyParamCaption}
-\item[{char $\ast$}]{string}
-\end{DoxyParamCaption}
-)}}\label{uart_8c_a50b070f4cc43030c47d4e8d0317f16f2}
+\subsection{Detailed Description}
+E\-V Datalogger Project. Jon Sowman 2014 \href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk} University of Southampton
 
-
-\-Send a \par
- terminated string to the debug output (to avoid storing the terminators in \-R\-A\-M all the time). 
-
-
-\begin{DoxyParams}{\-Parameters}
-{\em string} & \-A char pointer to the string to transmit. \\
-\hline
-\end{DoxyParams}
-\hypertarget{uart_8c_a0c0ca72359ddf28dcd15900dfba19343}{\index{uart.\-c@{uart.\-c}!uart\-\_\-init@{uart\-\_\-init}}
-\index{uart\-\_\-init@{uart\-\_\-init}!uart.c@{uart.\-c}}
-\subsubsection[{uart\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf uart\-\_\-init} (
-\begin{DoxyParamCaption}
-\item[{void}]{}
-\end{DoxyParamCaption}
-)}}\label{uart_8c_a0c0ca72359ddf28dcd15900dfba19343}
-
-
-\-E\-V \-Datalogger \-Project. 
-
-\-Jon \-Sowman 2014 $<$\href{mailto:js39g13@soton.ac.uk}{\tt js39g13@soton.\-ac.\-uk}$>$ \-University of \-Southampton \-Set up the \-U\-C\-S\-I for \-U\-A\-R\-T operation at 9600 baud. \-The baud rate generator is currently hard coded for 25\-M\-Hz \-S\-M\-C\-L\-K. \-T\-O\-D\-O\-: \-Fix this to calculate \-B\-R\-R values from \-F\-\_\-\-C\-P\-U. 
+\begin{DoxyAuthor}{Author}
+Jon Sowman 
+\end{DoxyAuthor}

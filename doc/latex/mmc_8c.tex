@@ -1,273 +1,273 @@
-\hypertarget{mmc_8c}{\section{/home/jon/projects/evlogger/evlogger/src/mmc.c \-File \-Reference}
-\label{mmc_8c}\index{/home/jon/projects/evlogger/evlogger/src/mmc.\-c@{/home/jon/projects/evlogger/evlogger/src/mmc.\-c}}
+\hypertarget{mmc_8c}{\section{/\-Users/js39g13/projects/evlogger/src/mmc.c File Reference}
+\label{mmc_8c}\index{/\-Users/js39g13/projects/evlogger/src/mmc.\-c@{/\-Users/js39g13/projects/evlogger/src/mmc.\-c}}
 }
-{\ttfamily \#include \char`\"{}diskio.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}\-H\-A\-L\-\_\-\-S\-D\-Card.\-h\char`\"{}}\*
-\subsection*{\-Defines}
+{\ttfamily \#include \char`\"{}diskio.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-A\-L\-\_\-\-S\-D\-Card.\-h\char`\"{}}\\*
+\subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}{\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T}()~\-S\-D\-Card\-\_\-init()       /$\ast$ \-Initialize \-M\-M\-C control port $\ast$/
+\#define \hyperlink{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}{I\-N\-I\-T\-\_\-\-P\-O\-R\-T}()~S\-D\-Card\-\_\-init()       /$\ast$ Initialize M\-M\-C control port $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}{\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E}()~\-S\-D\-Card\-\_\-fast\-Mode()   /$\ast$ \-Maximize \-S\-D \-Card transfer speed $\ast$/
+\#define \hyperlink{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}{F\-A\-S\-T\-\_\-\-M\-O\-D\-E}()~S\-D\-Card\-\_\-fast\-Mode()   /$\ast$ Maximize S\-D Card transfer speed $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}{\-D\-L\-Y\-\_\-\-U\-S}(n)~\-\_\-\-\_\-delay\-\_\-cycles(n $\ast$ (\-F\-\_\-\-C\-P\-U/1000000))
+\#define \hyperlink{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}{D\-L\-Y\-\_\-\-U\-S}(n)~\-\_\-\-\_\-delay\-\_\-cycles(n $\ast$ (F\-\_\-\-C\-P\-U/1000000))
 \item 
-\#define \hyperlink{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}{\-C\-S\-\_\-\-H}()~\-S\-D\-Card\-\_\-set\-C\-S\-High()  /$\ast$ \-Set \-M\-M\-C \-C\-S \char`\"{}high\char`\"{} $\ast$/
+\#define \hyperlink{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}{C\-S\-\_\-\-H}()~S\-D\-Card\-\_\-set\-C\-S\-High()  /$\ast$ Set M\-M\-C C\-S \char`\"{}high\char`\"{} $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}{\-C\-S\-\_\-\-L}()~\-S\-D\-Card\-\_\-set\-C\-S\-Low()   /$\ast$ \-Set \-M\-M\-C \-C\-S \char`\"{}low\char`\"{} $\ast$/
+\#define \hyperlink{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}{C\-S\-\_\-\-L}()~S\-D\-Card\-\_\-set\-C\-S\-Low()   /$\ast$ Set M\-M\-C C\-S \char`\"{}low\char`\"{} $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a2c73b81722187c48d6186148091162fb}{\-W\-P}~(0)                 /$\ast$ \-Card is write protected (yes\-:true, no\-:false, default\-:false) $\ast$/
+\#define \hyperlink{mmc_8c_a2c73b81722187c48d6186148091162fb}{W\-P}~(0)                 /$\ast$ Card is write protected (yes\-:true, no\-:false, default\-:false) $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}{\-C\-M\-D0}~(0)			/$\ast$ \-G\-O\-\_\-\-I\-D\-L\-E\-\_\-\-S\-T\-A\-T\-E $\ast$/
+\#define \hyperlink{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}{C\-M\-D0}~(0)			/$\ast$ G\-O\-\_\-\-I\-D\-L\-E\-\_\-\-S\-T\-A\-T\-E $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aca9979f299fa78c1128d778084478673}{\-C\-M\-D1}~(1)			/$\ast$ \-S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D $\ast$/
+\#define \hyperlink{mmc_8c_aca9979f299fa78c1128d778084478673}{C\-M\-D1}~(1)			/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}{\-A\-C\-M\-D41}~(0x80+41)	/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-S\-D\-C) $\ast$/
+\#define \hyperlink{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}{A\-C\-M\-D41}~(0x80+41)	/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-S\-D\-C) $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}{\-C\-M\-D8}~(8)			/$\ast$ \-S\-E\-N\-D\-\_\-\-I\-F\-\_\-\-C\-O\-N\-D $\ast$/
+\#define \hyperlink{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}{C\-M\-D8}~(8)			/$\ast$ S\-E\-N\-D\-\_\-\-I\-F\-\_\-\-C\-O\-N\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}{\-C\-M\-D9}~(9)			/$\ast$ \-S\-E\-N\-D\-\_\-\-C\-S\-D $\ast$/
+\#define \hyperlink{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}{C\-M\-D9}~(9)			/$\ast$ S\-E\-N\-D\-\_\-\-C\-S\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}{\-C\-M\-D10}~(10)		/$\ast$ \-S\-E\-N\-D\-\_\-\-C\-I\-D $\ast$/
+\#define \hyperlink{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}{C\-M\-D10}~(10)		/$\ast$ S\-E\-N\-D\-\_\-\-C\-I\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}{\-C\-M\-D12}~(12)		/$\ast$ \-S\-T\-O\-P\-\_\-\-T\-R\-A\-N\-S\-M\-I\-S\-S\-I\-O\-N $\ast$/
+\#define \hyperlink{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}{C\-M\-D12}~(12)		/$\ast$ S\-T\-O\-P\-\_\-\-T\-R\-A\-N\-S\-M\-I\-S\-S\-I\-O\-N $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a4be8f501d86d24b02923846db618fc71}{\-A\-C\-M\-D13}~(0x80+13)	/$\ast$ S\-D\-\_\-\-S\-T\-A\-T\-U\-S (\-S\-D\-C) $\ast$/
+\#define \hyperlink{mmc_8c_a4be8f501d86d24b02923846db618fc71}{A\-C\-M\-D13}~(0x80+13)	/$\ast$ S\-D\-\_\-\-S\-T\-A\-T\-U\-S (\-S\-D\-C) $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}{\-C\-M\-D16}~(16)		/$\ast$ \-S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-L\-E\-N $\ast$/
+\#define \hyperlink{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}{C\-M\-D16}~(16)		/$\ast$ S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-L\-E\-N $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}{\-C\-M\-D17}~(17)		/$\ast$ \-R\-E\-A\-D\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
+\#define \hyperlink{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}{C\-M\-D17}~(17)		/$\ast$ R\-E\-A\-D\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a3d32c27a6be061b865ba539127278f14}{\-C\-M\-D18}~(18)		/$\ast$ \-R\-E\-A\-D\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
+\#define \hyperlink{mmc_8c_a3d32c27a6be061b865ba539127278f14}{C\-M\-D18}~(18)		/$\ast$ R\-E\-A\-D\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}{\-C\-M\-D23}~(23)		/$\ast$ \-S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-C\-O\-U\-N\-T $\ast$/
+\#define \hyperlink{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}{C\-M\-D23}~(23)		/$\ast$ S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-C\-O\-U\-N\-T $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aa38144d651e2880f92c65bb683621f78}{\-A\-C\-M\-D23}~(0x80+23)	/$\ast$ S\-E\-T\-\_\-\-W\-R\-\_\-\-B\-L\-K\-\_\-\-E\-R\-A\-S\-E\-\_\-\-C\-O\-U\-N\-T (\-S\-D\-C) $\ast$/
+\#define \hyperlink{mmc_8c_aa38144d651e2880f92c65bb683621f78}{A\-C\-M\-D23}~(0x80+23)	/$\ast$ S\-E\-T\-\_\-\-W\-R\-\_\-\-B\-L\-K\-\_\-\-E\-R\-A\-S\-E\-\_\-\-C\-O\-U\-N\-T (\-S\-D\-C) $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a252300302c6f7960df547a7f5c25be85}{\-C\-M\-D24}~(24)		/$\ast$ \-W\-R\-I\-T\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
+\#define \hyperlink{mmc_8c_a252300302c6f7960df547a7f5c25be85}{C\-M\-D24}~(24)		/$\ast$ W\-R\-I\-T\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aee2c673fba987178f4642531fdeefe9e}{\-C\-M\-D25}~(25)		/$\ast$ \-W\-R\-I\-T\-E\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
+\#define \hyperlink{mmc_8c_aee2c673fba987178f4642531fdeefe9e}{C\-M\-D25}~(25)		/$\ast$ W\-R\-I\-T\-E\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}{\-C\-M\-D41}~(41)		/$\ast$ \-S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-A\-C\-M\-D) $\ast$/
+\#define \hyperlink{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}{C\-M\-D41}~(41)		/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (A\-C\-M\-D) $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a78289a7a85ffcfddd626694105dc0780}{\-C\-M\-D55}~(55)		/$\ast$ \-A\-P\-P\-\_\-\-C\-M\-D $\ast$/
+\#define \hyperlink{mmc_8c_a78289a7a85ffcfddd626694105dc0780}{C\-M\-D55}~(55)		/$\ast$ A\-P\-P\-\_\-\-C\-M\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}{\-C\-M\-D58}~(58)		/$\ast$ \-R\-E\-A\-D\-\_\-\-O\-C\-R $\ast$/
+\#define \hyperlink{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}{C\-M\-D58}~(58)		/$\ast$ R\-E\-A\-D\-\_\-\-O\-C\-R $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}{\-C\-T\-\_\-\-M\-M\-C}~0x01		/$\ast$ M\-M\-C ver 3 $\ast$/
+\#define \hyperlink{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}{C\-T\-\_\-\-M\-M\-C}~0x01		/$\ast$ M\-M\-C ver 3 $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{\-C\-T\-\_\-\-S\-D1}~0x02		/$\ast$ S\-D ver 1 $\ast$/
+\#define \hyperlink{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{C\-T\-\_\-\-S\-D1}~0x02		/$\ast$ S\-D ver 1 $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{\-C\-T\-\_\-\-S\-D2}~0x04		/$\ast$ S\-D ver 2 $\ast$/
+\#define \hyperlink{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{C\-T\-\_\-\-S\-D2}~0x04		/$\ast$ S\-D ver 2 $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}{\-C\-T\-\_\-\-S\-D\-C}~(\hyperlink{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{\-C\-T\-\_\-\-S\-D1}$|$\hyperlink{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{\-C\-T\-\_\-\-S\-D2})	/$\ast$ \-S\-D $\ast$/
+\#define \hyperlink{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}{C\-T\-\_\-\-S\-D\-C}~(\hyperlink{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{C\-T\-\_\-\-S\-D1}$\vert$\hyperlink{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{C\-T\-\_\-\-S\-D2})	/$\ast$ S\-D $\ast$/
 \item 
-\#define \hyperlink{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}{\-C\-T\-\_\-\-B\-L\-O\-C\-K}~0x08		/$\ast$ Block addressing $\ast$/
+\#define \hyperlink{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}{C\-T\-\_\-\-B\-L\-O\-C\-K}~0x08		/$\ast$ Block addressing $\ast$/
 \end{DoxyCompactItemize}
-\subsection*{\-Functions}
+\subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{\-D\-W\-O\-R\-D} \hyperlink{mmc_8c_af58b536abfd30f77213f4ecaf2ac52f5}{get\-\_\-fattime} (void)
+\hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{D\-W\-O\-R\-D} \hyperlink{mmc_8c_af58b536abfd30f77213f4ecaf2ac52f5}{get\-\_\-fattime} (void)
 \item 
-\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\-D\-S\-T\-A\-T\-U\-S} \hyperlink{mmc_8c_a21ad8e9a107ea2000705a3edfebaaa2d}{disk\-\_\-status} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} drv)
+\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{D\-S\-T\-A\-T\-U\-S} \hyperlink{mmc_8c_a21ad8e9a107ea2000705a3edfebaaa2d}{disk\-\_\-status} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} drv)
 \item 
-\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{\-D\-S\-T\-A\-T\-U\-S} \hyperlink{mmc_8c_a8e429a29bdbb73f5bc9e2ab2335a5112}{disk\-\_\-initialize} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} drv)
+\hyperlink{diskio_8h_adba6790898ce4029c20a34b898ce73c1}{D\-S\-T\-A\-T\-U\-S} \hyperlink{mmc_8c_a8e429a29bdbb73f5bc9e2ab2335a5112}{disk\-\_\-initialize} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} drv)
 \item 
-\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_a42043c0f462756dbdf1f3bd1bdb5fa50}{disk\-\_\-read} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} drv, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} $\ast$buff, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{\-D\-W\-O\-R\-D} sector, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} count)
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_a42043c0f462756dbdf1f3bd1bdb5fa50}{disk\-\_\-read} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} drv, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} $\ast$buff, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{D\-W\-O\-R\-D} sector, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} count)
 \item 
-\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_a0045ef2f87f7c45d77bcdef38eae7b67}{disk\-\_\-write} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} drv, const \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} $\ast$buff, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{\-D\-W\-O\-R\-D} sector, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} count)
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_a0045ef2f87f7c45d77bcdef38eae7b67}{disk\-\_\-write} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} drv, const \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} $\ast$buff, \hyperlink{integer_8h_ad342ac907eb044443153a22f964bf0af}{D\-W\-O\-R\-D} sector, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} count)
 \item 
-\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{\-D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_ae342f09a55603a5053750e2fd040f4a8}{disk\-\_\-ioctl} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} drv, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} ctrl, void $\ast$buff)
+\hyperlink{diskio_8h_aacdfef1dad6565f65c26d12fe0ea4b2b}{D\-R\-E\-S\-U\-L\-T} \hyperlink{mmc_8c_ae342f09a55603a5053750e2fd040f4a8}{disk\-\_\-ioctl} (\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} drv, \hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} ctrl, void $\ast$buff)
 \item 
 \hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{mmc_8c_a5bb225e2354c885403bff7190f77181c}{validate\-C\-S\-D} (void)
 \item 
 \hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{mmc_8c_a4d9c1f7df487446f7faaf14168ebd0d9}{detect\-Card} (void)
 \end{DoxyCompactItemize}
-\subsection*{\-Variables}
+\subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{\-B\-Y\-T\-E} \hyperlink{mmc_8c_ae155fbd1927455c581741eb21a731519}{\-I\-N\-S} = 1
+\hyperlink{integer_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\-Y\-T\-E} \hyperlink{mmc_8c_ae155fbd1927455c581741eb21a731519}{I\-N\-S} = 1
 \end{DoxyCompactItemize}
 
 
-\subsection{\-Define \-Documentation}
-\hypertarget{mmc_8c_a4be8f501d86d24b02923846db618fc71}{\index{mmc.\-c@{mmc.\-c}!\-A\-C\-M\-D13@{\-A\-C\-M\-D13}}
-\index{\-A\-C\-M\-D13@{\-A\-C\-M\-D13}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-A\-C\-M\-D13}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-C\-M\-D13}~(0x80+13)	/$\ast$ S\-D\-\_\-\-S\-T\-A\-T\-U\-S (\-S\-D\-C) $\ast$/}}\label{mmc_8c_a4be8f501d86d24b02923846db618fc71}
-\hypertarget{mmc_8c_aa38144d651e2880f92c65bb683621f78}{\index{mmc.\-c@{mmc.\-c}!\-A\-C\-M\-D23@{\-A\-C\-M\-D23}}
-\index{\-A\-C\-M\-D23@{\-A\-C\-M\-D23}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-A\-C\-M\-D23}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-C\-M\-D23}~(0x80+23)	/$\ast$ S\-E\-T\-\_\-\-W\-R\-\_\-\-B\-L\-K\-\_\-\-E\-R\-A\-S\-E\-\_\-\-C\-O\-U\-N\-T (\-S\-D\-C) $\ast$/}}\label{mmc_8c_aa38144d651e2880f92c65bb683621f78}
-\hypertarget{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}{\index{mmc.\-c@{mmc.\-c}!\-A\-C\-M\-D41@{\-A\-C\-M\-D41}}
-\index{\-A\-C\-M\-D41@{\-A\-C\-M\-D41}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-A\-C\-M\-D41}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-C\-M\-D41}~(0x80+41)	/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-S\-D\-C) $\ast$/}}\label{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}
-\hypertarget{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D0@{\-C\-M\-D0}}
-\index{\-C\-M\-D0@{\-C\-M\-D0}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D0}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D0}~(0)			/$\ast$ \-G\-O\-\_\-\-I\-D\-L\-E\-\_\-\-S\-T\-A\-T\-E $\ast$/}}\label{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}
-\hypertarget{mmc_8c_aca9979f299fa78c1128d778084478673}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D1@{\-C\-M\-D1}}
-\index{\-C\-M\-D1@{\-C\-M\-D1}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D1}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D1}~(1)			/$\ast$ \-S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D $\ast$/}}\label{mmc_8c_aca9979f299fa78c1128d778084478673}
-\hypertarget{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D10@{\-C\-M\-D10}}
-\index{\-C\-M\-D10@{\-C\-M\-D10}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D10}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D10}~(10)		/$\ast$ \-S\-E\-N\-D\-\_\-\-C\-I\-D $\ast$/}}\label{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}
-\hypertarget{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D12@{\-C\-M\-D12}}
-\index{\-C\-M\-D12@{\-C\-M\-D12}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D12}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D12}~(12)		/$\ast$ \-S\-T\-O\-P\-\_\-\-T\-R\-A\-N\-S\-M\-I\-S\-S\-I\-O\-N $\ast$/}}\label{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}
-\hypertarget{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D16@{\-C\-M\-D16}}
-\index{\-C\-M\-D16@{\-C\-M\-D16}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D16}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D16}~(16)		/$\ast$ \-S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-L\-E\-N $\ast$/}}\label{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}
-\hypertarget{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D17@{\-C\-M\-D17}}
-\index{\-C\-M\-D17@{\-C\-M\-D17}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D17}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D17}~(17)		/$\ast$ \-R\-E\-A\-D\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}
-\hypertarget{mmc_8c_a3d32c27a6be061b865ba539127278f14}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D18@{\-C\-M\-D18}}
-\index{\-C\-M\-D18@{\-C\-M\-D18}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D18}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D18}~(18)		/$\ast$ \-R\-E\-A\-D\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a3d32c27a6be061b865ba539127278f14}
-\hypertarget{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D23@{\-C\-M\-D23}}
-\index{\-C\-M\-D23@{\-C\-M\-D23}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D23}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D23}~(23)		/$\ast$ \-S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-C\-O\-U\-N\-T $\ast$/}}\label{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}
-\hypertarget{mmc_8c_a252300302c6f7960df547a7f5c25be85}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D24@{\-C\-M\-D24}}
-\index{\-C\-M\-D24@{\-C\-M\-D24}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D24}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D24}~(24)		/$\ast$ \-W\-R\-I\-T\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a252300302c6f7960df547a7f5c25be85}
-\hypertarget{mmc_8c_aee2c673fba987178f4642531fdeefe9e}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D25@{\-C\-M\-D25}}
-\index{\-C\-M\-D25@{\-C\-M\-D25}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D25}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D25}~(25)		/$\ast$ \-W\-R\-I\-T\-E\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_aee2c673fba987178f4642531fdeefe9e}
-\hypertarget{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D41@{\-C\-M\-D41}}
-\index{\-C\-M\-D41@{\-C\-M\-D41}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D41}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D41}~(41)		/$\ast$ \-S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-A\-C\-M\-D) $\ast$/}}\label{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}
-\hypertarget{mmc_8c_a78289a7a85ffcfddd626694105dc0780}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D55@{\-C\-M\-D55}}
-\index{\-C\-M\-D55@{\-C\-M\-D55}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D55}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D55}~(55)		/$\ast$ \-A\-P\-P\-\_\-\-C\-M\-D $\ast$/}}\label{mmc_8c_a78289a7a85ffcfddd626694105dc0780}
-\hypertarget{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D58@{\-C\-M\-D58}}
-\index{\-C\-M\-D58@{\-C\-M\-D58}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D58}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D58}~(58)		/$\ast$ \-R\-E\-A\-D\-\_\-\-O\-C\-R $\ast$/}}\label{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}
-\hypertarget{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D8@{\-C\-M\-D8}}
-\index{\-C\-M\-D8@{\-C\-M\-D8}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D8}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D8}~(8)			/$\ast$ \-S\-E\-N\-D\-\_\-\-I\-F\-\_\-\-C\-O\-N\-D $\ast$/}}\label{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}
-\hypertarget{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}{\index{mmc.\-c@{mmc.\-c}!\-C\-M\-D9@{\-C\-M\-D9}}
-\index{\-C\-M\-D9@{\-C\-M\-D9}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-M\-D9}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D9}~(9)			/$\ast$ \-S\-E\-N\-D\-\_\-\-C\-S\-D $\ast$/}}\label{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}
-\hypertarget{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}{\index{mmc.\-c@{mmc.\-c}!\-C\-S\-\_\-\-H@{\-C\-S\-\_\-\-H}}
-\index{\-C\-S\-\_\-\-H@{\-C\-S\-\_\-\-H}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-S\-\_\-\-H}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-S\-\_\-\-H}(
+\subsection{Macro Definition Documentation}
+\hypertarget{mmc_8c_a4be8f501d86d24b02923846db618fc71}{\index{mmc.\-c@{mmc.\-c}!A\-C\-M\-D13@{A\-C\-M\-D13}}
+\index{A\-C\-M\-D13@{A\-C\-M\-D13}!mmc.c@{mmc.\-c}}
+\subsubsection[{A\-C\-M\-D13}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-C\-M\-D13~(0x80+13)	/$\ast$ S\-D\-\_\-\-S\-T\-A\-T\-U\-S (\-S\-D\-C) $\ast$/}}\label{mmc_8c_a4be8f501d86d24b02923846db618fc71}
+\hypertarget{mmc_8c_aa38144d651e2880f92c65bb683621f78}{\index{mmc.\-c@{mmc.\-c}!A\-C\-M\-D23@{A\-C\-M\-D23}}
+\index{A\-C\-M\-D23@{A\-C\-M\-D23}!mmc.c@{mmc.\-c}}
+\subsubsection[{A\-C\-M\-D23}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-C\-M\-D23~(0x80+23)	/$\ast$ S\-E\-T\-\_\-\-W\-R\-\_\-\-B\-L\-K\-\_\-\-E\-R\-A\-S\-E\-\_\-\-C\-O\-U\-N\-T (\-S\-D\-C) $\ast$/}}\label{mmc_8c_aa38144d651e2880f92c65bb683621f78}
+\hypertarget{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}{\index{mmc.\-c@{mmc.\-c}!A\-C\-M\-D41@{A\-C\-M\-D41}}
+\index{A\-C\-M\-D41@{A\-C\-M\-D41}!mmc.c@{mmc.\-c}}
+\subsubsection[{A\-C\-M\-D41}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-C\-M\-D41~(0x80+41)	/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (\-S\-D\-C) $\ast$/}}\label{mmc_8c_a9b6fdfed1b57ac31269b6b9987e0761b}
+\hypertarget{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D0@{C\-M\-D0}}
+\index{C\-M\-D0@{C\-M\-D0}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D0}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D0~(0)			/$\ast$ G\-O\-\_\-\-I\-D\-L\-E\-\_\-\-S\-T\-A\-T\-E $\ast$/}}\label{mmc_8c_a938c1466755f12fb04ac0d1b775584d1}
+\hypertarget{mmc_8c_aca9979f299fa78c1128d778084478673}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D1@{C\-M\-D1}}
+\index{C\-M\-D1@{C\-M\-D1}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D1}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D1~(1)			/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D $\ast$/}}\label{mmc_8c_aca9979f299fa78c1128d778084478673}
+\hypertarget{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D10@{C\-M\-D10}}
+\index{C\-M\-D10@{C\-M\-D10}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D10}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D10~(10)		/$\ast$ S\-E\-N\-D\-\_\-\-C\-I\-D $\ast$/}}\label{mmc_8c_ae7b800ed8e7bd52e6f570a5ce72b8104}
+\hypertarget{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D12@{C\-M\-D12}}
+\index{C\-M\-D12@{C\-M\-D12}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D12}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D12~(12)		/$\ast$ S\-T\-O\-P\-\_\-\-T\-R\-A\-N\-S\-M\-I\-S\-S\-I\-O\-N $\ast$/}}\label{mmc_8c_a8d6283c9b060afbaa0e6d1ff7e5ea7b8}
+\hypertarget{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D16@{C\-M\-D16}}
+\index{C\-M\-D16@{C\-M\-D16}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D16}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D16~(16)		/$\ast$ S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-L\-E\-N $\ast$/}}\label{mmc_8c_aaeab261b94f2031ba41a1d4d857c3541}
+\hypertarget{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D17@{C\-M\-D17}}
+\index{C\-M\-D17@{C\-M\-D17}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D17}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D17~(17)		/$\ast$ R\-E\-A\-D\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a6bbfe7dc16a19b7f40efcf554b5666ad}
+\hypertarget{mmc_8c_a3d32c27a6be061b865ba539127278f14}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D18@{C\-M\-D18}}
+\index{C\-M\-D18@{C\-M\-D18}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D18}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D18~(18)		/$\ast$ R\-E\-A\-D\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a3d32c27a6be061b865ba539127278f14}
+\hypertarget{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D23@{C\-M\-D23}}
+\index{C\-M\-D23@{C\-M\-D23}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D23}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D23~(23)		/$\ast$ S\-E\-T\-\_\-\-B\-L\-O\-C\-K\-\_\-\-C\-O\-U\-N\-T $\ast$/}}\label{mmc_8c_a14506e981f38b6177bc36f72c2ca18b1}
+\hypertarget{mmc_8c_a252300302c6f7960df547a7f5c25be85}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D24@{C\-M\-D24}}
+\index{C\-M\-D24@{C\-M\-D24}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D24}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D24~(24)		/$\ast$ W\-R\-I\-T\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_a252300302c6f7960df547a7f5c25be85}
+\hypertarget{mmc_8c_aee2c673fba987178f4642531fdeefe9e}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D25@{C\-M\-D25}}
+\index{C\-M\-D25@{C\-M\-D25}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D25}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D25~(25)		/$\ast$ W\-R\-I\-T\-E\-\_\-\-M\-U\-L\-T\-I\-P\-L\-E\-\_\-\-B\-L\-O\-C\-K $\ast$/}}\label{mmc_8c_aee2c673fba987178f4642531fdeefe9e}
+\hypertarget{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D41@{C\-M\-D41}}
+\index{C\-M\-D41@{C\-M\-D41}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D41}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D41~(41)		/$\ast$ S\-E\-N\-D\-\_\-\-O\-P\-\_\-\-C\-O\-N\-D (A\-C\-M\-D) $\ast$/}}\label{mmc_8c_a3ca1450d0ac55d2705aab03537bf2865}
+\hypertarget{mmc_8c_a78289a7a85ffcfddd626694105dc0780}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D55@{C\-M\-D55}}
+\index{C\-M\-D55@{C\-M\-D55}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D55}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D55~(55)		/$\ast$ A\-P\-P\-\_\-\-C\-M\-D $\ast$/}}\label{mmc_8c_a78289a7a85ffcfddd626694105dc0780}
+\hypertarget{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D58@{C\-M\-D58}}
+\index{C\-M\-D58@{C\-M\-D58}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D58}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D58~(58)		/$\ast$ R\-E\-A\-D\-\_\-\-O\-C\-R $\ast$/}}\label{mmc_8c_aa7a26b2cf17e1ff5967820a1fa41a7aa}
+\hypertarget{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D8@{C\-M\-D8}}
+\index{C\-M\-D8@{C\-M\-D8}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D8}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D8~(8)			/$\ast$ S\-E\-N\-D\-\_\-\-I\-F\-\_\-\-C\-O\-N\-D $\ast$/}}\label{mmc_8c_ac75b3e0ad1fb013ea946fb49bbe65668}
+\hypertarget{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}{\index{mmc.\-c@{mmc.\-c}!C\-M\-D9@{C\-M\-D9}}
+\index{C\-M\-D9@{C\-M\-D9}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-M\-D9}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-M\-D9~(9)			/$\ast$ S\-E\-N\-D\-\_\-\-C\-S\-D $\ast$/}}\label{mmc_8c_a1fac6a251d7e7dc204d21639bf521459}
+\hypertarget{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}{\index{mmc.\-c@{mmc.\-c}!C\-S\-\_\-\-H@{C\-S\-\_\-\-H}}
+\index{C\-S\-\_\-\-H@{C\-S\-\_\-\-H}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-S\-\_\-\-H}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-S\-\_\-\-H(
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)~\-S\-D\-Card\-\_\-set\-C\-S\-High()  /$\ast$ \-Set \-M\-M\-C \-C\-S \char`\"{}high\char`\"{} $\ast$/}}\label{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}
-\hypertarget{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}{\index{mmc.\-c@{mmc.\-c}!\-C\-S\-\_\-\-L@{\-C\-S\-\_\-\-L}}
-\index{\-C\-S\-\_\-\-L@{\-C\-S\-\_\-\-L}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-S\-\_\-\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-S\-\_\-\-L}(
+)~S\-D\-Card\-\_\-set\-C\-S\-High()  /$\ast$ Set M\-M\-C C\-S \char`\"{}high\char`\"{} $\ast$/}}\label{mmc_8c_ab6872874dbf2ac63a9885446a5a6da36}
+\hypertarget{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}{\index{mmc.\-c@{mmc.\-c}!C\-S\-\_\-\-L@{C\-S\-\_\-\-L}}
+\index{C\-S\-\_\-\-L@{C\-S\-\_\-\-L}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-S\-\_\-\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-S\-\_\-\-L(
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)~\-S\-D\-Card\-\_\-set\-C\-S\-Low()   /$\ast$ \-Set \-M\-M\-C \-C\-S \char`\"{}low\char`\"{} $\ast$/}}\label{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}
-\hypertarget{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}{\index{mmc.\-c@{mmc.\-c}!\-C\-T\-\_\-\-B\-L\-O\-C\-K@{\-C\-T\-\_\-\-B\-L\-O\-C\-K}}
-\index{\-C\-T\-\_\-\-B\-L\-O\-C\-K@{\-C\-T\-\_\-\-B\-L\-O\-C\-K}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-T\-\_\-\-B\-L\-O\-C\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-\_\-\-B\-L\-O\-C\-K}~0x08		/$\ast$ Block addressing $\ast$/}}\label{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}
-\hypertarget{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}{\index{mmc.\-c@{mmc.\-c}!\-C\-T\-\_\-\-M\-M\-C@{\-C\-T\-\_\-\-M\-M\-C}}
-\index{\-C\-T\-\_\-\-M\-M\-C@{\-C\-T\-\_\-\-M\-M\-C}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-T\-\_\-\-M\-M\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-\_\-\-M\-M\-C}~0x01		/$\ast$ M\-M\-C ver 3 $\ast$/}}\label{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}
-\hypertarget{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{\index{mmc.\-c@{mmc.\-c}!\-C\-T\-\_\-\-S\-D1@{\-C\-T\-\_\-\-S\-D1}}
-\index{\-C\-T\-\_\-\-S\-D1@{\-C\-T\-\_\-\-S\-D1}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-T\-\_\-\-S\-D1}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-\_\-\-S\-D1}~0x02		/$\ast$ S\-D ver 1 $\ast$/}}\label{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}
-\hypertarget{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{\index{mmc.\-c@{mmc.\-c}!\-C\-T\-\_\-\-S\-D2@{\-C\-T\-\_\-\-S\-D2}}
-\index{\-C\-T\-\_\-\-S\-D2@{\-C\-T\-\_\-\-S\-D2}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-T\-\_\-\-S\-D2}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-\_\-\-S\-D2}~0x04		/$\ast$ S\-D ver 2 $\ast$/}}\label{mmc_8c_a0db1b71113e73184a5ba511e7020a922}
-\hypertarget{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}{\index{mmc.\-c@{mmc.\-c}!\-C\-T\-\_\-\-S\-D\-C@{\-C\-T\-\_\-\-S\-D\-C}}
-\index{\-C\-T\-\_\-\-S\-D\-C@{\-C\-T\-\_\-\-S\-D\-C}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-C\-T\-\_\-\-S\-D\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-T\-\_\-\-S\-D\-C}~({\bf \-C\-T\-\_\-\-S\-D1}$|${\bf \-C\-T\-\_\-\-S\-D2})	/$\ast$ \-S\-D $\ast$/}}\label{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}
-\hypertarget{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}{\index{mmc.\-c@{mmc.\-c}!\-D\-L\-Y\-\_\-\-U\-S@{\-D\-L\-Y\-\_\-\-U\-S}}
-\index{\-D\-L\-Y\-\_\-\-U\-S@{\-D\-L\-Y\-\_\-\-U\-S}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-D\-L\-Y\-\_\-\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-L\-Y\-\_\-\-U\-S}(
+)~S\-D\-Card\-\_\-set\-C\-S\-Low()   /$\ast$ Set M\-M\-C C\-S \char`\"{}low\char`\"{} $\ast$/}}\label{mmc_8c_ae809be768bb813a2d5e6cb1edaa7e0af}
+\hypertarget{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}{\index{mmc.\-c@{mmc.\-c}!C\-T\-\_\-\-B\-L\-O\-C\-K@{C\-T\-\_\-\-B\-L\-O\-C\-K}}
+\index{C\-T\-\_\-\-B\-L\-O\-C\-K@{C\-T\-\_\-\-B\-L\-O\-C\-K}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-T\-\_\-\-B\-L\-O\-C\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-T\-\_\-\-B\-L\-O\-C\-K~0x08		/$\ast$ Block addressing $\ast$/}}\label{mmc_8c_a7d48ce54c27f4f60666309e8627fab47}
+\hypertarget{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}{\index{mmc.\-c@{mmc.\-c}!C\-T\-\_\-\-M\-M\-C@{C\-T\-\_\-\-M\-M\-C}}
+\index{C\-T\-\_\-\-M\-M\-C@{C\-T\-\_\-\-M\-M\-C}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-T\-\_\-\-M\-M\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-T\-\_\-\-M\-M\-C~0x01		/$\ast$ M\-M\-C ver 3 $\ast$/}}\label{mmc_8c_ac52ec66c278308382fdf7b2c57f0ad8c}
+\hypertarget{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}{\index{mmc.\-c@{mmc.\-c}!C\-T\-\_\-\-S\-D1@{C\-T\-\_\-\-S\-D1}}
+\index{C\-T\-\_\-\-S\-D1@{C\-T\-\_\-\-S\-D1}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-T\-\_\-\-S\-D1}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-T\-\_\-\-S\-D1~0x02		/$\ast$ S\-D ver 1 $\ast$/}}\label{mmc_8c_ad1c9fc863ec15d3320b3850dc571626e}
+\hypertarget{mmc_8c_a0db1b71113e73184a5ba511e7020a922}{\index{mmc.\-c@{mmc.\-c}!C\-T\-\_\-\-S\-D2@{C\-T\-\_\-\-S\-D2}}
+\index{C\-T\-\_\-\-S\-D2@{C\-T\-\_\-\-S\-D2}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-T\-\_\-\-S\-D2}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-T\-\_\-\-S\-D2~0x04		/$\ast$ S\-D ver 2 $\ast$/}}\label{mmc_8c_a0db1b71113e73184a5ba511e7020a922}
+\hypertarget{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}{\index{mmc.\-c@{mmc.\-c}!C\-T\-\_\-\-S\-D\-C@{C\-T\-\_\-\-S\-D\-C}}
+\index{C\-T\-\_\-\-S\-D\-C@{C\-T\-\_\-\-S\-D\-C}!mmc.c@{mmc.\-c}}
+\subsubsection[{C\-T\-\_\-\-S\-D\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-T\-\_\-\-S\-D\-C~({\bf C\-T\-\_\-\-S\-D1}$\vert${\bf C\-T\-\_\-\-S\-D2})	/$\ast$ S\-D $\ast$/}}\label{mmc_8c_ae76d94ac83c68d1f025cb0bcad77fa5d}
+\hypertarget{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}{\index{mmc.\-c@{mmc.\-c}!D\-L\-Y\-\_\-\-U\-S@{D\-L\-Y\-\_\-\-U\-S}}
+\index{D\-L\-Y\-\_\-\-U\-S@{D\-L\-Y\-\_\-\-U\-S}!mmc.c@{mmc.\-c}}
+\subsubsection[{D\-L\-Y\-\_\-\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-L\-Y\-\_\-\-U\-S(
 \begin{DoxyParamCaption}
 \item[{}]{n}
 \end{DoxyParamCaption}
-)~\-\_\-\-\_\-delay\-\_\-cycles(n $\ast$ (\-F\-\_\-\-C\-P\-U/1000000))}}\label{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}
-\hypertarget{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}{\index{mmc.\-c@{mmc.\-c}!\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E@{\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E}}
-\index{\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E@{\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-F\-A\-S\-T\-\_\-\-M\-O\-D\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-F\-A\-S\-T\-\_\-\-M\-O\-D\-E}(
+)~\-\_\-\-\_\-delay\-\_\-cycles(n $\ast$ (F\-\_\-\-C\-P\-U/1000000))}}\label{mmc_8c_aa78538b0ffa9ead6d53815a26e3bfb2d}
+\hypertarget{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}{\index{mmc.\-c@{mmc.\-c}!F\-A\-S\-T\-\_\-\-M\-O\-D\-E@{F\-A\-S\-T\-\_\-\-M\-O\-D\-E}}
+\index{F\-A\-S\-T\-\_\-\-M\-O\-D\-E@{F\-A\-S\-T\-\_\-\-M\-O\-D\-E}!mmc.c@{mmc.\-c}}
+\subsubsection[{F\-A\-S\-T\-\_\-\-M\-O\-D\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-A\-S\-T\-\_\-\-M\-O\-D\-E(
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)~\-S\-D\-Card\-\_\-fast\-Mode()   /$\ast$ \-Maximize \-S\-D \-Card transfer speed $\ast$/}}\label{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}
-\hypertarget{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}{\index{mmc.\-c@{mmc.\-c}!\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T@{\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T}}
-\index{\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T@{\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-I\-N\-I\-T\-\_\-\-P\-O\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-N\-I\-T\-\_\-\-P\-O\-R\-T}(
+)~S\-D\-Card\-\_\-fast\-Mode()   /$\ast$ Maximize S\-D Card transfer speed $\ast$/}}\label{mmc_8c_aae3adf77d24a7bd6e5a07d334fe76f68}
+\hypertarget{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}{\index{mmc.\-c@{mmc.\-c}!I\-N\-I\-T\-\_\-\-P\-O\-R\-T@{I\-N\-I\-T\-\_\-\-P\-O\-R\-T}}
+\index{I\-N\-I\-T\-\_\-\-P\-O\-R\-T@{I\-N\-I\-T\-\_\-\-P\-O\-R\-T}!mmc.c@{mmc.\-c}}
+\subsubsection[{I\-N\-I\-T\-\_\-\-P\-O\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-N\-I\-T\-\_\-\-P\-O\-R\-T(
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)~\-S\-D\-Card\-\_\-init()       /$\ast$ \-Initialize \-M\-M\-C control port $\ast$/}}\label{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}
-\hypertarget{mmc_8c_a2c73b81722187c48d6186148091162fb}{\index{mmc.\-c@{mmc.\-c}!\-W\-P@{\-W\-P}}
-\index{\-W\-P@{\-W\-P}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-W\-P}~(0)                 /$\ast$ \-Card is write protected (yes\-:true, no\-:false, default\-:false) $\ast$/}}\label{mmc_8c_a2c73b81722187c48d6186148091162fb}
+)~S\-D\-Card\-\_\-init()       /$\ast$ Initialize M\-M\-C control port $\ast$/}}\label{mmc_8c_aeb59301a4b910e7456484c9390d73b1d}
+\hypertarget{mmc_8c_a2c73b81722187c48d6186148091162fb}{\index{mmc.\-c@{mmc.\-c}!W\-P@{W\-P}}
+\index{W\-P@{W\-P}!mmc.c@{mmc.\-c}}
+\subsubsection[{W\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define W\-P~(0)                 /$\ast$ Card is write protected (yes\-:true, no\-:false, default\-:false) $\ast$/}}\label{mmc_8c_a2c73b81722187c48d6186148091162fb}
 
 
-\subsection{\-Function \-Documentation}
+\subsection{Function Documentation}
 \hypertarget{mmc_8c_a4d9c1f7df487446f7faaf14168ebd0d9}{\index{mmc.\-c@{mmc.\-c}!detect\-Card@{detect\-Card}}
 \index{detect\-Card@{detect\-Card}!mmc.c@{mmc.\-c}}
-\subsubsection[{detect\-Card}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf detect\-Card} (
+\subsubsection[{detect\-Card}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} detect\-Card (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a4d9c1f7df487446f7faaf14168ebd0d9}
 \hypertarget{mmc_8c_a8e429a29bdbb73f5bc9e2ab2335a5112}{\index{mmc.\-c@{mmc.\-c}!disk\-\_\-initialize@{disk\-\_\-initialize}}
 \index{disk\-\_\-initialize@{disk\-\_\-initialize}!mmc.c@{mmc.\-c}}
-\subsubsection[{disk\-\_\-initialize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-S\-T\-A\-T\-U\-S} {\bf disk\-\_\-initialize} (
+\subsubsection[{disk\-\_\-initialize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-S\-T\-A\-T\-U\-S} disk\-\_\-initialize (
 \begin{DoxyParamCaption}
-\item[{{\bf \-B\-Y\-T\-E}}]{drv}
+\item[{{\bf B\-Y\-T\-E}}]{drv}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a8e429a29bdbb73f5bc9e2ab2335a5112}
 \hypertarget{mmc_8c_ae342f09a55603a5053750e2fd040f4a8}{\index{mmc.\-c@{mmc.\-c}!disk\-\_\-ioctl@{disk\-\_\-ioctl}}
 \index{disk\-\_\-ioctl@{disk\-\_\-ioctl}!mmc.c@{mmc.\-c}}
-\subsubsection[{disk\-\_\-ioctl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-ioctl} (
+\subsubsection[{disk\-\_\-ioctl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-R\-E\-S\-U\-L\-T} disk\-\_\-ioctl (
 \begin{DoxyParamCaption}
-\item[{{\bf \-B\-Y\-T\-E}}]{drv, }
-\item[{{\bf \-B\-Y\-T\-E}}]{ctrl, }
+\item[{{\bf B\-Y\-T\-E}}]{drv, }
+\item[{{\bf B\-Y\-T\-E}}]{ctrl, }
 \item[{void $\ast$}]{buff}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_ae342f09a55603a5053750e2fd040f4a8}
 \hypertarget{mmc_8c_a42043c0f462756dbdf1f3bd1bdb5fa50}{\index{mmc.\-c@{mmc.\-c}!disk\-\_\-read@{disk\-\_\-read}}
 \index{disk\-\_\-read@{disk\-\_\-read}!mmc.c@{mmc.\-c}}
-\subsubsection[{disk\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-read} (
+\subsubsection[{disk\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-R\-E\-S\-U\-L\-T} disk\-\_\-read (
 \begin{DoxyParamCaption}
-\item[{{\bf \-B\-Y\-T\-E}}]{drv, }
-\item[{{\bf \-B\-Y\-T\-E} $\ast$}]{buff, }
-\item[{{\bf \-D\-W\-O\-R\-D}}]{sector, }
-\item[{{\bf \-B\-Y\-T\-E}}]{count}
+\item[{{\bf B\-Y\-T\-E}}]{drv, }
+\item[{{\bf B\-Y\-T\-E} $\ast$}]{buff, }
+\item[{{\bf D\-W\-O\-R\-D}}]{sector, }
+\item[{{\bf B\-Y\-T\-E}}]{count}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a42043c0f462756dbdf1f3bd1bdb5fa50}
 \hypertarget{mmc_8c_a21ad8e9a107ea2000705a3edfebaaa2d}{\index{mmc.\-c@{mmc.\-c}!disk\-\_\-status@{disk\-\_\-status}}
 \index{disk\-\_\-status@{disk\-\_\-status}!mmc.c@{mmc.\-c}}
-\subsubsection[{disk\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-S\-T\-A\-T\-U\-S} {\bf disk\-\_\-status} (
+\subsubsection[{disk\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-S\-T\-A\-T\-U\-S} disk\-\_\-status (
 \begin{DoxyParamCaption}
-\item[{{\bf \-B\-Y\-T\-E}}]{drv}
+\item[{{\bf B\-Y\-T\-E}}]{drv}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a21ad8e9a107ea2000705a3edfebaaa2d}
 \hypertarget{mmc_8c_a0045ef2f87f7c45d77bcdef38eae7b67}{\index{mmc.\-c@{mmc.\-c}!disk\-\_\-write@{disk\-\_\-write}}
 \index{disk\-\_\-write@{disk\-\_\-write}!mmc.c@{mmc.\-c}}
-\subsubsection[{disk\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-R\-E\-S\-U\-L\-T} {\bf disk\-\_\-write} (
+\subsubsection[{disk\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-R\-E\-S\-U\-L\-T} disk\-\_\-write (
 \begin{DoxyParamCaption}
-\item[{{\bf \-B\-Y\-T\-E}}]{drv, }
-\item[{const {\bf \-B\-Y\-T\-E} $\ast$}]{buff, }
-\item[{{\bf \-D\-W\-O\-R\-D}}]{sector, }
-\item[{{\bf \-B\-Y\-T\-E}}]{count}
+\item[{{\bf B\-Y\-T\-E}}]{drv, }
+\item[{const {\bf B\-Y\-T\-E} $\ast$}]{buff, }
+\item[{{\bf D\-W\-O\-R\-D}}]{sector, }
+\item[{{\bf B\-Y\-T\-E}}]{count}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a0045ef2f87f7c45d77bcdef38eae7b67}
 \hypertarget{mmc_8c_af58b536abfd30f77213f4ecaf2ac52f5}{\index{mmc.\-c@{mmc.\-c}!get\-\_\-fattime@{get\-\_\-fattime}}
 \index{get\-\_\-fattime@{get\-\_\-fattime}!mmc.c@{mmc.\-c}}
-\subsubsection[{get\-\_\-fattime}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-D\-W\-O\-R\-D} {\bf get\-\_\-fattime} (
+\subsubsection[{get\-\_\-fattime}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\-W\-O\-R\-D} get\-\_\-fattime (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_af58b536abfd30f77213f4ecaf2ac52f5}
 \hypertarget{mmc_8c_a5bb225e2354c885403bff7190f77181c}{\index{mmc.\-c@{mmc.\-c}!validate\-C\-S\-D@{validate\-C\-S\-D}}
 \index{validate\-C\-S\-D@{validate\-C\-S\-D}!mmc.c@{mmc.\-c}}
-\subsubsection[{validate\-C\-S\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf validate\-C\-S\-D} (
+\subsubsection[{validate\-C\-S\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} validate\-C\-S\-D (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}}\label{mmc_8c_a5bb225e2354c885403bff7190f77181c}
 
 
-\subsection{\-Variable \-Documentation}
-\hypertarget{mmc_8c_ae155fbd1927455c581741eb21a731519}{\index{mmc.\-c@{mmc.\-c}!\-I\-N\-S@{\-I\-N\-S}}
-\index{\-I\-N\-S@{\-I\-N\-S}!mmc.c@{mmc.\-c}}
-\subsubsection[{\-I\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-B\-Y\-T\-E} {\bf \-I\-N\-S} = 1}}\label{mmc_8c_ae155fbd1927455c581741eb21a731519}
+\subsection{Variable Documentation}
+\hypertarget{mmc_8c_ae155fbd1927455c581741eb21a731519}{\index{mmc.\-c@{mmc.\-c}!I\-N\-S@{I\-N\-S}}
+\index{I\-N\-S@{I\-N\-S}!mmc.c@{mmc.\-c}}
+\subsubsection[{I\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-Y\-T\-E} I\-N\-S = 1}}\label{mmc_8c_ae155fbd1927455c581741eb21a731519}

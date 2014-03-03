@@ -33,7 +33,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  @file: accel.h
- *  @addtogroup HAL_Cma3000
+ *  @addtogroup Accelerometer
  *  @{
  *
  ******************************************************************************/

@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file uart.c
+ * @author Jon Sowman
+ * @addtogroup UART
+ * @{
  */
 
 #include <string.h>
@@ -37,9 +42,10 @@ void uart_init(void)
 }
 
 /**
- * Takes a char pointer, transmit until we find a null character
+ * Takes a char pointer, transmit data over the UART until we find a 
+ * null character.
  * TODO: This should time out instead of busy-wait forever.
- * \param string A char pointer to the string to transmit
+ * @param string A char pointer to the string to transmit
  */
 static void _uart_tx(char* string)
 {
@@ -53,7 +59,7 @@ static void _uart_tx(char* string)
 /**
  * Send a \r\n terminated string to the debug output (to avoid storing
  * the terminators in RAM all the time).
- * \param string A char pointer to the string to transmit.
+ * @param string A char pointer to the string to transmit.
  */
 void uart_debug(char* string)
 {
@@ -63,3 +69,6 @@ void uart_debug(char* string)
     _uart_tx("\r\n");
 }
 
+/**
+ * @}
+ */

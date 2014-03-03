@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file adc.c
+ * @author Jon Sowman
+ * @addtogroup ADC
+ * @{
  */
 
 #include <inttypes.h>
@@ -11,7 +16,12 @@
 
 /**
  * Set up the ADC clock and configure resolution, then enable the ADC
- * unit.
+ * unit. Configure the memory channels to physical inputs. Configure the DMA
+ * unit on DMA channel 0 to automatically move data from the ADC conversion
+ * memory into the sample buffer at the end of each conversion run.
+ *
+ * @param sb A pointer to the sample buffer into which we will put ADC
+ * readings.
  */
 void adc_init(volatile SampleBuffer *sb)
 {
@@ -67,7 +77,8 @@ void adc_init(volatile SampleBuffer *sb)
 
 /**
  * Enable DMA on channel 0 which will move data to the sample buffer
- * after the ADC conversion run has completed.
+ * after the ADC conversion run has completed, then begin the conversion
+ * run.
  */
 void adc_convert(void)
 {
@@ -77,3 +88,7 @@ void adc_convert(void)
     // Start conversion and wait until the DMA transfer completes
     ADC12CTL0 |= ADC12SC;
 }
+
+/**
+ * @}
+ */

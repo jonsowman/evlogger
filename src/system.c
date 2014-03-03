@@ -3,13 +3,18 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file system.c
+ * @author Jon Sowman
+ * @addtogroup System
+ * @{
  */
 
 #include <in430.h>
 #include "HAL_PMM.h"
 #include "system.h"
 
-// System clock counter
+/** Current clock time */
 volatile clock_time_t ticks;
 
 /**
@@ -35,6 +40,8 @@ void clock_init(void)
 }
 
 /**
+ * Configure the system core clock to provide a stable clock for the CPU.
+ *
  * Set up the system core clock source as the digitally controlled 
  * oscillator (DCO) and have the FLL stabilise the DCO at 25MHz with reference
  * to the external high speed crystal XT2, which is 4MHz on the MSP-EXP430
@@ -94,7 +101,8 @@ void sys_clock_init(void)
 }
 
 /**
- * Return the current system time
+ * Return the current system time.
+ * @returns The current clock time in milliseconds.
  */
 clock_time_t clock_time(void)
 {
@@ -102,8 +110,10 @@ clock_time_t clock_time(void)
 }
 
 /**
- * Delay for the provided number of milliseconds
- * \param delay The number of ms to delay.
+ * Delay for the provided number of milliseconds. We use the __delay_cycles()
+ * function which consists of putting NOPs into the CPU pipeline for the
+ * required period.
+ * @param delay The number of ms to delay.
  */ 
 void _delay_ms(clock_time_t delay)
 {
@@ -116,9 +126,13 @@ void _delay_ms(clock_time_t delay)
 
 /**
  * Interrupt service routine for the system ticks counter.
- * the interrupt() macro is from legacymsp430.h
+ * Note that the interrupt() macro is from legacymsp430.h.
  */
 interrupt(TIMER0_A0_VECTOR) TIMER0_A0_ISR(void)
 {
     ticks++;
 }
+
+/**
+ * @}
+ */
