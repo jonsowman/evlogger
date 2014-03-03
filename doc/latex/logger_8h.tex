@@ -59,21 +59,21 @@ typedef struct \hyperlink{structSampleBuffer}{\-Sample\-Buffer} \hyperlink{logge
 \subsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}{logger\-\_\-init} (void)
-\begin{DoxyCompactList}\small\item\em \-Set up the hardware for logging functionality. \end{DoxyCompactList}\item 
-void \hyperlink{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}{sd\-\_\-setup} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$\hyperlink{logger_8c_ad897897d6e8cd86086d5ebaa9a21d0d4}{sdbuf})
+void \hyperlink{group__logger_ga7f0a1ef369c8017a21abc0f68371b64e}{logger\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em \-Set up the hardware for logging functionality, including the configuration of required peripherals such as the \-A\-D\-C and \-Accelerometer. \end{DoxyCompactList}\item 
+void \hyperlink{group__logger_gae7aec9e9b6c4a25bda9ff4b5498aedee}{sd\-\_\-setup} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$\hyperlink{group__logger_gad897897d6e8cd86086d5ebaa9a21d0d4}{sdbuf})
 \begin{DoxyCompactList}\small\item\em \-Set up the \-S\-D card for logging to it. \end{DoxyCompactList}\item 
-\-F\-R\-E\-S\-U\-L\-T \hyperlink{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}{sd\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$rb, char $\ast$\hyperlink{logger_8c_a8e106526932e3c95b903409ab35b0882}{writebuf}, \-F\-I\-L $\ast$\hyperlink{logger_8c_a4be63952e3c9cb0f46f9e592b3c78714}{fil}, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\-F\-R\-E\-S\-U\-L\-T \hyperlink{group__logger_gad722dfdb4da7ee009462dde1a83f4358}{sd\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$rb, char $\ast$\hyperlink{group__logger_ga8e106526932e3c95b903409ab35b0882}{writebuf}, \-F\-I\-L $\ast$\hyperlink{group__logger_ga4be63952e3c9cb0f46f9e592b3c78714}{fil}, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
 \begin{DoxyCompactList}\small\item\em \-Write n bytes from a ring buffer to an \-S\-D card controlled by fatfs. \end{DoxyCompactList}\item 
-\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}{ringbuf\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$data, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__logger_gab8bdf9f19d8d4ebacc793b22afd90768}{ringbuf\-\_\-write} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$data, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
 \begin{DoxyCompactList}\small\item\em \-Write n bytes to a ring buffer. \end{DoxyCompactList}\item 
-\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}{ringbuf\-\_\-read} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$read\-\_\-buffer, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
+\hyperlink{typedefs_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\-\_\-t} \hyperlink{group__logger_ga78ecc0240d02beed08b04f5c69dd3f2c}{ringbuf\-\_\-read} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf, char $\ast$read\-\_\-buffer, \hyperlink{typedefs_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\-\_\-t} n)
 \begin{DoxyCompactList}\small\item\em \-Read n bytes from a ring buffer. \end{DoxyCompactList}\item 
-void \hyperlink{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}{update\-\_\-lcd} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf)
+void \hyperlink{group__logger_gaf8a40257f5965ff6dd711c8b3923e4d1}{update\-\_\-lcd} (\hyperlink{structRingBuffer}{\-Ring\-Buffer} $\ast$buf)
 \begin{DoxyCompactList}\small\item\em \-Update the \-L\-C\-D with the current status of the logger service. \end{DoxyCompactList}\item 
-void \hyperlink{logger_8h_adf69ccbc6389e013322d06a0516d9db5}{logger\-\_\-enable} (void)
+void \hyperlink{group__logger_gadf69ccbc6389e013322d06a0516d9db5}{logger\-\_\-enable} (void)
 \begin{DoxyCompactList}\small\item\em \-Enable \-T\-A1 to begin logging by setting mode control to \char`\"{}up\char`\"{} mode, counter counts to \-T\-Ax\-C\-C\-R0. \end{DoxyCompactList}\item 
-void \hyperlink{logger_8h_aeb449c011f90affd5c104e98298704b5}{logger\-\_\-disable} (void)
+void \hyperlink{group__logger_gaeb449c011f90affd5c104e98298704b5}{logger\-\_\-disable} (void)
 \begin{DoxyCompactList}\small\item\em \-Disable \-T\-A1 to halt logging by setting mode control to \-S\-T\-O\-P. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -139,126 +139,3 @@ void \hyperlink{logger_8h_aeb449c011f90affd5c104e98298704b5}{logger\-\_\-disable
 \hypertarget{logger_8h_a04b1abe6e9526dc4f1c490318dc72f78}{\index{logger.\-h@{logger.\-h}!\-Sample\-Buffer@{\-Sample\-Buffer}}
 \index{\-Sample\-Buffer@{\-Sample\-Buffer}!logger.h@{logger.\-h}}
 \subsubsection[{\-Sample\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \-Sample\-Buffer}  {\bf \-Sample\-Buffer}}}\label{logger_8h_a04b1abe6e9526dc4f1c490318dc72f78}
-
-
-\subsection{\-Function \-Documentation}
-\hypertarget{logger_8h_aeb449c011f90affd5c104e98298704b5}{\index{logger.\-h@{logger.\-h}!logger\-\_\-disable@{logger\-\_\-disable}}
-\index{logger\-\_\-disable@{logger\-\_\-disable}!logger.h@{logger.\-h}}
-\subsubsection[{logger\-\_\-disable}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-disable} (
-\begin{DoxyParamCaption}
-\item[{void}]{}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_aeb449c011f90affd5c104e98298704b5}
-
-
-\-Disable \-T\-A1 to halt logging by setting mode control to \-S\-T\-O\-P. 
-
-\hypertarget{logger_8h_adf69ccbc6389e013322d06a0516d9db5}{\index{logger.\-h@{logger.\-h}!logger\-\_\-enable@{logger\-\_\-enable}}
-\index{logger\-\_\-enable@{logger\-\_\-enable}!logger.h@{logger.\-h}}
-\subsubsection[{logger\-\_\-enable}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-enable} (
-\begin{DoxyParamCaption}
-\item[{void}]{}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_adf69ccbc6389e013322d06a0516d9db5}
-
-
-\-Enable \-T\-A1 to begin logging by setting mode control to \char`\"{}up\char`\"{} mode, counter counts to \-T\-Ax\-C\-C\-R0. 
-
-\hypertarget{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}{\index{logger.\-h@{logger.\-h}!logger\-\_\-init@{logger\-\_\-init}}
-\index{logger\-\_\-init@{logger\-\_\-init}!logger.h@{logger.\-h}}
-\subsubsection[{logger\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf logger\-\_\-init} (
-\begin{DoxyParamCaption}
-\item[{void}]{}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_a7f0a1ef369c8017a21abc0f68371b64e}
-
-
-\-Set up the hardware for logging functionality. 
-
-\hypertarget{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}{\index{logger.\-h@{logger.\-h}!ringbuf\-\_\-read@{ringbuf\-\_\-read}}
-\index{ringbuf\-\_\-read@{ringbuf\-\_\-read}!logger.h@{logger.\-h}}
-\subsubsection[{ringbuf\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf ringbuf\-\_\-read} (
-\begin{DoxyParamCaption}
-\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf, }
-\item[{char $\ast$}]{read\-\_\-buffer, }
-\item[{{\bf uint16\-\_\-t}}]{n}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_a78ecc0240d02beed08b04f5c69dd3f2c}
-
-
-\-Read n bytes from a ring buffer. 
-
-
-\begin{DoxyParams}{\-Parameters}
-{\em buf} & \-A pointer to the ring buffer we want to write to \\
-\hline
-{\em read\-\_\-buffer} & \-Copy data into this array \\
-\hline
-{\em n} & \-The number of bytes to be read from the ring buffer \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{\-Returns}
-0 for success, non-\/0 for failure 
-\end{DoxyReturn}
-\hypertarget{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}{\index{logger.\-h@{logger.\-h}!ringbuf\-\_\-write@{ringbuf\-\_\-write}}
-\index{ringbuf\-\_\-write@{ringbuf\-\_\-write}!logger.h@{logger.\-h}}
-\subsubsection[{ringbuf\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\-\_\-t} {\bf ringbuf\-\_\-write} (
-\begin{DoxyParamCaption}
-\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf, }
-\item[{char $\ast$}]{data, }
-\item[{{\bf uint16\-\_\-t}}]{n}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_ab8bdf9f19d8d4ebacc793b22afd90768}
-
-
-\-Write n bytes to a ring buffer. 
-
-
-\begin{DoxyParams}{\-Parameters}
-{\em buf} & \-A pointer to the ring buffer we want to write to \\
-\hline
-{\em data} & \-A pointer to the data to be written \\
-\hline
-{\em n} & \-The number of bytes to be written to the ring buffer \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{\-Returns}
-0 for success, non-\/0 for failure 
-\end{DoxyReturn}
-\hypertarget{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}{\index{logger.\-h@{logger.\-h}!sd\-\_\-setup@{sd\-\_\-setup}}
-\index{sd\-\_\-setup@{sd\-\_\-setup}!logger.h@{logger.\-h}}
-\subsubsection[{sd\-\_\-setup}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf sd\-\_\-setup} (
-\begin{DoxyParamCaption}
-\item[{{\bf \-Ring\-Buffer} $\ast$}]{sdbuf}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_ae7aec9e9b6c4a25bda9ff4b5498aedee}
-
-
-\-Set up the \-S\-D card for logging to it. 
-
-\hypertarget{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}{\index{logger.\-h@{logger.\-h}!sd\-\_\-write@{sd\-\_\-write}}
-\index{sd\-\_\-write@{sd\-\_\-write}!logger.h@{logger.\-h}}
-\subsubsection[{sd\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}\-F\-R\-E\-S\-U\-L\-T {\bf sd\-\_\-write} (
-\begin{DoxyParamCaption}
-\item[{{\bf \-Ring\-Buffer} $\ast$}]{rb, }
-\item[{char $\ast$}]{writebuf, }
-\item[{\-F\-I\-L $\ast$}]{fil, }
-\item[{{\bf uint16\-\_\-t}}]{n}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_ad722dfdb4da7ee009462dde1a83f4358}
-
-
-\-Write n bytes from a ring buffer to an \-S\-D card controlled by fatfs. 
-
-\hypertarget{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}{\index{logger.\-h@{logger.\-h}!update\-\_\-lcd@{update\-\_\-lcd}}
-\index{update\-\_\-lcd@{update\-\_\-lcd}!logger.h@{logger.\-h}}
-\subsubsection[{update\-\_\-lcd}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-lcd} (
-\begin{DoxyParamCaption}
-\item[{{\bf \-Ring\-Buffer} $\ast$}]{buf}
-\end{DoxyParamCaption}
-)}}\label{logger_8h_af8a40257f5965ff6dd711c8b3923e4d1}
-
-
-\-Update the \-L\-C\-D with the current status of the logger service. 
-
-\-This should not be called too regularly on the \-M\-S\-P-\/\-E\-X\-P430 board due to the \-S\-D card and \-L\-C\-D panel being on the same \-S\-P\-I bus and will cause slowdown of \-S\-D transactions. 

@@ -32,6 +32,10 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ *  @file: accel.h
+ *  @addtogroup HAL_Cma3000
+ *  @{
+ *
  ******************************************************************************/
 
 #ifndef HAL_CMA3000_H
@@ -92,3 +96,7 @@ void Cma3000_readAccelDMA(void);
 extern int8_t Cma3000_writeRegister(uint8_t Address, int8_t Data);
 
 #endif /* HAL_MENU_H */
+
+/**
+ * @}
+ */

@@ -124,22 +124,22 @@ Typedefs</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structSampleBuffer.html">SampleBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a04b1abe6e9526dc4f1c490318dc72f78">SampleBuffer</a></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a7f0a1ef369c8017a21abc0f68371b64e">logger_init</a> (void)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the hardware for logging functionality.  <a href="#a7f0a1ef369c8017a21abc0f68371b64e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#ae7aec9e9b6c4a25bda9ff4b5498aedee">sd_setup</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *<a class="el" href="logger_8c.html#ad897897d6e8cd86086d5ebaa9a21d0d4">sdbuf</a>)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the SD card for logging to it.  <a href="#ae7aec9e9b6c4a25bda9ff4b5498aedee"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#ad722dfdb4da7ee009462dde1a83f4358">sd_write</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *rb, char *<a class="el" href="logger_8c.html#a8e106526932e3c95b903409ab35b0882">writebuf</a>, FIL *<a class="el" href="logger_8c.html#a4be63952e3c9cb0f46f9e592b3c78714">fil</a>, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write n bytes from a ring buffer to an SD card controlled by fatfs.  <a href="#ad722dfdb4da7ee009462dde1a83f4358"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#ab8bdf9f19d8d4ebacc793b22afd90768">ringbuf_write</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf, char *data, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write n bytes to a ring buffer.  <a href="#ab8bdf9f19d8d4ebacc793b22afd90768"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a78ecc0240d02beed08b04f5c69dd3f2c">ringbuf_read</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf, char *read_buffer, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read n bytes from a ring buffer.  <a href="#a78ecc0240d02beed08b04f5c69dd3f2c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#af8a40257f5965ff6dd711c8b3923e4d1">update_lcd</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the LCD with the current status of the logger service.  <a href="#af8a40257f5965ff6dd711c8b3923e4d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#adf69ccbc6389e013322d06a0516d9db5">logger_enable</a> (void)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable TA1 to begin logging by setting mode control to "up" mode, counter counts to TAxCCR0.  <a href="#adf69ccbc6389e013322d06a0516d9db5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#aeb449c011f90affd5c104e98298704b5">logger_disable</a> (void)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable TA1 to halt logging by setting mode control to STOP.  <a href="#aeb449c011f90affd5c104e98298704b5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#ga7f0a1ef369c8017a21abc0f68371b64e">logger_init</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the hardware for logging functionality, including the configuration of required peripherals such as the ADC and Accelerometer.  <a href="group__logger.html#ga7f0a1ef369c8017a21abc0f68371b64e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gae7aec9e9b6c4a25bda9ff4b5498aedee">sd_setup</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *<a class="el" href="group__logger.html#gad897897d6e8cd86086d5ebaa9a21d0d4">sdbuf</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the SD card for logging to it.  <a href="group__logger.html#gae7aec9e9b6c4a25bda9ff4b5498aedee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gad722dfdb4da7ee009462dde1a83f4358">sd_write</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *rb, char *<a class="el" href="group__logger.html#ga8e106526932e3c95b903409ab35b0882">writebuf</a>, FIL *<a class="el" href="group__logger.html#ga4be63952e3c9cb0f46f9e592b3c78714">fil</a>, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write n bytes from a ring buffer to an SD card controlled by fatfs.  <a href="group__logger.html#gad722dfdb4da7ee009462dde1a83f4358"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gab8bdf9f19d8d4ebacc793b22afd90768">ringbuf_write</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf, char *data, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write n bytes to a ring buffer.  <a href="group__logger.html#gab8bdf9f19d8d4ebacc793b22afd90768"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#ga78ecc0240d02beed08b04f5c69dd3f2c">ringbuf_read</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf, char *read_buffer, <a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a> n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read n bytes from a ring buffer.  <a href="group__logger.html#ga78ecc0240d02beed08b04f5c69dd3f2c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gaf8a40257f5965ff6dd711c8b3923e4d1">update_lcd</a> (<a class="el" href="structRingBuffer.html">RingBuffer</a> *buf)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the LCD with the current status of the logger service.  <a href="group__logger.html#gaf8a40257f5965ff6dd711c8b3923e4d1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gadf69ccbc6389e013322d06a0516d9db5">logger_enable</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable TA1 to begin logging by setting mode control to "up" mode, counter counts to TAxCCR0.  <a href="group__logger.html#gadf69ccbc6389e013322d06a0516d9db5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__logger.html#gaeb449c011f90affd5c104e98298704b5">logger_disable</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable TA1 to halt logging by setting mode control to STOP.  <a href="group__logger.html#gaeb449c011f90affd5c104e98298704b5"></a><br/></td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="a97ed3fe57790c99c8e351a42713c604d"></a><!-- doxytag: member="logger.h::ACCEL_CHANNELS" ref="a97ed3fe57790c99c8e351a42713c604d" args="" -->
@@ -380,232 +380,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/><h2>Function Documentation</h2>
-<a class="anchor" id="aeb449c011f90affd5c104e98298704b5"></a><!-- doxytag: member="logger.h::logger_disable" ref="aeb449c011f90affd5c104e98298704b5" args="(void)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="logger_8h.html#aeb449c011f90affd5c104e98298704b5">logger_disable</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Disable TA1 to halt logging by setting mode control to STOP. </p>
-
-</div>
-</div>
-<a class="anchor" id="adf69ccbc6389e013322d06a0516d9db5"></a><!-- doxytag: member="logger.h::logger_enable" ref="adf69ccbc6389e013322d06a0516d9db5" args="(void)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="logger_8h.html#adf69ccbc6389e013322d06a0516d9db5">logger_enable</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Enable TA1 to begin logging by setting mode control to "up" mode, counter counts to TAxCCR0. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7f0a1ef369c8017a21abc0f68371b64e"></a><!-- doxytag: member="logger.h::logger_init" ref="a7f0a1ef369c8017a21abc0f68371b64e" args="(void)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="logger_8h.html#a7f0a1ef369c8017a21abc0f68371b64e">logger_init</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set up the hardware for logging functionality. </p>
-
-</div>
-</div>
-<a class="anchor" id="a78ecc0240d02beed08b04f5c69dd3f2c"></a><!-- doxytag: member="logger.h::ringbuf_read" ref="a78ecc0240d02beed08b04f5c69dd3f2c" args="(RingBuffer *buf, char *read_buffer, uint16_t n)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="el" href="logger_8h.html#a78ecc0240d02beed08b04f5c69dd3f2c">ringbuf_read</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structRingBuffer.html">RingBuffer</a> *&#160;</td>
-          <td class="paramname"><em>buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>read_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a>&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Read n bytes from a ring buffer. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buf</td><td>A pointer to the ring buffer we want to write to </td></tr>
-    <tr><td class="paramname">read_buffer</td><td>Copy data into this array </td></tr>
-    <tr><td class="paramname">n</td><td>The number of bytes to be read from the ring buffer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 for success, non-0 for failure </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ab8bdf9f19d8d4ebacc793b22afd90768"></a><!-- doxytag: member="logger.h::ringbuf_write" ref="ab8bdf9f19d8d4ebacc793b22afd90768" args="(RingBuffer *buf, char *data, uint16_t n)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="typedefs_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="el" href="logger_8h.html#ab8bdf9f19d8d4ebacc793b22afd90768">ringbuf_write</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structRingBuffer.html">RingBuffer</a> *&#160;</td>
-          <td class="paramname"><em>buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a>&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Write n bytes to a ring buffer. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buf</td><td>A pointer to the ring buffer we want to write to </td></tr>
-    <tr><td class="paramname">data</td><td>A pointer to the data to be written </td></tr>
-    <tr><td class="paramname">n</td><td>The number of bytes to be written to the ring buffer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 for success, non-0 for failure </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae7aec9e9b6c4a25bda9ff4b5498aedee"></a><!-- doxytag: member="logger.h::sd_setup" ref="ae7aec9e9b6c4a25bda9ff4b5498aedee" args="(RingBuffer *sdbuf)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="logger_8h.html#ae7aec9e9b6c4a25bda9ff4b5498aedee">sd_setup</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structRingBuffer.html">RingBuffer</a> *&#160;</td>
-          <td class="paramname"><em>sdbuf</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set up the SD card for logging to it. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad722dfdb4da7ee009462dde1a83f4358"></a><!-- doxytag: member="logger.h::sd_write" ref="ad722dfdb4da7ee009462dde1a83f4358" args="(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FRESULT <a class="el" href="logger_8h.html#ad722dfdb4da7ee009462dde1a83f4358">sd_write</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structRingBuffer.html">RingBuffer</a> *&#160;</td>
-          <td class="paramname"><em>rb</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>writebuf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">FIL *&#160;</td>
-          <td class="paramname"><em>fil</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="typedefs_8h.html#a1f1825b69244eb3ad2c7165ddc99c956">uint16_t</a>&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Write n bytes from a ring buffer to an SD card controlled by fatfs. </p>
-
-</div>
-</div>
-<a class="anchor" id="af8a40257f5965ff6dd711c8b3923e4d1"></a><!-- doxytag: member="logger.h::update_lcd" ref="af8a40257f5965ff6dd711c8b3923e4d1" args="(RingBuffer *buf)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="logger_8h.html#af8a40257f5965ff6dd711c8b3923e4d1">update_lcd</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structRingBuffer.html">RingBuffer</a> *&#160;</td>
-          <td class="paramname"><em>buf</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Update the LCD with the current status of the logger service. </p>
-<p>This should not be called too regularly on the MSP-EXP430 board due to the SD card and LCD panel being on the same SPI bus and will cause slowdown of SD transactions. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -624,7 +398,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 3 2014 09:29:19 for EV Logger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 3 2014 09:38:17 for EV Logger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

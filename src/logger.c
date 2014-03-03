@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file logger.c
+ * @author Jon Sowman
+ * @addtogroup logger
+ * @{
  */
 
 #include <string.h>
@@ -17,10 +22,22 @@
 #include "typedefs.h"
 #include "mmc.h"
 
-// Quick facilities to get the used/free values of a ring buffer
+/**
+ * Quick facility to get the used value of a ring buffer
+ * @param b A pointer to the buffer which we wish to query
+ */
 #define rb_getused_m(b) ((b->tail==b->head) ? 0:(b->head - b->tail + b->len) % b->len)
+
+/**
+ * Quick facility to get the free value of a ring buffer
+ * @param b A pointer to the buffer which we wish to query
+ */
 #define rb_getfree_m(b) ((b->tail==b->head) ? b->len : (b->tail - b->head + b->len) % b->len)
-// Reset a ring buffer to its original empty state
+
+/**
+ * Reset a ring buffer to its original empty state
+ * @param b A pointer to the buffer which we wish to query
+ */
 #define rb_reset_m(b) do {b->tail = b->head = 0} while (0)
 
 volatile uint32_t time;
@@ -39,7 +56,8 @@ FIL fil;
 DWORD fsz;
 
 /**
- * Set up the hardware for logging functionality
+ * Set up the hardware for logging functionality, including the configuration
+ * of required peripherals such as the ADC and Accelerometer.
  */
 void logger_init(void)
 {
@@ -397,3 +415,7 @@ interrupt(PORT2_VECTOR) PORT2_ISR(void)
         ;
     }
 }
+
+/**
+ * @}
+ */
