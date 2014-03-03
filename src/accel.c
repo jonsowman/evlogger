@@ -74,7 +74,9 @@ uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
 char s[20];
 
 /**
- * @brief  Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
+ * Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
+ * @param samplebuffer The SampleBuffer in which to place accelerometer data
+ * samples.
  */
 void Cma3000_init(volatile SampleBuffer *samplebuffer)
 {
@@ -170,9 +172,9 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     DMA2CTL |= DMAIE;
 }
 
-/***************************************************************************//**
- * @brief  Disables the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
- ******************************************************************************/
+/**
+ * Disables the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
+ */
 
 void Cma3000_disable(void)
 {
@@ -195,9 +197,9 @@ void Cma3000_disable(void)
     UCA0CTL1 |= UCSWRST;
 }
 
-/***************************************************************************//**
- * @brief  Reads data from the accelerometer
- ******************************************************************************/
+/**
+ * Reads data from the accelerometer
+ */
 
 void Cma3000_readAccel(void)
 {
@@ -213,12 +215,12 @@ void Cma3000_readAccel(void)
     Cma3000_zAccel = Cma3000_readRegister(DOUTZ);
 }
 
-/***************************************************************************//**
- * @brief  Sets accelerometer offset.
+/**
+ * Sets accelerometer offset.
  * @param  xAccel_offset  x-axis offset
  * @param  yAccel_offset  y-axis offset
  * @param  zAccel_offset  z-axis offset
- ******************************************************************************/
+ */
 
 void Cma3000_setAccel_offset(int8_t xAccel_offset,
                              int8_t yAccel_offset,
@@ -234,9 +236,9 @@ void Cma3000_setAccel_offset(int8_t xAccel_offset,
     Cma3000_zAccel_offset = zAccel_offset;
 }
 
-/***************************************************************************//**
- * @brief  Reads data from the accelerometer with removed offset
- ******************************************************************************/
+/**
+ * Reads data from the accelerometer with removed offset
+ */
 
 void Cma3000_readAccel_offset(void)
 {
@@ -253,12 +255,11 @@ void Cma3000_readAccel_offset(void)
     Cma3000_zAccel -= Cma3000_zAccel_offset;
 }
 
-/***************************************************************************//**
- *
- * @brief  Reads data from the accelerometer
+/**
+ * Reads data from the accelerometer
  * @param  Address  Address of register
  * @return Register contents
- ******************************************************************************/
+ */
 
 int8_t Cma3000_readRegister(uint8_t Address)
 {
@@ -323,13 +324,12 @@ void Cma3000_readAccelDMA(void)
     DMA2CTL |= DMAEN;
 }
 
-/***************************************************************************//**
- * @brief  Writes data to the accelerometer
+/**
+ * Writes data to the accelerometer
  * @param  Address  Address of register
  * @param  accelData     Data to be written to the accelerometer
  * @return  Received data
- ******************************************************************************/
-
+ */
 int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
 {
     uint8_t Result;
@@ -406,6 +406,6 @@ interrupt(DMA_VECTOR) DMA_ISR(void)
     }
 }
 
-/***************************************************************************//**
+/**
  * @}
- ******************************************************************************/
+ */

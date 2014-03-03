@@ -7,6 +7,8 @@
  * Standard data type shorthand defined as with avr-libc.
  * long long is unsupported since we probably shouldn't be using it anyway.
  *
+ * @file typedefs.h
+ * @author Jon Sowman
  */
 
 #ifndef __TYPEDEFS_H__
@@ -14,7 +16,10 @@
 
 #include <msp430.h>
 
-// This is shorthand from avr-libc
+/**
+ * This is shorthand from avr-libc
+ * @param x Shift 1 left by x bits
+ */
 #define _BV(x) (1<<x)
 
 typedef unsigned char uint8_t;

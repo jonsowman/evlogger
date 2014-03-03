@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file uart.h
+ * @author Jon Sowman
+ * @addtogroup UART
+ * @{
  */
 
 #ifndef __UART_H__
@@ -35,3 +40,7 @@ void uart_init(void);
 void uart_debug(char* string);
 
 #endif /* __UART_H__ */
+
+/**
+ * @}
+ */
