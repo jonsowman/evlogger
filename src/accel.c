@@ -64,14 +64,11 @@ int8_t Cma3000_zAccel_offset;
 // Maintain a pointer to the SampleBuffer
 volatile SampleBuffer *sb;
 
-// Temporary place to store incoming accel data
-uint8_t rxbuf[7];
-
-// These are the accel commands to be written via DMA (excluding 1st byte)
-uint8_t cmdbuf[] = {0, DOUTY << 2, 0, DOUTZ << 2, 0, 0, 0};
-
-//FIXME
-char s[20];
+/**
+ * Contain the current accelerometer state. This is volatile since it is
+ * modified in the interrupt service routine.
+ */
+volatile accel_state_t accel_state;
 
 /**
  * Configures the CMA3000-D01 3-Axis Ultra Low Power Accelerometer
@@ -142,34 +139,8 @@ void Cma3000_init(volatile SampleBuffer *samplebuffer)
     for(i=0; i < ACCEL_CHANNELS; i++)
         sb->accel[i] = 0;
 
-    // Clear the accel temp buffer
-    for(i=0; i<7; i++)
-        rxbuf[i] = 0;
-
-    // Set DMA1 to write to the accel, DMA2 to read from it
-    DMACTL0 |= DMA1TSEL_17;
-    DMACTL1 |= DMA2TSEL_16;
-
-    // Enable round robin and don't let DMA interrupt RMW cycles
-    DMACTL4 |= ROUNDROBIN | DMARMWDIS;
-
-    // Set up burst block transfer. Increment source for DMA1, dst for DMA2
-    // Source and dest are both bytes
-    DMA1CTL |= DMADT_2 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-    DMA2CTL |= DMADT_2 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-
-    // DMA1 - transfer from command buffer to SPI TX
-    // DMA2 - transfer from SPI RX to receive buffer
-    // A transfer is 2 bytes each way
-    DMA1SA = (uintptr_t)cmdbuf;
-    DMA1DA = (uintptr_t)&UCA0TXBUF;
-    DMA1SZ = 7;
-    DMA2SA = (uintptr_t)&UCA0RXBUF;
-    DMA2DA = (uintptr_t)rxbuf;
-    DMA2SZ = 7;
-
-    // Fire an interrupt when receive completes
-    DMA2CTL |= DMAIE;
+    // Fire an interrupt when we get a new char
+    UCA0IE |= UCRXIE;
 }
 
 /**
@@ -309,19 +280,29 @@ int8_t Cma3000_readRegister(uint8_t Address)
 }
 
 /**
- * Read all three accelerometer channels to the temporary buffer via DMA.
+ * Commence reading of data into the SampleBuffer
  */
-void Cma3000_readAccelDMA(void)
+void Cma3000_readAccelFSM(void)
 {
-    // Select (deselection happens in the DMA2IFG ISR)
+    accel_state = STATE_ACCEL_NONE;
+
+    // Assert CS
     ACCEL_OUT &= ~ACCEL_CS;
 
-    // Transmit the first byte manually which will then trigger DMA
+    // Transmit the first byte (the FSM will handle from here on)
     UCA0TXBUF = DOUTX << 2;
 
-    // Enable the transfers over the two channels
-    DMA1CTL |= DMAEN;
-    DMA2CTL |= DMAEN;
+    // Move into the first state
+    accel_state = STATE_ACCEL_XREQ;
+}
+
+/**
+ * Get the current state of the accelerometer
+ * \returns The current state as an accel_state_t.
+ */
+accel_state_t Cma3000_getState(void)
+{
+    return accel_state;
 }
 
 /**
@@ -380,26 +361,56 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
 }
 
 /**
- * Interrupt when the DMA controller has finished receiving new data
- * from the accelerometer. We should process this data.
+ * Interrupt whenever we get a new byte from the accelerometer. We should
+ * update the state machine and process the byte accordingly.
  */
-interrupt(DMA_VECTOR) DMA_ISR(void)
+interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
 {
-    P8OUT &= ~_BV(1);
-    switch(DMAIV)
+    switch(UCA0IV)
     {
-        case DMAIV_DMA2IFG:
-            // Deassert CS now that the transfer is complete
-            ACCEL_OUT |= ACCEL_CS;
-
-            // Move data into the sample buffer
-            sb->accel[0] = (uint16_t)rxbuf[2];
-            sb->accel[1] = (uint16_t)rxbuf[4];
-            sb->accel[2] = (uint16_t)rxbuf[6];
-            
-            sprintf(s, "%u", sb->accel[0]);
-            uart_debug(s);
-
+        case USCI_UCRXIFG:
+            // Process depending on current accel state
+            switch(accel_state)
+            {
+                case STATE_ACCEL_NONE:
+                    // What are we doing here?
+                    break;
+                case STATE_ACCEL_XREQ:
+                    // Transmit a dummy to get data x
+                    UCA0TXBUF = 0;
+                    accel_state = STATE_ACCEL_XRDY;
+                    break;
+                case STATE_ACCEL_XRDY:
+                    // We've got data x, store it and move to y
+                    sb->accel[0] = UCA0RXBUF;
+                    UCA0TXBUF = DOUTY << 2;
+                    accel_state = STATE_ACCEL_YREQ;
+                    break;
+                case STATE_ACCEL_YREQ:
+                    // Transmit a dummy to get Y
+                    UCA0TXBUF = 0;
+                    accel_state = STATE_ACCEL_YRDY;
+                    break;
+                case STATE_ACCEL_YRDY:
+                    // We've got y, store it and move to z
+                    sb->accel[1] = UCA0RXBUF;
+                    UCA0TXBUF = DOUTZ << 2;
+                    accel_state = STATE_ACCEL_ZREQ;
+                    break;
+                case STATE_ACCEL_ZREQ:
+                    // Transmit a dummy to get z
+                    UCA0TXBUF = 0;
+                    accel_state = STATE_ACCEL_ZRDY;
+                    break;
+                case STATE_ACCEL_ZRDY:
+                    // We've got z, store it and finish
+                    sb->accel[2] = UCA0RXBUF;
+                    accel_state = STATE_ACCEL_DONE;
+                    // Deselect acceleration sensor
+                    ACCEL_OUT |= ACCEL_CS;
+                    break;
+                default: break;
+            }
             break;
         default:
             break;

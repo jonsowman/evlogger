@@ -86,13 +86,38 @@ extern int8_t Cma3000_xAccel;
 extern int8_t Cma3000_yAccel;
 extern int8_t Cma3000_zAccel;
 
+/**
+ * Enumerate possible states for the accelerometer finite state machine (FSM)
+ */
+typedef enum accel_state_t
+{
+    /// We have no or invalid data in the SampleBuffer
+    STATE_ACCEL_NONE,
+    /// We have requested the data value for X
+    STATE_ACCEL_XREQ,
+    /// A data value for X is ready
+    STATE_ACCEL_XRDY,
+    /// We have requested the data value for Y
+    STATE_ACCEL_YREQ,
+    /// A data value for Y is ready
+    STATE_ACCEL_YRDY,
+    /// We have requested the data value for Z
+    STATE_ACCEL_ZREQ,
+    /// A data value for Z is ready
+    STATE_ACCEL_ZRDY,
+    /// We have completed, there is a full set of valid data in th
+    /// sample buffer
+    STATE_ACCEL_DONE
+} accel_state_t;
+
 extern void Cma3000_init(volatile SampleBuffer *sb);
 extern void Cma3000_disable(void);
 extern void Cma3000_readAccel(void);
 extern void Cma3000_setAccel_offset(int8_t xAccel_offset, int8_t yAccel_offset, int8_t zAccel_offset);
 extern void Cma3000_readAccel_offset(void);
 extern int8_t Cma3000_readRegister(uint8_t Address);
-void Cma3000_readAccelDMA(void);
+void Cma3000_readAccelFSM(void);
+accel_state_t Cma3000_getState(void);
 extern int8_t Cma3000_writeRegister(uint8_t Address, int8_t Data);
 
 #endif /* HAL_MENU_H */

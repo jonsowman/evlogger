@@ -74,6 +74,8 @@ DWORD fsz;
  */
 void logger_init(void)
 {
+    accel_state_t xl;
+
     // Initialise the ADC with the sample buffer `sb`
     adc_init(&sb);
     Cma3000_init(&sb);
@@ -85,6 +87,18 @@ void logger_init(void)
     P8OUT &= ~_BV(1);
     P8DIR |= _BV(2);
     P8OUT &= ~_BV(2);
+
+    // FIXME
+    while(1)
+    {
+        // Start a reading and wait till done
+        Cma3000_readAccelFSM();
+        while(xl != STATE_ACCEL_DONE)
+            xl = Cma3000_getState();
+        sprintf(s, "done, x = %i", sb.accel[0]);
+        uart_debug(s);
+        _delay_ms(500);
+    }
 
     // Select the potentiometer and enable the ADC on that channel
     P8DIR |= _BV(0);
@@ -250,13 +264,7 @@ void sd_setup(RingBuffer* sdbuf)
 
         // Update the LCD once every 200ms
         if((clock_time() % 333) == 0)
-        {
-            P8OUT |= _BV(1);
-            Cma3000_readAccelDMA();
-            //sprintf(s, "%i %i %i", sb.accel[0], sb.accel[1], sb.accel[2]);
-            //uart_debug(s);
             update_lcd(sdbuf);
-        }
     }
 }
 
