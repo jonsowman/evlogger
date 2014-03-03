@@ -48,9 +48,22 @@ char writebuf[512];
 RingBuffer sdbuf;
 
 char stringbuf[50];
+
+/**
+ * A SampleBuffer to store a single set of readings before they are transferred
+ * into the SD transaction buffer.
+ */
 volatile SampleBuffer sb;
 
-// A FAT filesystem appears!
+/**
+ * @var FatFs
+ * A FATFS filesystem object which we use to handle files and
+ * directories on the SD Card.
+ * @var fil
+ * A pointer to the data file.
+ * @var fsz
+ * Stores the current size of the data file.
+ */
 FATFS FatFs;
 FIL fil;
 DWORD fsz;

@@ -16,7 +16,7 @@
 /**
  * Set up the UCSI for UART operation at 9600 baud. The baud rate
  * generator is currently hard coded for 25MHz SMCLK.
- * TODO: Fix this to calculate BRR values from F_CPU.
+ * @todo Fix this to calculate BRR values from F_CPU.
  */
 void uart_init(void)
 {
@@ -44,8 +44,8 @@ void uart_init(void)
 /**
  * Takes a char pointer, transmit data over the UART until we find a 
  * null character.
- * TODO: This should time out instead of busy-wait forever.
  * @param string A char pointer to the string to transmit
+ * @todo This should time out instead of busy-wait forever.
  */
 static void _uart_tx(char* string)
 {

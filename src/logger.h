@@ -40,7 +40,9 @@
  */
 #define SD_RINGBUF_LEN 2048
 
-// Don't change the below line
+/**
+ * The ring buffer mask value. This is automatically calculated.
+ */
 #define SD_RINGBUF_MASK (SD_RINGBUF_LEN - 1)
 
 /**
@@ -50,16 +52,16 @@
  * A pointer to the start of the character buffer to be used by this ring 
  * buffer.
  * @var RingBuffer::head
- * A pointer to the head of the ring buffer (i.e. the next free byte available
+ * A pointer to the head of the ring buffer (the next free byte available
  * for writing).
  * @var RingBuffer::tail
- * A pointer to the tail of the ring buffer (i.e. the next unread byte)
+ * A pointer to the tail of the ring buffer (the next unread byte)
  * @var RingBuffer::len
  * The length of the ring buffer
  * @var RingBuffer::mask
  * This value is a ring buffer intrinsic and is automatically generated.
  * @var RingBuffer::overflow
- * A flag that will be set non-zero if a buffer overflow occurs (i.e. the head
+ * A flag that will be set non-zero if a buffer overflow occurs (the head
  * tries to "overtake" the tail.
  */
 typedef struct RingBuffer
