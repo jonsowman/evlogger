@@ -1,14 +1,10 @@
 /**
- * EV Datalogger Project
- *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
- *
  * Standard data type shorthand defined as with avr-libc.
  * long long is unsupported since we probably shouldn't be using it anyway.
  *
  * @file typedefs.h
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  */
 
 #ifndef __TYPEDEFS_H__
