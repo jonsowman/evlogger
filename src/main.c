@@ -1,7 +1,19 @@
 /**
- * EV Datalogger Project
+ * \mainpage Electric Vehicle Datalogger
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
+ * \section Introduction
+ * This project uses an MSP430 (specifically, the MSP430F5529) to log data from
+ * various channels to be used on an electric vehicle. This project is designed
+ * for use on the MSP-EXP430F5529LP experimentation board which is available
+ * from Texas Instruments.
+ *
+ * \section Software Architecture
+ * The software documented here is written specifically for the project, but
+ * libraries and hardware abstraction layer utilities are used from various
+ * sources which are documentented in the code.
+ *
+ * Jon Sowman 2014 (js39g13@soton.ac.uk)
+ *
  * University of Southampton
  *
  * @file main.c

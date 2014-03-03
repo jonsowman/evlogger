@@ -3,6 +3,11 @@
  *
  * Jon Sowman 2014 <js39g13@soton.ac.uk>
  * University of Southampton
+ *
+ * @file adc.h
+ * @author Jon Sowman
+ * @addtogroup ADC
+ * @{
  */
 
 #ifndef __ADC_H__
@@ -17,3 +22,7 @@ void adc_init(volatile SampleBuffer *sb);
 void adc_convert(void);
 
 #endif /* __ADC_H__ */
+
+/**
+ * @}
+ */

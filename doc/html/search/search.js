@@ -7,14 +7,15 @@
 
 var indexSectionsWithContent =
 {
-  0: "_abcdfghilmorstuw",
+  0: "_abcdefghilmorstuw",
   1: "rs",
   2: "almstu",
   3: "_acilmrsu",
   4: "abcfhlmorstw",
   5: "cirsu",
   6: "_acdgimrstu",
-  7: "almsu"
+  7: "almsu",
+  8: "e"
 };
 
 var indexSectionNames =
@@ -26,7 +27,8 @@ var indexSectionNames =
   4: "variables",
   5: "typedefs",
   6: "defines",
-  7: "groups"
+  7: "groups",
+  8: "pages"
 };
 
 function convertToId(search)
