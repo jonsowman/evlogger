@@ -1,11 +1,15 @@
 /**
- * EV Datalogger Project
+ * Handles the main logger functionality of the device, including the
+ * configuration of all required peripherals for the logging service.
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
+ * Logging data into the SD buffer is interrupt controlled so that precise
+ * timing may be maintained. Other functionality such as updating the LCD
+ * screen and opening, flushing and closing of files is up to an infinite loop
+ * such that it can be easily interrupted by higher priority tasks.
  *
  * @file logger.c
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup logger
  * @{
  */

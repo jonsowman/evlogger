@@ -12,12 +12,12 @@
  * libraries and hardware abstraction layer utilities are used from various
  * sources which are documentented in the code.
  *
- * Jon Sowman 2014 (js39g13@soton.ac.uk)
- *
- * University of Southampton
+ * \section Authorship
+ * Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
  *
  * @file main.c
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup main
  * @{
  */

@@ -1,11 +1,16 @@
 /**
- * EV Datalogger Project
+ * Handles configuration and initialisation of the analogue to digital
+ * converter unit, plus starting conversions and post-handling the conversion
+ * results.
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
+ * We use DMA channel 0 to move results from the ADC conversion memory into a
+ * SampleBuffer once the conversion has completed, such that the CPU need only
+ * request the beginning of a conversion run and some time later, the results
+ * will appear in the SampleBuffer that the CPU specified.
  *
  * @file adc.c
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup ADC
  * @{
  */

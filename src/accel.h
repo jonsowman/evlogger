@@ -1,3 +1,7 @@
+/**
+ * Accelerometer header.
+ */
+
 /*******************************************************************************
  *
  *  HAL_Cma3000.h
@@ -33,6 +37,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  @file: accel.h
+ *  @author TI, Modified by Jon Sowman
  *  @addtogroup Accelerometer
  *  @{
  *

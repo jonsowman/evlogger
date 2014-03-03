@@ -1,11 +1,9 @@
 /**
- * EV Datalogger Project
+ * Logger header.
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
- * 
  * @file logger.h
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup logger
  * @{
  */

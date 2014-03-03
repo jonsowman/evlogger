@@ -1,11 +1,19 @@
 /**
- * EV Datalogger Project
+ * Handles intrinsic system functionality such as controlling the CPU core
+ * clock and ensuring its stability, providing a real time "wall clock" source,
+ * etc.
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
+ * The core clock is generated using onboard equipment, with the reference
+ * being an external 4MHz high precision crystal. Since the core clock
+ * frequency is much higher than the reference, a frequency locked loop (FLL)
+ * system is paired with a digitally controlled oscillator (DCO) to provide a
+ * stabilised source via feedback. This system is fantastically complicated and
+ * reading of the datasheet (specific to the F5529) is recommended before
+ * attempting to understand what is going on in this module!
  *
  * @file system.c
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup System
  * @{
  */

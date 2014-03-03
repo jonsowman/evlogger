@@ -1,11 +1,13 @@
 /**
- * EV Datalogger Project
+ * Configure and initialise the USCI in UART (universal async receiver
+ * transmitter) mode, principally for the purposes of debugging.
  *
- * Jon Sowman 2014 <js39g13@soton.ac.uk>
- * University of Southampton
+ * We also provide functionality for transmitting a C-string (null terminated)
+ * over the UART to facilitate easy debugging.
  *
  * @file uart.c
- * @author Jon Sowman
+ * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup UART
  * @{
  */

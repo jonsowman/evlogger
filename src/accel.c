@@ -1,3 +1,13 @@
+/**
+ * Handles configuration and initialisation of the CMA3000 onboard
+ * accelerometer.
+ *
+ * This module is based on the TI example code (see the notice in the source
+ * code) buit is heavily modified to use a finite state machine (FSM) type
+ * approach to getting data from the accelerometer such that very little CPU
+ * time is required (since the logger is typically busy with other things).
+ */
+
 /*******************************************************************************
  *
  *  HAL_Cma3000.c - Code for using the CMA3000-D01 3-Axis Ultra Low Power
@@ -37,6 +47,7 @@
 
 /***************************************************************************//**
  * @file       accel.c
+ * @author TI, Modified by Jon Sowman
  * @addtogroup Accelerometer
  * @{
  ******************************************************************************/
