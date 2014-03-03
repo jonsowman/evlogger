@@ -119,6 +119,7 @@ void logger_init(void)
  * not be called too regularly on the MSP-EXP430 board due to the SD card and
  * LCD panel being on the same SPI bus and will cause slowdown of SD
  * transactions.
+ * @param buf A pointer to the ring buffer which we are monitoring.
  */
 void update_lcd(RingBuffer *buf)
 {
@@ -156,7 +157,10 @@ void update_lcd(RingBuffer *buf)
 }
 
 /**
- * Set up the SD card for logging to it
+ * Set up the SD card for logging to it.
+ * @param sdbuf A pointer to the SD card buffer. This is a ring buffer that we
+ * will use to buffer incoming samples before they are logged to the SD card,
+ * such that we can write entire sectors at once.
  */
 void sd_setup(RingBuffer* sdbuf)
 {   
@@ -245,6 +249,12 @@ void sd_setup(RingBuffer* sdbuf)
 
 /**
  * Write n bytes from a ring buffer to an SD card controlled by fatfs
+ * @param rb A pointer to the ring buffer from which we will read the required
+ * data.
+ * @param writebuf A short buffer where we can temporarily place a single
+ * before before writing it to the card.
+ * @param n The number of bytes to be written to the card.
+ * @return FRESULT The fatfs result code for the write operation.
  */
 FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
 {
@@ -265,11 +275,13 @@ FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
 }
 
 /**
- * Write n bytes to a ring buffer
- * \param buf A pointer to the ring buffer we want to write to
- * \param data A pointer to the data to be written
- * \param n The number of bytes to be written to the ring buffer
- * \returns 0 for success, non-0 for failure
+ * Write n bytes to a ring buffer. This is done via a fast memcpy operation
+ * and as such, there is logic in this function to transparently handle the
+ * copy even if we're wrapping over the boundary of the ring buffer.
+ * @param buf A pointer to the ring buffer we want to write to
+ * @param data A pointer to the data to be written
+ * @param n The number of bytes to be written to the ring buffer
+ * @returns 0 for success, non-0 for failure
  */
 uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 {
@@ -306,11 +318,13 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 }
 
 /**
- * Read n bytes from a ring buffer
- * \param buf A pointer to the ring buffer we want to write to
- * \param read_buffer Copy data into this array
- * \param n The number of bytes to be read from the ring buffer
- * \returns 0 for success, non-0 for failure
+ * Read n bytes from a ring buffer. This is done via a fast memcpy operation
+ * and as such, there is logic in this function to transparently handle the
+ * copy even if we're wrapping over the boundary of the ring buffer.
+ * @param buf A pointer to the ring buffer we want to write to
+ * @param read_buffer Copy data into this array
+ * @param n The number of bytes to be read from the ring buffer
+ * @returns 0 for success, non-0 for failure
  */
 uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
 {
@@ -389,7 +403,8 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 }
 
 /**
- * Interrupt vector for button S1
+ * Interrupt vector for button S1. We should debounce the button press using
+ * the system ticks timer, and then enable or disable logging as required.
  */
 interrupt(PORT1_VECTOR) PORT1_ISR(void)
 {
