@@ -363,7 +363,6 @@ int8_t Cma3000_writeRegister(uint8_t Address, int8_t accelData)
  */
 interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
 {
-    P8OUT |= _BV(1);
     switch(UCA0IV)
     {
         case USCI_UCRXIFG:
@@ -413,7 +412,6 @@ interrupt(USCI_A0_VECTOR) USCI_A0_ISR(void)
         default:
             break;
     }
-    P8OUT &= ~_BV(1);
 }
 
 /**

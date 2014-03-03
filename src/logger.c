@@ -247,7 +247,7 @@ void sd_setup(RingBuffer* sdbuf)
             sd_write(sdbuf, writebuf, &fil, 512);
 
         // Update the LCD once every 200ms
-        if((clock_time() % 333) == 0)
+        if((clock_time() % 200) == 0)
             update_lcd(sdbuf);
     }
 }
@@ -406,7 +406,7 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 
     // Trigger the next conversion
     adc_convert();
-    if((clock_time() % 100) == 0)
+    if((clock_time() % 10) == 0)
         Cma3000_readAccelFSM();
 }
 
