@@ -1,3 +1,10 @@
+###############################
+# EV Datalogger Project
+# Jon Sowman 2014
+# University of Southampton
+# All Rights Reserved
+###############################
+
 import struct
 import time
 
