@@ -49,15 +49,16 @@
  * clock timer are controlled by the System module, relevant documentation is
  * contained within.
  *
- * \section build Building the Firmware A Makefile is provided to build the
- * firmware using the GNU mspgcc toolchain.  Builds of this toolchain are
- * available for Windows, OS X and Linux though on Windows you will need to set
- * an IDE up as appropriate since the Makefile will not work (unless you use
- * cygwin). To build the firmware using the Makefile please change to the
- * source directory and run $ make. Flashing the device is done using mspdebug
- * over the Spy-by-Wire interface, and can be enacted by running $ make flash.
- * Cleaning the build directory (deleting all object files, dependency list
- * files and binaries) can be done using $ make clean.
+ * \section build Building the Firmware
+ * A Makefile is provided to build the firmware using the GNU mspgcc toolchain.
+ * Builds of this toolchain are available for Windows, OS X and Linux though on
+ * Windows you will need to set an IDE up as appropriate since the Makefile
+ * will not work (unless you use cygwin). To build the firmware using the
+ * Makefile please change to the source directory and run $ make. Flashing the
+ * device is done using mspdebug over the Spy-by-Wire interface, and can be
+ * enacted by running $ make flash.  Cleaning the build directory (deleting all
+ * object files, dependency list files and binaries) can be done using $ make
+ * clean.
  *
  * \section author Authorship
  * Jon Sowman, University of Southampton <js39g13@soton.ac.uk>. Please get in
