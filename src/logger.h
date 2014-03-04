@@ -96,7 +96,7 @@ typedef struct SampleBuffer
 } SampleBuffer;
 
 void logger_init(void);
-void sd_setup(RingBuffer *sdbuf);
+void start_logger(RingBuffer* sdbuf);
 FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n);
 uint8_t ringbuf_write(RingBuffer* buf, char* data, uint16_t n);
 uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n);

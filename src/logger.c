@@ -49,30 +49,33 @@ static volatile uint8_t logger_running, file_open;
 static char s[UART_BUF_LEN];
 static char ringbuf[SD_RINGBUF_LEN];
 static char writebuf[512];
+
+/// A RingBuffer that we will use to buffer sets of samples that are to be
+/// moved to the SD card
 static RingBuffer sdbuf;
 
-/**
- * A SampleBuffer to store a single set of readings before they are transferred
- * into the SD transaction buffer.
- */
+/// A SampleBuffer to store a single set of readings before they are transferred
+/// into the SD transaction buffer.
 static volatile SampleBuffer sb;
 
-/**
- * @var FatFs
- * A FATFS filesystem object which we use to handle files and
- * directories on the SD Card.
- * @var fil
- * A pointer to the data file.
- * @var fsz
- * Stores the current size of the data file.
- */
+/// A FATFS filesystem object which we use to handle files and
+/// directories on the SD Card.
 FATFS FatFs;
+/// A pointer to the data file.
 FIL fil;
+/// Stores the current size of the data file.
 DWORD fsz;
 
 /**
  * Set up the hardware for logging functionality, including the configuration
  * of required peripherals such as the ADC and Accelerometer.
+ *
+ * Timer A1 (TA1) is configured to interrupt at the log frequency (1kHz), the
+ * interrupt service routine (ISR) is TIMER1_A0_ISR() also found in this file
+ * (please see that function's documentation for details of what is done in the
+ * ISR).
+ *
+ * @todo Calculate TAxCCR0 value based on F_CPU instead of hard-coding.
  */
 void logger_init(void)
 {
@@ -124,17 +127,20 @@ void logger_init(void)
     Dogs102x6_stringDraw(1, 0, "Logging: OFF", DOGS102x6_DRAW_NORMAL);
     logger_running = 0;
 
-    // Call the SD setup routine (this doesn't terminate)
-    sd_setup(&sdbuf);
+    // Start the logging service (actual logging starts later)!
+    start_logger(&sdbuf);
 }
 
 
 /**
- * Update the LCD with the current status of the logger service. This should
- * not be called too regularly on the MSP-EXP430 board due to the SD card and
- * LCD panel being on the same SPI bus and will cause slowdown of SD
- * transactions.
- * @param buf A pointer to the ring buffer which we are monitoring.
+ * Update the LCD with the current status of the logger, including buffer
+ * usage, data file size and SD card utilisation.
+ *
+ * @note This should not be called too regularly on the MSP-EXP430 board due to
+ * the SD card and LCD panel being on the same SPI bus and will cause slowdown
+ * of SD transactions.
+ *
+ * @param buf A pointer to the RingBuffer which we are monitoring.
  */
 void update_lcd(RingBuffer *buf)
 {
@@ -172,12 +178,20 @@ void update_lcd(RingBuffer *buf)
 }
 
 /**
- * Set up the SD card for logging to it.
- * @param sdbuf A pointer to the SD card buffer. This is a ring buffer that we
+ * Set up the SD card and the FATFS filesystem handler before commencing the
+ * logging service.
+ *
+ * The controls regularly moving blocks of data from the SD buffer to the card
+ * using sd_write(), which is done when the SD buffer size has reached at least
+ * the sector size such that we write as quickly as possible. It also calls for
+ * LCD display updates (with update_lcd()) and handling opening/closing of the
+ * data file when logging starts/stops.
+ *
+ * @param sdbuf A pointer to the SD card buffer. This is a RingBuffer that we
  * will use to buffer incoming samples before they are logged to the SD card,
  * such that we can write entire sectors at once.
  */
-void sd_setup(RingBuffer* sdbuf)
+void start_logger(RingBuffer* sdbuf)
 {   
     FRESULT fr;
 
@@ -257,7 +271,19 @@ void sd_setup(RingBuffer* sdbuf)
 }
 
 /**
- * Write n bytes from a ring buffer to an SD card controlled by fatfs
+ * Write n bytes from a ring buffer to an SD card controlled by fatfs.
+ *
+ * We turn on the red LED on the board during an SD write transaction such that
+ * the user can monitor the frequency and duration of writes. This is
+ * particularly helpful in watching for SD clock stretching which often causes
+ * buffer overflow.
+ *
+ * @note n should always be at least one sector (typically 512 bytes), hence
+ * the RingBuffer rb. Doing otherwise will work but will likely cause
+ * significant slowdown. The calling function can use the rb_getused_m() macro
+ * to determine when there is one sector's worth (or more) of data in the
+ * buffer and then call sd_write().
+ *
  * @param rb A pointer to the ring buffer from which we will read the required
  * data.
  * @param writebuf A short buffer where we can temporarily place a single
@@ -285,9 +311,12 @@ FRESULT sd_write(RingBuffer *rb, char *writebuf, FIL *fil, uint16_t n)
 }
 
 /**
- * Write n bytes to a ring buffer. This is done via a fast memcpy operation
- * and as such, there is logic in this function to transparently handle the
- * copy even if we're wrapping over the boundary of the ring buffer.
+ * Write n bytes to a RingBuffer.
+ *
+ * This is done via a fast memcpy operation and as such, there is logic in this
+ * function to transparently handle the copy even if we're wrapping over the
+ * boundary of the ring buffer.
+ *
  * @param buf A pointer to the ring buffer we want to write to
  * @param data A pointer to the data to be written
  * @param n The number of bytes to be written to the ring buffer
@@ -328,9 +357,12 @@ uint8_t ringbuf_write(RingBuffer *buf, char* data, uint16_t n)
 }
 
 /**
- * Read n bytes from a ring buffer. This is done via a fast memcpy operation
- * and as such, there is logic in this function to transparently handle the
- * copy even if we're wrapping over the boundary of the ring buffer.
+ * Read n bytes from a ring buffer.
+ *
+ * This is done via a fast memcpy operation and as such, there is logic in this
+ * function to transparently handle the copy even if we're wrapping over the
+ * boundary of the ring buffer.
+ *
  * @param buf A pointer to the ring buffer we want to write to
  * @param read_buffer Copy data into this array
  * @param n The number of bytes to be read from the ring buffer
@@ -369,6 +401,12 @@ uint8_t ringbuf_read(RingBuffer *buf, char* read_buffer, uint16_t n)
 /**
  * Enable TA1 to begin logging by setting mode control to "up" mode,
  * counter counts to TAxCCR0.
+ *
+ * The flag variable logger_running is asserted such that the start_logger()
+ * loop notices that logging has started as should open the data file if it has
+ * not already done so.  We also write to the LCD to show that logging has been
+ * started.
+ * @note logger_running is asserted before the timer is enabled.
  */
 void logger_enable(void)
 {
@@ -385,6 +423,12 @@ void logger_enable(void)
 
 /**
  * Disable TA1 to halt logging by setting mode control to STOP.
+ *
+ * The flag logger_running is deasserted so that the start_logger() loop
+ * notices and cleanly flushes and closes the data file.  We also write to the
+ * LCD to show that logging has stopped.
+ *
+ * @note logger_running is deasserted after the timer is stopped.
  */
 void logger_disable(void)
 {
@@ -396,9 +440,14 @@ void logger_disable(void)
 }
 
 /**
- * Interrupt for TA1, here we should log one block of data to the SD card.
- * In future we may buffer data and log it in blocks, or transfer it to the
- * SD card via DMA.
+ * Interrupt service routine for Timer A1 (TA1), where we should log one block
+ * of data.
+ *
+ * We do this by copying the current SampleBuffer into the RingBuffer used for
+ * SD transactions. There is no processing of the data since it is too slow --
+ * this is left to post-processing on a desktop machine. We then trigger the
+ * next conversion runs for the ADC and accelerometer such that next time we
+ * enter this ISR, new data will be in the SampleBuffer sb.
  */
 interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 {
@@ -414,7 +463,8 @@ interrupt(TIMER1_A0_VECTOR) TIMER1_A0_ISR(void)
 }
 
 /**
- * Interrupt vector for button S1. We should debounce the button press using
+ * Interrupt vector for button S1 which is used for enabled and disabling
+ * logging. We should debounce the button press using
  * the system ticks timer, and then enable or disable logging as required.
  */
 interrupt(PORT1_VECTOR) PORT1_ISR(void)
