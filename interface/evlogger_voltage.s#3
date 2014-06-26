@@ -6071,13 +6071,20 @@ Generic negative voltage terminal.</description>
 <part name="R4" library="rcl" deviceset="R-EU_" device="0207/10"/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="RP" library="rcl" deviceset="R-EU_" device="0207/10"/>
 <part name="R5" library="rcl" deviceset="R-EU_" device="0207/10"/>
-<part name="R6" library="rcl" deviceset="R-EU_" device="0207/10"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
+<wire x1="38.1" y1="50.8" x2="45.72" y2="50.8" width="0.2032" layer="94"/>
+<wire x1="45.72" y1="43.18" x2="38.1" y2="43.18" width="0.2032" layer="94"/>
+<wire x1="38.1" y1="43.18" x2="38.1" y2="50.8" width="0.2032" layer="94"/>
+<wire x1="38.1" y1="50.8" x2="45.72" y2="43.18" width="0.2032" layer="94"/>
+<wire x1="45.72" y1="43.18" x2="45.72" y2="50.8" width="0.2032" layer="94"/>
+<wire x1="45.72" y1="50.8" x2="38.1" y2="43.18" width="0.2032" layer="94"/>
+<text x="37.846" y="51.308" size="1.778" layer="94">LEM LV</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G1" x="93.98" y="50.8"/>
@@ -6091,14 +6098,14 @@ Generic negative voltage terminal.</description>
 </instance>
 <instance part="R1" gate="G$1" x="76.2" y="50.8"/>
 <instance part="R2" gate="G$1" x="76.2" y="45.72"/>
-<instance part="SUPPLY3" gate="G$1" x="35.56" y="66.04"/>
-<instance part="R3" gate="G$1" x="35.56" y="58.42" rot="R90"/>
-<instance part="R4" gate="G$1" x="35.56" y="43.18" rot="R90"/>
-<instance part="GND2" gate="1" x="35.56" y="33.02"/>
+<instance part="SUPPLY3" gate="G$1" x="60.96" y="66.04"/>
+<instance part="R3" gate="G$1" x="60.96" y="58.42" rot="R90"/>
+<instance part="R4" gate="G$1" x="60.96" y="43.18" rot="R90"/>
+<instance part="GND2" gate="1" x="60.96" y="33.02"/>
 <instance part="GND3" gate="1" x="68.58" y="60.96"/>
-<instance part="R5" gate="G$1" x="58.42" y="40.64" rot="R270"/>
-<instance part="R6" gate="G$1" x="58.42" y="27.94" rot="R270"/>
-<instance part="GND4" gate="1" x="58.42" y="17.78"/>
+<instance part="RP" gate="G$1" x="40.64" y="58.42" rot="R90"/>
+<instance part="R5" gate="G$1" x="50.8" y="38.1" rot="R90"/>
+<instance part="GND4" gate="1" x="50.8" y="27.94"/>
 </instances>
 <busses>
 </busses>
@@ -6159,11 +6166,11 @@ Generic negative voltage terminal.</description>
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <pinref part="R4" gate="G$1" pin="2"/>
-<wire x1="35.56" y1="53.34" x2="35.56" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="53.34" x2="60.96" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="35.56" y1="50.8" x2="35.56" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="50.8" x2="35.56" y2="50.8" width="0.1524" layer="91"/>
-<junction x="35.56" y="50.8"/>
+<wire x1="60.96" y1="50.8" x2="60.96" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="50.8" x2="60.96" y2="50.8" width="0.1524" layer="91"/>
+<junction x="60.96" y="50.8"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -6175,7 +6182,7 @@ Generic negative voltage terminal.</description>
 <segment>
 <pinref part="R4" gate="G$1" pin="1"/>
 <pinref part="GND2" gate="1" pin="GND"/>
-<wire x1="35.56" y1="38.1" x2="35.56" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="38.1" x2="60.96" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="RI" gate="G$1" pin="1"/>
@@ -6184,35 +6191,39 @@ Generic negative voltage terminal.</description>
 <wire x1="68.58" y1="66.04" x2="68.58" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R6" gate="G$1" pin="2"/>
+<pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="GND4" gate="1" pin="GND"/>
-<wire x1="58.42" y1="22.86" x2="58.42" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="33.02" x2="50.8" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
 <pinref part="SUPPLY3" gate="G$1" pin="3.3V"/>
 <pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="35.56" y1="66.04" x2="35.56" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="66.04" x2="60.96" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="CLAMP" class="0">
+<net name="VPHASE" class="0">
 <segment>
-<pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="50.8" y1="48.26" x2="58.42" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="48.26" x2="58.42" y2="45.72" width="0.1524" layer="91"/>
-<label x="50.8" y="48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="38.1" y1="66.04" x2="40.64" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="66.04" x2="40.64" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="RP" gate="G$1" pin="2"/>
+<label x="38.1" y="66.04" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="N$3" class="0">
+<net name="GND_CHAS" class="0">
 <segment>
+<pinref part="RP" gate="G$1" pin="1"/>
+<wire x1="40.64" y1="53.34" x2="40.64" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="38.1" x2="38.1" y2="38.1" width="0.1524" layer="91"/>
+<label x="38.1" y="38.1" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<wire x1="43.18" y1="45.72" x2="50.8" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="45.72" x2="50.8" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="58.42" y1="35.56" x2="58.42" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="58.42" y1="35.56" x2="71.12" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="35.56" x2="71.12" y2="45.72" width="0.1524" layer="91"/>
-<junction x="58.42" y="35.56"/>
 </segment>
 </net>
 </nets>
