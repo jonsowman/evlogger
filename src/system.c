@@ -12,7 +12,7 @@
  * attempting to understand what is going on in this module!
  *
  * @file system.c
- * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @author Jon Sowman, University of Southampton <j.sowman@soton.ac.uk>
  * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup System
  * @{

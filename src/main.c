@@ -61,11 +61,11 @@
  * clean.
  *
  * \section author Authorship
- * Jon Sowman, University of Southampton <js39g13@soton.ac.uk>. Please get in
+ * Jon Sowman, University of Southampton <j.sowman@soton.ac.uk>. Please get in
  * touch with any questions or comments.
  *
  * @file main.c
- * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @author Jon Sowman, University of Southampton <j.sowman@soton.ac.uk>
  * @copyright Jon Sowman 2014, All Rights Reserved
  * @addtogroup main
  * @{

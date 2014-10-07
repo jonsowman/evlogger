@@ -3,7 +3,7 @@
  * long long is unsupported since we probably shouldn't be using it anyway.
  *
  * @file typedefs.h
- * @author Jon Sowman, University of Southampton <js39g13@soton.ac.uk>
+ * @author Jon Sowman, University of Southampton <j.sowman@soton.ac.uk>
  * @copyright Jon Sowman 2014, All Rights Reserved
  */
 
