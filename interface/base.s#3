@@ -2042,7 +2042,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="CARD_CH6" library="SparkFun-Connectors" deviceset="M05X2" device="PTH"/>
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="U$3" library="SparkFun-Connectors" deviceset="M04X2" device=""/>
+<part name="LOGGER_SENSORS" library="SparkFun-Connectors" deviceset="M04X2" device=""/>
 <part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -2073,7 +2073,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="GND7" gate="1" x="111.76" y="33.02" smashed="yes" rot="R270"/>
 <instance part="CARD_CH6" gate="G$1" x="132.08" y="2.54"/>
 <instance part="GND8" gate="1" x="111.76" y="7.62" smashed="yes" rot="R270"/>
-<instance part="U$3" gate="G$1" x="17.78" y="-22.86"/>
+<instance part="LOGGER_SENSORS" gate="G$1" x="17.78" y="-22.86"/>
 <instance part="GND9" gate="1" x="27.94" y="-30.48" smashed="yes"/>
 </instances>
 <busses>
@@ -2387,7 +2387,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="121.92" y="0" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$3" gate="G$1" pin="7"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="7"/>
 <wire x1="10.16" y1="-25.4" x2="7.62" y2="-25.4" width="0.1524" layer="91"/>
 <label x="7.62" y="-25.4" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
 </segment>
@@ -2401,7 +2401,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="10.16" y1="-17.78" x2="7.62" y2="-17.78" width="0.1524" layer="91"/>
 <label x="7.62" y="-17.78" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="1"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -2447,7 +2447,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="114.3" y1="7.62" x2="124.46" y2="7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$3" gate="G$1" pin="8"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="8"/>
 <wire x1="25.4" y1="-25.4" x2="27.94" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 <wire x1="27.94" y1="-25.4" x2="27.94" y2="-27.94" width="0.1524" layer="91"/>
@@ -2470,7 +2470,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="25.4" y1="-17.78" x2="27.94" y2="-17.78" width="0.1524" layer="91"/>
 <label x="27.94" y="-17.78" size="1.27" layer="95" font="vector" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="2"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SENSE_CH3" class="0">
@@ -2482,7 +2482,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="10.16" y1="-20.32" x2="7.62" y2="-20.32" width="0.1524" layer="91"/>
 <label x="7.62" y="-20.32" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="3"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="3"/>
 </segment>
 </net>
 <net name="SENSE_CH4" class="0">
@@ -2494,7 +2494,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="25.4" y1="-20.32" x2="27.94" y2="-20.32" width="0.1524" layer="91"/>
 <label x="27.94" y="-20.32" size="1.27" layer="95" font="vector" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="4"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="4"/>
 </segment>
 </net>
 <net name="SENSE_CH5" class="0">
@@ -2506,7 +2506,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="10.16" y1="-22.86" x2="7.62" y2="-22.86" width="0.1524" layer="91"/>
 <label x="7.62" y="-22.86" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="5"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="5"/>
 </segment>
 </net>
 <net name="SENSE_CH6" class="0">
@@ -2518,7 +2518,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <wire x1="25.4" y1="-22.86" x2="27.94" y2="-22.86" width="0.1524" layer="91"/>
 <label x="27.94" y="-22.86" size="1.27" layer="95" font="vector" xref="yes"/>
-<pinref part="U$3" gate="G$1" pin="6"/>
+<pinref part="LOGGER_SENSORS" gate="G$1" pin="6"/>
 </segment>
 </net>
 </nets>

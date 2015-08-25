@@ -2296,31 +2296,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="60.96" y1="48.26" x2="58.42" y2="48.26" width="0.1524" layer="91"/>
 <label x="58.42" y="48.26" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
 </segment>
-<segment>
-<pinref part="CARD_CH2" gate="G$1" pin="9"/>
-<wire x1="60.96" y1="22.86" x2="58.42" y2="22.86" width="0.1524" layer="91"/>
-<label x="58.42" y="22.86" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="CARD_CH3" gate="G$1" pin="9"/>
-<wire x1="60.96" y1="-2.54" x2="58.42" y2="-2.54" width="0.1524" layer="91"/>
-<label x="58.42" y="-2.54" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="CARD_CH4" gate="G$1" pin="9"/>
-<wire x1="124.46" y1="48.26" x2="121.92" y2="48.26" width="0.1524" layer="91"/>
-<label x="121.92" y="48.26" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="CARD_CH5" gate="G$1" pin="9"/>
-<wire x1="124.46" y1="22.86" x2="121.92" y2="22.86" width="0.1524" layer="91"/>
-<label x="121.92" y="22.86" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="CARD_CH6" gate="G$1" pin="9"/>
-<wire x1="124.46" y1="-2.54" x2="121.92" y2="-2.54" width="0.1524" layer="91"/>
-<label x="121.92" y="-2.54" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
-</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -2371,6 +2346,41 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="27.94" y1="35.56" x2="30.48" y2="35.56" width="0.1524" layer="91"/>
 <label x="30.48" y="35.56" size="1.27" layer="95" font="vector" xref="yes"/>
 <label x="30.48" y="35.56" size="1.27" layer="95" font="vector" xref="yes"/>
+</segment>
+</net>
+<net name="SENSE_CH2" class="0">
+<segment>
+<pinref part="CARD_CH2" gate="G$1" pin="9"/>
+<wire x1="60.96" y1="22.86" x2="58.42" y2="22.86" width="0.1524" layer="91"/>
+<label x="58.42" y="22.86" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="SENSE_CH3" class="0">
+<segment>
+<pinref part="CARD_CH3" gate="G$1" pin="9"/>
+<wire x1="60.96" y1="-2.54" x2="58.42" y2="-2.54" width="0.1524" layer="91"/>
+<label x="58.42" y="-2.54" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="SENSE_CH4" class="0">
+<segment>
+<pinref part="CARD_CH4" gate="G$1" pin="9"/>
+<wire x1="124.46" y1="48.26" x2="121.92" y2="48.26" width="0.1524" layer="91"/>
+<label x="121.92" y="48.26" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="SENSE_CH5" class="0">
+<segment>
+<pinref part="CARD_CH5" gate="G$1" pin="9"/>
+<wire x1="124.46" y1="22.86" x2="121.92" y2="22.86" width="0.1524" layer="91"/>
+<label x="121.92" y="22.86" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="SENSE_CH6" class="0">
+<segment>
+<pinref part="CARD_CH6" gate="G$1" pin="9"/>
+<wire x1="124.46" y1="-2.54" x2="121.92" y2="-2.54" width="0.1524" layer="91"/>
+<label x="121.92" y="-2.54" size="1.27" layer="95" font="vector" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>

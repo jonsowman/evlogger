@@ -117,7 +117,7 @@
 <layer number="251" name="SMDround" color="12" fill="11" visible="no" active="no"/>
 <layer number="254" name="cooling" color="7" fill="1" visible="no" active="yes"/>
 </layers>
-<schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
+<schematic xreflabel="%F%N/%S" xrefpart="/%S.%C%R">
 <libraries>
 <library name="rcl">
 <description>&lt;b&gt;Resistors, Capacitors, Inductors&lt;/b&gt;&lt;p&gt;
